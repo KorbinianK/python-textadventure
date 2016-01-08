@@ -21,5 +21,6 @@ with open('txt/namegenerator/objective.txt', 'r') as f:
 
 combined = zip(names,pre,adjectives,types,objectives)
 
+test
 
 print ' '.join(combined[1])
