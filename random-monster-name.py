@@ -20,6 +20,6 @@ with open('txt/namegenerator/objective.txt', 'r') as f:
     random.shuffle(objectives)
 
 combined = zip(names,pre,adjectives,types,objectives)
-abc = random.shuffle(combined)
+
 
 print ' '.join(combined[1])
