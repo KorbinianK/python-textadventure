@@ -1,7 +1,7 @@
-class gold(item):
-	
+class Gold(Item):
+
 	def __init__(self, name, value, damage):
-		super().__init__(name, value)
+		super().__init__(name="Gold", value=self.amount)
 		self.amount=amount
 
 	def __str__(self):
