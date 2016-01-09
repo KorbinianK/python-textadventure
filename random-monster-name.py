@@ -1,6 +1,6 @@
 import textwrap, random
 
-class nameGenerator(object):
+class NameGenerator(object):
 
 	with open('txt/namegenerator/name.txt', 'r') as f:
     	names = f.read().splitlines()
