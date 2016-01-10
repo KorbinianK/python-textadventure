@@ -4,8 +4,12 @@ from colorama import init, Fore, Back, Style
 import random
 
 def play():
-
-    player = Player()
+    print ("What is your name?\n")
+    name_input = raw_input ('>: ')
+    player = Player(name_input)
+    print ("Hello " +player.name +"\n")
+    print ("Welcome to our world of pain and suffering!")
+    
     monstername = RandomMonsterName()
 
     while player.is_alive() and not player.victory:
