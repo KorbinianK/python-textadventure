@@ -6,6 +6,7 @@ class Player(object):
     	self.name=name
         self.hp = 100
         self.victory = False
+        self.condition = "normal"
 
     def is_alive(self):
         return self.hp > 0
@@ -15,4 +16,6 @@ class Player(object):
 
     def getHP(self):
         return self.hp
-    
+
+    def setCondition(self, condition):
+    	self.condition = condition
