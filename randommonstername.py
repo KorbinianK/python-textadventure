@@ -8,30 +8,29 @@ import textwrap, random
 #
 
 
-class RandomMonsterName():
+class RandomMonsterName(object):
 
-    def getName(self):
+    def __init__(self):
         with open('txt/namegenerator/name.txt', 'r') as f:
-            names = f.read().splitlines()
-            random.shuffle(names)
-
+            self.names = f.read().splitlines()
         with open('txt/namegenerator/pre.txt', 'r') as f:
-            pre = f.read().splitlines()
-
+            self.pre = f.read().splitlines()
         with open('txt/namegenerator/adjective.txt', 'r') as f:
-            adjectives = f.read().splitlines()
-            random.shuffle(adjectives)
-
+            self.adjectives = f.read().splitlines()
         with open('txt/namegenerator/type.txt', 'r') as f:
-            types = f.read().splitlines()
-            random.shuffle(types)
-
+            self.types = f.read().splitlines()
         with open('txt/namegenerator/objective.txt', 'r') as f:
-            objectives = f.read().splitlines()
-            random.shuffle(objectives)
+            self.tobject = f.read().splitlines()
 
-        combined = zip(names,pre,adjectives,types,objectives)
+        self.shuffName = sorted(self.names, key=lambda k: random.random())[0]
+        self.shuffAdj = sorted(self.adjectives, key=lambda k: random.random())[0]
+        self.shuffType = sorted(self.types, key=lambda k: random.random())[0]
+        self.shuffObj =  sorted(self.tobject, key=lambda k: random.random())[0]
 
-        monstername = ' '.join(combined[1])
 
+    def getFullName(self):
+        monstername = self.shuffName +", "+self.pre[0]+" "+self.shuffAdj +" "+ self.shuffType+" "+self.shuffObj
         return monstername
+
+    def getOnlyName(self):
+        return  self.shuffName
