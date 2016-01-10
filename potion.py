@@ -1,4 +1,4 @@
-class potion(item):
+class Potion(Item):
 	
 	def __init__(self, name, value, strength):
 		super().__init__(name, value)

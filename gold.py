@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-class gold(item):
-	def __init__(self, name, value, damage)
-		super().__init__(name, value)
-=======
 class Gold(Item):
 
 	def __init__(self, name, value, damage):
@@ -25,5 +20,4 @@ class Gold(Item):
 		self.value=value
 
 	def setAmount(self, amount):
->>>>>>> master
 		self.amount=amount

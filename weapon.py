@@ -1,15 +1,9 @@
-class weapon(item):
-<<<<<<< HEAD
-	def __init__(self, name, value, damage):
-		super().__init__(name, value)
-		self.damage=damage
-=======
+class Weapon(item):
 
 	def __init__(self, name, value, damage):
 		super().__init__(name, value)
 		self.damage=damage
 		isBroken=false
->>>>>>> master
 
 	def __str__(self):
 		return ""
@@ -27,9 +21,6 @@ class weapon(item):
 		self.value=value
 
 	def setDamage(self, damage):
-<<<<<<< HEAD
-		self.damage=damage
-=======
 		self.damage=damage
 
 	def destroy(self):
@@ -37,4 +28,3 @@ class weapon(item):
 
 	def isBroken(self):
 		return self.isBroken
->>>>>>> master
