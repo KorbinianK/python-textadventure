@@ -28,9 +28,15 @@ class RandomMonsterName(object):
         self.shuffObj =  sorted(self.tobject, key=lambda k: random.random())[0]
 
 
+#
+# Returns the full name incl. type etc.
+#
     def getFullName(self):
         monstername = self.shuffName +", "+self.pre[0]+" "+self.shuffAdj +" "+ self.shuffType+" "+self.shuffObj
         return monstername
 
-    def getOnlyName(self):
+#
+# Returns only the first name
+#
+    def getShortName(self):
         return  self.shuffName
