@@ -6,6 +6,7 @@ from monster import Monster
 from colorama import init, Fore, Back, Style
 import random
 
+init()
 def __init__(self):
     self.settings = Settings()
     self.difficulty = settings.difficulty
