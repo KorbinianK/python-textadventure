@@ -2,6 +2,7 @@ from settings import Settings
 from player import Player
 from colorama import init, Fore, Back, Style
 
+from items import Items
 import random
 
 class Actions():
@@ -12,8 +13,9 @@ class Actions():
         self.player = player
         self.monster = monster
 
-    def __repr__(self):
 
+    def __repr__(self):
+        items = Items()
         ##
         ## Summons a monster
         ##
@@ -22,7 +24,7 @@ class Actions():
                 damage = random.randint(1,15)
                 return "You already face %s, and it attacks you. You take"%(self.monster.getShortName()) + \
                 Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
-                "%s, your HP is now at "%(self.player.name)+ Fore.RED + str(self.player.getHP()) + Style.RESET_ALL +"\n"
+                "%s, your HP is now at "%(self.player.name)+ Fore.CYAN + str(self.player.getHP()) + Style.RESET_ALL +"\n"
             else:
                 self.player.facesMonster = True
                 damage = random.randint(1,15)
@@ -34,7 +36,7 @@ class Actions():
                     return Style.RESET_ALL +"A wild" +Fore.GREEN+ " %s "%(self.monster.getFullName()) + \
                     Style.RESET_ALL+ "appears!\n%s attacks and you take"%(self.monster.getShortName()) + \
                     Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
-                    "%s, your HP is now at "%(self.player.name)+ Fore.RED + str(self.player.getHP()) + Style.RESET_ALL +"\n"
+                    Fore.CYAN +"%s"%(self.player.name)+ Style.RESET_ALL+", your HP is now at "+ Fore.CYAN + str(self.player.getHP()) + Style.RESET_ALL +"\n"
 
         ##
         ## Attacks the monster
@@ -47,15 +49,15 @@ class Actions():
                     self.player.facesMonster = False
                     if self.monster.hasLoot:
                         self.player.addItem(self.monster.getLoot())
-                        return "You killed %s"%(self.monster.getShortName())+" and it drops some Loot!" +\
-                                "Oh look, it's %s "%(self.monster.getLoot().name)
+                        return "You killed %s"%(self.monster.getShortName())+" and it drops some Loot! " +\
+                                "Oh look, it's"+Fore.YELLOW+" %s!"%(self.monster.getLoot().name+Style.RESET_ALL)
                     else:
                         return "You killed %s"%(self.monster.getShortName())
                 else:
                     self.monster.takeDamage(damage)
                     return "You attack" + Fore.GREEN+" %s "%(self.monster.getShortName())+ Style.RESET_ALL +\
                      "and you deal" +Fore.RED+" %s "%(damage)+Style.RESET_ALL+"damage.\n"+\
-                     "The Monster's Health is now at "+Fore.RED +str(self.monster.getHP())+Style.RESET_ALL
+                     "The Monster's Health is now at "+Fore.GREEN +str(self.monster.getHP())+Style.RESET_ALL
             else:
                 return "You shake your fists and try to attack your shadows"
 
@@ -79,27 +81,31 @@ class Actions():
                 return "'Coward! You stay exactly where you are!', shouts a voice and you tremble at it's power over you."
 
 
-
+        ##
+        ## Displays the items the player has
+        ##
 
         elif(self.action == "inventory"):
-            return self.player.printInventory()
+            if self.player.hasItems:
+                return self.player.printInventory()
+            else:
+                return "You find some lint in your pockets, it looks pretty useless..."
         ##
         ## Just for debugging
         ##
 
-        elif(self.action == "info"):
-            if self.player.is_facing_Monster:
-                self.player.facing_Monster(False)
-                return "true"
-            else:
-                return "false"
+        elif(self.action == "cheat"):
+            
+            self.player.strength = 100
+            self.player.name ="Lazy Cheater"
+            return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Style.RESET_ALL
 
         ##
         ## Displays available commands
         ##
 
         elif(self.action =="help"):
-            return Back.WHITE + Fore.BLACK +"[monster] [attack] [flee] [info] [help]" + Style.RESET_ALL
+            return Back.WHITE + Fore.BLACK +"[monster] [attack] [inventory] [flee] [info] [help]" + Style.RESET_ALL
         ##
         ## Message if invalid command was used
         ##

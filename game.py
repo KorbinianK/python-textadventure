@@ -12,12 +12,19 @@ def __init__(self):
     self.difficulty = settings.difficulty
 
 def play():
+    settings = Settings()
+    difficulty = settings.difficulty
     print ("What is your name?\n")
     name_input = raw_input ('>: ')
     player = Player()
     player.name = name_input
     monster = Monster()
-    monster.hasLoot = True
+    #hp,strength,armor,hasLoot,level
+    if difficulty == "easy":
+        monster.setup(1,player.level)
+    else:
+        monster.setup(2,player.level)
+    # monster.setup(10,5,5,True,5)
 
 
 #
@@ -41,6 +48,10 @@ def play():
         print Style.RESET_ALL
         if monster.killed:
             monster = Monster()
+            if difficulty == "easy":
+                monster.setup(1,player.level)
+            else:
+                monster.setup(2,player.level)
         response =  actions(action_input,player,monster)
         if player.condition is "normal":
             print response

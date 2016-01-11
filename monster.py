@@ -1,5 +1,6 @@
 from randommonstername import RandomMonsterName
 from items import Items
+import random
 
 class Monster(object):
 
@@ -13,8 +14,9 @@ class Monster(object):
         self.armor = 1
         self.killed = False
         self.hasLoot = False
-        item = Items()
-        self.Loot = item.randomWeapon()
+        self.level = 1
+        self.item = Items()
+        self.Loot = self.item.randomWeapon(self.level)
 
     def getFullName(self):
         return self.fullName
@@ -44,3 +46,35 @@ class Monster(object):
 
     def getLoot(self):
         return self.Loot
+
+    def setLoot(self,value):
+        self.Loot = self.item.randomWeapon(value)
+
+    # def setup(self,hp,strength,armor,hasLoot,level):
+    #     self.hp = hp
+    #     self.strength = strength
+    #     self.armor = armor
+    #     self.hasLoot = hasLoot
+    #     self.level = level
+    #     self.setLoot(level)
+
+    def setup(self,difficulty,player_level):
+        if difficulty is 1:
+            self.hp = random.randint(5,15)
+            self.strength = random.randint(1,5)
+            self.armor = random.randint(0,5)
+            rnd = random.randint(1,10)
+            if rnd > 0:
+                self.hasLoot = True
+            self.level = random.randint(1,6)
+            self.setLoot(self.level)
+
+        else:
+            self.hp = random.randint(15,25)
+            self.strength = random.randint(5,10)
+            self.armor = random.randint(2,8)
+            rnd = random.randint(0,10)
+            if rnd > 7:
+                self.hasLoot = True
+            self.level = random.randint(1,6)
+            self.setLoot(self.level)

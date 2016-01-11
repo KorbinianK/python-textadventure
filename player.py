@@ -6,9 +6,11 @@ class Player(object):
         self.facesMonster = False
         self.victory = False
         self.condition = "normal"
-        self.strength = 15
+        self.strength = 1
         self.armor = 1
+        self.level = 1
         self.inventory =[]
+        self.hasItems=False
 
     def is_alive(self):
         return self.hp > 0
@@ -30,6 +32,15 @@ class Player(object):
 
     def addItem(self, item):
         self.inventory.append(item)
+        self.hasItems = True
 
     def printInventory(self):
-        return str(self.inventory[0].name)
+        string = ""
+        print len(self.inventory)
+        if len(self.inventory) < 1:
+            for x in self.inventory:
+                string = string + x.name+", "
+            return string
+        else:
+            return self.inventory[0].name
+            
