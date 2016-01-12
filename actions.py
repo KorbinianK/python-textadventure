@@ -6,28 +6,28 @@ from items import Items
 import random
 
 class Actions():
-    def __init__(self, action, player, monster):
+    def __init__(self, action, player, room):
 
         self.action = action
         self.player = player
-        self.monster = monster
-        #self.items = items
-
+        self.room = room
+        self.monster = room.monster
+        self.chest = room.chest
 
     def __repr__(self):
-        #items = Items()
 
         ##
         ## Summons a monster
         ##
         if(self.action == "monster" ):
-            if not self.monster.killed and self.player.facesMonster:
+
+            if self.room.hasMonster and not self.monster.killed and self.player.facesMonster:
                 damage = random.randint(1,15)
                 self.player.takeDamage(damage)
                 return "You already face %s, and it attacks you. You take"%(self.monster.getShortName()) + \
                 Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
                 "%s, your HP is now at "%(self.player.name)+ Fore.CYAN + str(self.player.getHP()) + Style.RESET_ALL +"\n"
-            else:
+            elif self.room.hasMonster:
                 self.player.facesMonster = True
                 damage = random.randint(1,15)
                 if(int(self.player.getHP()) - damage < 0):
@@ -40,7 +40,8 @@ class Actions():
                     Style.RESET_ALL+ "appears!\n%s attacks and you take"%(self.monster.getShortName()) + \
                     Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
                     Fore.CYAN +"%s"%(self.player.name)+ Style.RESET_ALL+", your HP is now at "+ Fore.CYAN + str(self.player.getHP()) + Style.RESET_ALL +"\n"
-
+            else:
+                return "The room is empty... like your soul. Do you want to"+Fore.CYAN+"continue?"+Style.RESET_ALL
         ##
         ## Attacks the monster
         ##

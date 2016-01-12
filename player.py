@@ -11,9 +11,13 @@ class Player(object):
         self.level = 1
         self.inventory =[]
         self.hasItems=False
+        self.is_in_room = False
 
     def is_alive(self):
         return self.hp > 0
+
+    def is_in_room(self):
+        return self.is_in_room
 
     def takeDamage(self, damage):
         self.hp -= damage
