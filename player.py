@@ -1,3 +1,4 @@
+from colorama import init, Fore, Back, Style
 class Player(object):
 
     def __init__(self):
@@ -21,6 +22,7 @@ class Player(object):
 
     def takeDamage(self, damage):
         self.hp -= damage
+        return "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage."
 
     def getHP(self):
         return self.hp
@@ -38,12 +40,11 @@ class Player(object):
 
         self.inventory.append(item)
         self.hasItems = True
-        #print "added"+item.name
-        print self.inventory[0].name + str(len(self.inventory))
+
 
     def printInventory(self):
-        string = ""
-        print len(self.inventory)
+        string = "You own: "
+
         if len(self.inventory) > 1:
             for index,item in enumerate(self.inventory, start=1):
                 string = string+ str(index) +" "+item.name+", "

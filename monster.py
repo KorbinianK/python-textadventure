@@ -1,5 +1,6 @@
 from randommonstername import RandomMonsterName
 from items import Items
+from colorama import init, Fore, Back, Style
 import random
 
 class Monster(object):
@@ -36,7 +37,7 @@ class Monster(object):
 
     def takeDamage(self, damage):
         self.hp -= damage
-        print self.shortName+": 'AHHHRGWLWLW GROOOWAAR'\n"+"The monster takes %s damage"%(damage)
+        print Fore.GREEN+self.shortName+": 'AHHHRGWLWLW GROOOWAAR'\n"+Style.RESET_ALL
 
     def getHP(self):
         return self.hp
@@ -50,13 +51,8 @@ class Monster(object):
     def setLoot(self,value):
         self.Loot = self.item.randomWeapon(value)
 
-    # def setup(self,hp,strength,armor,hasLoot,level):
-    #     self.hp = hp
-    #     self.strength = strength
-    #     self.armor = armor
-    #     self.hasLoot = hasLoot
-    #     self.level = level
-    #     self.setLoot(level)
+    def kill(self):
+        self.killed = True
 
     def setup(self,difficulty,player_level):
         if difficulty is 1:
@@ -78,3 +74,56 @@ class Monster(object):
                 self.hasLoot = True
             self.level = random.randint(1,6)
             self.setLoot(self.level)
+
+
+    def attack(self, room, player):
+        damage = player.strength + random.randint(0,2)
+
+        if (self.getHP() - damage <= 0):
+            room.killMonster()
+            player.facesMonster = False
+            if self.hasLoot:
+                player.addItem(self.getLoot())
+                return "You killed %s"%(self.getShortName())+" and it drops some Loot! " +\
+                        "Oh look, it's"+Fore.YELLOW+" %s!"%(self.getLoot().name+Style.RESET_ALL)
+            else:
+                return "You killed %s"%(self.getShortName())
+        else:
+            self.takeDamage(damage)
+            return "You attack" + Fore.GREEN+" %s "%(self.getShortName())+ Style.RESET_ALL +\
+             "and you deal" +Fore.RED+" %s "%(damage)+Style.RESET_ALL+"damage.\n"+\
+             "The Monster's Health is now at "+Fore.GREEN +str(self.getHP())+Style.RESET_ALL
+
+    def flee(self, room, player):
+            player.facesMonster = False
+            damage = random.randint(1,15)
+            string = Fore.RED +"%s "%(self.getShortName())+ Style.RESET_ALL+"laughs manically as you try to flee from it\n"
+
+            if damage < 5:
+                return string +"You barely manage, stumbling through the darkness \n" + \
+                 "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n"
+            else:
+                return string +"As you run through the darkness you fall and hit your head on something. \n" + \
+                 "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n"
+
+
+    def spawn(self,room,player):
+        if room.hasMonster:
+            if not self.killed and player.facesMonster:
+                damage = random.randint(1,15)
+                player.takeDamage(damage)
+                return "You already face %s, and it attacks you. You take"%(self.getShortName()) + \
+                Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
+                "%s, your HP is now at "%(player.name)+ Fore.CYAN + str(player.getHP()) + Style.RESET_ALL +"\n"
+            elif room.hasMonster and not self.killed :
+                player.facesMonster = True
+                damage = random.randint(1,15)
+                if(int(player.getHP()) - damage < 0):
+                    player.takeDamage(damage)
+                    return Style.RESET_ALL, "You took {0} damage, you are now dead".format(damage)
+                else:
+                    player.takeDamage(damage)
+                    return Style.RESET_ALL +"\nA wild" +Fore.GREEN+ " %s "%(self.getFullName()) + \
+                    Style.RESET_ALL+ "appears!\n%s attacks and you take"%(self.getShortName()) + \
+                    Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
+                    Fore.CYAN +"\n%s"%(player.name)+ Style.RESET_ALL+", your HP is now at "+ Fore.CYAN + str(player.getHP()) + Style.RESET_ALL +"\n"

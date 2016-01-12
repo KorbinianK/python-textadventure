@@ -19,19 +19,13 @@ def play():
     player = Player()
     player.name = name_input
     room = Room(difficulty,player)
-    #monster = Monster()
-    #hp,strength,armor,hasLoot,level
-    # if difficulty == "easy":
-    #     monster.setup(1,player.level)
-    # else:
-    #     monster.setup(2,player.level)
-    # monster.setup(10,5,5,True,5)
-
+    
 #
 # Asks for the player Name
 #
-    print (Style.RESET_ALL + "Hello"+Fore.CYAN + " %s"%(player.name) + Style.RESET_ALL +"!\n")
-    print ("Welcome to our world of pain and suffering!\n")
+    print Style.RESET_ALL
+    print '{:^90}'.format("Hello"+Fore.CYAN + " %s"%(player.name) + Style.RESET_ALL +"!")
+    print '{:^80}'.format("Welcome to our world of pain and suffering!")
 
 
 #
@@ -43,7 +37,7 @@ def play():
             room.newRoom()
             player.is_in_room = True
 
-        print("What do you want to do?\n")
+        print ("\nWhat do you want to do?\n")
 
     #
     # Asks the player for some Input commands
@@ -51,14 +45,8 @@ def play():
         action_input = raw_input(Fore.CYAN + '>: ')
 
         print Style.RESET_ALL
-        # if monster.killed:
-        #     monster = Monster()
-        #     if difficulty == "easy":
-        #         monster.setup(1,player.level)
-        #     else:
-        #         monster.setup(2,player.level)
 
-        response =  actions(action_input,player,room)
+        response = actions(action_input,player,room)
         if player.condition is "normal":
             print response
         elif player.condition is "poisoned":

@@ -10,14 +10,17 @@ class Room(object):
         self.isDone = False
         self.difficulty = difficulty
         self.player = player
-        self.chest = Chest(self.player.level)
+        self.chest = Chest(self.player)
         self.monster = Monster()
+        self.inspected = False
 
 
     def newRoom(self):
-        print "You enter a dark room."
+        print '{:^80}'.format("###################################")
+        print '{:^80}'.format("You enter a dark room.")
+        print '{:^80}'.format("###################################")
         rnd = random.randint(0,10)
-        if rnd < 5:
+        if rnd < 1:
             self.hasMonster = True
         else:
             self.hasChest = True
@@ -34,7 +37,9 @@ class Room(object):
         else:
             self.isDone = True
 
-    # def inspectRoom(self):
-        # if self.hasMonster:
-        #
-        # if self.hasChest:
+    def inspectRoom(self):
+        self.inspected = True
+
+    def killMonster(self):
+        self.monster.kill()
+        self.hasMonster = False
