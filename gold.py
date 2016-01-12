@@ -1,4 +1,4 @@
-class Gold(Item):
+class Gold():
 
 	def __init__(self, name, value, damage):
 		super().__init__(name="Gold", value=self.amount)
@@ -6,7 +6,7 @@ class Gold(Item):
 
 	def __str__(self):
 		return ""
-		
+
 	def getName(self):
 		return self.name
 

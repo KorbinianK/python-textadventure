@@ -3,21 +3,22 @@ from player import Player
 from actions import Actions as actions
 from settings import Settings
 from monster import Monster
+from room import Room
 from colorama import init, Fore, Back, Style
 import random
 
 init()
-def __init__(self):
-    self.settings = Settings()
-    self.difficulty = settings.difficulty
 
 def play():
     settings = Settings()
+
     difficulty = settings.difficulty
+
     print ("What is your name?\n")
     name_input = raw_input ('>: ')
     player = Player()
     player.name = name_input
+    room = Room(difficulty,player)
     monster = Monster()
     #hp,strength,armor,hasLoot,level
     if difficulty == "easy":
@@ -25,7 +26,6 @@ def play():
     else:
         monster.setup(2,player.level)
     # monster.setup(10,5,5,True,5)
-
 
 #
 # Asks for the player Name
@@ -45,6 +45,7 @@ def play():
     # Asks the player for some Input commands
     #
         action_input = raw_input(Fore.CYAN + '>: ')
+
         print Style.RESET_ALL
         if monster.killed:
             monster = Monster()
@@ -52,6 +53,7 @@ def play():
                 monster.setup(1,player.level)
             else:
                 monster.setup(2,player.level)
+
         response =  actions(action_input,player,monster)
         if player.condition is "normal":
             print response

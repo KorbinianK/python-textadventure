@@ -36,7 +36,7 @@ class Monster(object):
 
     def takeDamage(self, damage):
         self.hp -= damage
-        return self.shortName+": 'AHHHRGWLWLW GROOOWAAR'\n"+"The monster takes %s damage"%(damage)
+        print self.shortName+": 'AHHHRGWLWLW GROOOWAAR'\n"+"The monster takes %s damage"%(damage)
 
     def getHP(self):
         return self.hp
@@ -66,7 +66,7 @@ class Monster(object):
             rnd = random.randint(1,10)
             if rnd > 0:
                 self.hasLoot = True
-            self.level = random.randint(1,6)
+            self.level = random.randint(1,10)
             self.setLoot(self.level)
 
         else:

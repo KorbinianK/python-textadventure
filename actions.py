@@ -9,19 +9,21 @@ class Actions():
     def __init__(self, action, player, monster):
 
         self.action = action
-        #self.name = player.name
         self.player = player
         self.monster = monster
+        #self.items = items
 
 
     def __repr__(self):
-        items = Items()
+        #items = Items()
+
         ##
         ## Summons a monster
         ##
         if(self.action == "monster" ):
             if not self.monster.killed and self.player.facesMonster:
                 damage = random.randint(1,15)
+                self.player.takeDamage(damage)
                 return "You already face %s, and it attacks you. You take"%(self.monster.getShortName()) + \
                 Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
                 "%s, your HP is now at "%(self.player.name)+ Fore.CYAN + str(self.player.getHP()) + Style.RESET_ALL +"\n"
@@ -29,8 +31,9 @@ class Actions():
                 self.player.facesMonster = True
                 damage = random.randint(1,15)
                 if(int(self.player.getHP()) - damage < 0):
-                    return Style.RESET_ALL, "You took {0} damage, you are now dead".format(damage)
                     self.player.takeDamage(damage)
+                    return Style.RESET_ALL, "You took {0} damage, you are now dead".format(damage)
+
                 else:
                     self.player.takeDamage(damage)
                     return Style.RESET_ALL +"A wild" +Fore.GREEN+ " %s "%(self.monster.getFullName()) + \
@@ -70,6 +73,7 @@ class Actions():
                 self.player.facesMonster = False
                 damage = random.randint(1,15)
                 string = Fore.RED +"%s "%(self.monster.getShortName())+ Style.RESET_ALL+"laughs manically as you try to flee from it\n"
+
                 if damage < 5:
                     return string +"You barely manage, stumbling through the darkness \n" + \
                      "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n"
@@ -95,7 +99,7 @@ class Actions():
         ##
 
         elif(self.action == "cheat"):
-            
+
             self.player.strength = 100
             self.player.name ="Lazy Cheater"
             return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Style.RESET_ALL

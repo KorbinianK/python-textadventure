@@ -31,16 +31,19 @@ class Player(object):
         self.facesMonster = status
 
     def addItem(self, item):
+
         self.inventory.append(item)
         self.hasItems = True
+        #print "added"+item.name
+        print self.inventory[0].name + str(len(self.inventory))
 
     def printInventory(self):
         string = ""
         print len(self.inventory)
-        if len(self.inventory) < 1:
-            for x in self.inventory:
-                string = string + x.name+", "
+        if len(self.inventory) > 1:
+            for index,item in enumerate(self.inventory, start=1):
+                string = string+ str(index) +" "+item.name+", "
             return string
         else:
             return self.inventory[0].name
-            
+    #    return self.inventory[0].name + self.inventory[1].name
