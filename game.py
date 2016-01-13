@@ -46,7 +46,7 @@ def play():
 
         print Style.RESET_ALL
 
-        response = actions(action_input,player,room)
+        response = Actions(action_input,player,room)
         if player.condition is "normal":
             print response
         elif player.condition is "poisoned":
