@@ -6,8 +6,9 @@ from monster import Monster
 from room import Room
 from colorama import init, Fore, Back, Style
 import random
+import re
 
-init()
+init(autoreset=True)
 
 def play():
     settings = Settings()
@@ -46,26 +47,25 @@ def play():
 
         print Style.RESET_ALL
 
-        response = Actions(action_input,player,room)
-        if player.condition is "normal":
-            print response
-        elif player.condition is "poisoned":
-            #Do stuff with "response"
-            print response
+        response = actions(action_input,player,room)
+
         if action_input == "restart":
             print Back.WHITE+"                  "+Fore.BLACK+"Game restarted"+ Back.WHITE +Fore.RED+"                  \n"+Style.RESET_ALL
             play()
         elif action_input == "exit":
             print Back.RED+"                  "+Fore.WHITE+"Game exited"+ Back.RED +"                  \n"+Style.RESET_ALL
             break;
+
         else:
             # The magic happens here:
             response = actions(action_input,player,room)
             if player.condition is "normal":
+
                 print response
             elif player.condition is "poisoned":
                 #Do stuff with "response"
-                print response
+                string = re.sub(r"(.\d*.[\[].)","",str(response)[::-1])
+                print string
 
 if __name__ == "__main__":
     play()

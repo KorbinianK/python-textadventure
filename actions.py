@@ -5,6 +5,8 @@ from colorama import init, Fore, Back, Style
 from items import Items
 import random
 
+init(autoreset=True)
+
 class Actions():
     def __init__(self, action, player, room):
 
@@ -110,5 +112,6 @@ class Actions():
         ## Message if invalid command was used
         ##
         else:
-            return Style.RESET_ALL +"Sorry, You cannot" + " '%s'.\n"%(self.action)+ \
+            string = Style.RESET_ALL +"Sorry, You cannot" + " '%s'.\n"%(self.action)+ \
             "Type" +Fore.CYAN+" help "+ Style.RESET_ALL+"to view currently available commands."
+            return string
