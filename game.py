@@ -19,7 +19,7 @@ def play():
     player = Player()
     player.name = name_input
     room = Room(difficulty,player)
-    
+
 #
 # Asks for the player Name
 #
@@ -52,6 +52,20 @@ def play():
         elif player.condition is "poisoned":
             #Do stuff with "response"
             print response
+        if action_input == "restart":
+            print Back.WHITE+"                  "+Fore.BLACK+"Game restarted"+ Back.WHITE +Fore.RED+"                  \n"+Style.RESET_ALL
+            play()
+        elif action_input == "exit":
+            print Back.RED+"                  "+Fore.WHITE+"Game exited"+ Back.RED +"                  \n"+Style.RESET_ALL
+            break;
+        else:
+            # The magic happens here:
+            response = actions(action_input,player,room)
+            if player.condition is "normal":
+                print response
+            elif player.condition is "poisoned":
+                #Do stuff with "response"
+                print response
 
 if __name__ == "__main__":
     play()

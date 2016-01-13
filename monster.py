@@ -19,6 +19,7 @@ class Monster(object):
         self.item = Items()
         self.Loot = self.item.randomWeapon(self.level)
 
+
     def getFullName(self):
         return self.fullName
 
