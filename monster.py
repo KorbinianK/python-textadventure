@@ -102,10 +102,10 @@ class Monster(object):
 
             if damage < 5:
                 return string +"You barely manage, stumbling through the darkness \n" + \
-                 "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n"
+                 self.player.takeDamage(damage)
             else:
                 return string +"As you run through the darkness you fall and hit your head on something. \n" + \
-                 "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n"
+                  self.player.takeDamage(damage)
 
 
     def spawn(self,room,player):

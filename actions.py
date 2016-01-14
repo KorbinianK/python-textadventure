@@ -50,8 +50,8 @@ class Actions():
         ##
 
         elif(self.action.lower() == "continue"):
-
-            if self.room.is_done():
+        
+            if self.room.isDone:
                 return "You progress to the next room"
             else:
                 return "nope"

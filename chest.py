@@ -1,4 +1,5 @@
 from items import Items
+from colorama import init, Fore, Back, Style
 import random
 
 class Chest(object):
@@ -21,6 +22,7 @@ class Chest(object):
                 self.Loot = self.item.randomWeapon(self.level)
 
     def getLoot(self):
+        print "You found "+Fore.YELLOW+self.Loot.name+Style.RESET_ALL+"! It has been added to your"+Fore.CYAN+" inventory "+Style.RESET_ALL+"."
         return self.Loot
 
     def is_opened(self):
