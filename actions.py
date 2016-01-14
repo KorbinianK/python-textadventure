@@ -50,7 +50,11 @@ class Actions():
         ##
 
         elif(self.action.lower() == "continue"):
-            return "nope"
+
+            if self.room.is_done():
+                return "You progress to the next room"
+            else:
+                return "nope"
 
         ##
         ## Tells the player what the room has inside
@@ -69,12 +73,8 @@ class Actions():
         ##
         elif(self.action.lower() == "open chest"):
             if self.room.inspected:
-                if self.room.hasChest and not self.room.chest.is_opened():
-                    if self.room.chest.hasLoot:
-                        self.player.addItem(self.room.chest.open())
-                        return "opened chest"
-                    else:
-                        return "You open the chest. It's empty."
+                if self.room.hasChest and not self.room.chest.opened:
+                    return self.room.openChest()
                 else:
                     return "Nice try... How about this instead? " + self.player.takeDamage(1)
             else:

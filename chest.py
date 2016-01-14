@@ -26,10 +26,16 @@ class Chest(object):
     def is_opened(self):
         return self.opened
 
-    def open(self):
+    def open(self,player):
         print "The chest opens with a loud squeaky noise"
         self.opened = True
-        return self.getLoot()
+        if self.hasLoot:
+            self.player.addItem(self.getLoot())
+            string = "opened chest"
+        else:
+            string = "You open the chest. It's empty."
+
+        return string
 
     def has_loot(self):
         return self.hasLoot

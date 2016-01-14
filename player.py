@@ -14,6 +14,7 @@ class Player(object):
         self.hasItems=False
         self.is_in_room = False
 
+
     def is_alive(self):
         return self.hp > 0
 
@@ -46,8 +47,8 @@ class Player(object):
         string = "You own: "
 
         if len(self.inventory) > 1:
-            for index,item in enumerate(self.inventory, start=1):
-                string = string+ str(index) +" "+item.name+", "
+            for item in self.inventory:
+                string = string +item.name+", "
             return string
         else:
             return self.inventory[0].name

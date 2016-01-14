@@ -1,10 +1,12 @@
 from weapon import Weapon
+from potion import Potion
 from gold import Gold
 
 class Items():
 
     def __init__(self):
         self.weapon = Weapon()
+        # self.potion = Potion()
         #self.gold = Gold()
 
     def randomWeapon(self, value):
@@ -23,3 +25,7 @@ class Items():
             self.weapon.setValue = 5
             self.weapon.setDamage = 10
             return self.weapon
+
+    # def getPotion(self,strength):
+    #         self.potion.strength = strength
+    #         return self.potion

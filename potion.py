@@ -1,17 +1,11 @@
-class Potion(Item):
-	
-	def __init__(self, name, value, strength):
-		super().__init__(name, value)
+class Potion(object):
+
+	def __init__(self, name, strength):
 		self.strength=strength
-		
+		self.name=name
+
 	def __str__(self):
 		return ""
-		
-	def getName(self):
-		return self.name
-
-	def getValue (self):
-		return self.value
 
 	def setName(self, name):
 		self.name=name

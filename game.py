@@ -7,6 +7,7 @@ from room import Room
 from colorama import init, Fore, Back, Style
 import random
 import re
+import sys
 
 init(autoreset=True)
 
@@ -15,11 +16,12 @@ def play():
 
     difficulty = settings.difficulty
 
+    player = Player()
+    #room = Room(difficulty,player)
     print ("What is your name?\n")
     name_input = raw_input ('>: ')
-    player = Player()
+
     player.name = name_input
-    room = Room(difficulty,player)
 
 #
 # Asks for the player Name
@@ -34,8 +36,9 @@ def play():
 #
     while player.is_alive() and not player.victory:
 
+
         if not player.is_in_room:
-            room.newRoom()
+            room = Room(difficulty,player)
             player.is_in_room = True
 
         print ("\nWhat do you want to do?\n")
@@ -44,27 +47,33 @@ def play():
     # Asks the player for some Input commands
     #
         action_input = raw_input(Fore.CYAN + '>: ')
-
-        print Style.RESET_ALL
+        print "room "+ str(room.is_done())
+        if room.is_done() and action_input.lower() == "continue":
+            room = room.getRoom(difficulty,player)
 
         response = actions(action_input,player,room)
 
-        if action_input == "restart":
+        if action_input.lower() == "restart":
             print Back.WHITE+"                  "+Fore.BLACK+"Game restarted"+ Back.WHITE +Fore.RED+"                  \n"+Style.RESET_ALL
+
             play()
-        elif action_input == "exit":
+        elif action_input.lower() == "exit":
             print Back.RED+"                  "+Fore.WHITE+"Game exited"+ Back.RED +"                  \n"+Style.RESET_ALL
             break;
 
         else:
             # The magic happens here:
+
             response = actions(action_input,player,room)
+
             if player.condition is "normal":
 
                 print response
+
             elif player.condition is "poisoned":
                 #Do stuff with "response"
                 string = re.sub(r"(.\d*.[\[].)","",str(response)[::-1])
+
                 print string
 
 if __name__ == "__main__":
