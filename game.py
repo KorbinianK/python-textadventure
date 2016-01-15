@@ -58,14 +58,37 @@ def play():
             # The magic happens here:
             response = actions(action_input,player,room)
             if player.condition is "normal":
-                string = str(response)
-            #    print Back.WHITE+Fore.WHITE+Style.BRIGHT+string
                 print response
-            elif player.condition is "poisoned":
-                #Do stuff with "response"
-                string = re.sub(r"(.\d*.[\[].)","",str(response)[::-1])
+            rand = random.randint(0,10)
+            if player.condition is "poisoned":
+                if rand == 3:
+                    #Do stuff with "response"
+                    string = re.sub(r"(.\d*.[\[].)","",str(response)[::-1])
+                    print string
+                elif rand == 4:
+                    #Do stuff with "response"
+                    string = str(response)
+                    newString =""
+                    for letter in string:
 
-                print string
+                        if (letter == 'a') or (letter == 'e') or (letter == 'i') or (letter == 'o') or (letter == 'u'):
+                            letter += letter
+                            letter += letter
+                            newString += letter
+
+                        else:
+                            newString += letter
+                else:
+                    string = str(response)
+                    newString =""
+                    for letter in string:
+
+                        if (letter == 'r'):
+                            letter = 'l'
+                            newString += letter
+                        else:
+                            newString += letter    
+                    print newString
 
 if __name__ == "__main__":
     play()

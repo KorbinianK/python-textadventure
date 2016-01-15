@@ -6,7 +6,7 @@ class Player(object):
         self.hp = 100
         self.facesMonster = False
         self.victory = False
-        self.condition = "normal"
+        self.condition = "poisoned"
         self.strength = 1
         self.armor = 1
         self.level = 1
