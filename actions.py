@@ -25,7 +25,7 @@ class Actions():
             if self.room.hasMonster:
                 return self.room.monster.spawn(self.room,self.player)
             else:
-                return "The room is empty... like your soul. Do you want to"+Fore.CYAN+" continue"+Style.RESET_ALL +" or"+Fore.CYAN+" look around"+Style.RESET_ALL +"?"
+                return "The room is empty... like your soul. Do you want to"+Fore.CYAN+" continue"+Fore.WHITE +" or"+Fore.CYAN+" look around"+Fore.WHITE +"?"
 
         ##
         ## Attacks the monster
@@ -50,7 +50,7 @@ class Actions():
         ##
 
         elif(self.action.lower() == "continue"):
-        
+
             if self.room.isDone:
                 return "You progress to the next room"
             else:
@@ -63,7 +63,7 @@ class Actions():
         elif(self.action.lower() == "look around"):
             self.room.inspectRoom()
             if self.room.hasChest and not self.room.chest.opened:
-                return "You see a"+Fore.YELLOW + " closed Chest "+Style.RESET_ALL+"in one corner of the room."
+                return "You see a"+Fore.YELLOW + " closed Chest "+Fore.WHITE+"in one corner of the room."
             elif self.room.hasChest and self.room.chest.opened:
                 return "There seems to be only an open Chest in this room."
             return "You look around. Good job."
@@ -78,7 +78,7 @@ class Actions():
                 else:
                     return "Nice try... How about this instead? " + self.player.takeDamage(1)
             else:
-                return "You seem to imagine things in the darkness. Maybe"+Fore.CYAN+" look around "+Style.RESET_ALL+"first."
+                return "You seem to imagine things in the darkness. Maybe"+Fore.CYAN+" look around "+Fore.WHITE+"first."
 
         ##
         ## Displays the items the player has
@@ -100,18 +100,18 @@ class Actions():
 
             self.player.strength = 100
             self.player.name ="Lazy Cheater"
-            return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Style.RESET_ALL
+            return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Fore.WHITE
 
         ##
         ## Displays available commands
         ##
 
         elif(self.action =="help"):
-            return Back.WHITE + Fore.BLACK +"[monster] [attack] [inventory] [flee] [info] [help]" + Style.RESET_ALL
+            return Back.WHITE + Fore.BLACK +"[monster] [attack] [inventory] [flee] [info] [help]" + Fore.WHITE
         ##
         ## Message if invalid command was used
         ##
         else:
-            string = Style.RESET_ALL +"Sorry, You cannot" + " '%s'.\n"%(self.action)+ \
-            "Type" +Fore.CYAN+" help "+ Style.RESET_ALL+"to view currently available commands."
+            string = "Sorry, You cannot" + " '%s'.\n"%(self.action)+ \
+            "Type" +Fore.CYAN+" help "+ Fore.WHITE+"to view currently available commands."
             return string

@@ -14,14 +14,14 @@ class Room(object):
         self.chest = Chest(self.player)
         self.monster = Monster()
         self.inspected = False
-        self.name = "default"+str(random.randint(0,10))
+        #self.name = "default"+str(random.randint(0,10))
         self.newRoom()
 
     # Sets up a new Room and displays some "Intro Text"
     def newRoom(self):
         self.isDone = False
         print '{:^80}'.format("###################################")
-        print '{:^80}'.format("You enter a dark room."+self.name)
+        print '{:^80}'.format("You enter a dark room.")
         print '{:^80}'.format("###################################")
 
         # Decides whether the room gets a monster or a chest
@@ -33,7 +33,7 @@ class Room(object):
 
         # Setup monster
         if self.hasMonster:
-            
+
             if self.difficulty == "easy":
                 self.monster.setup(1,self.player.level)
 

@@ -58,10 +58,13 @@ def play():
             # The magic happens here:
             response = actions(action_input,player,room)
             if player.condition is "normal":
+                string = str(response)
+            #    print Back.WHITE+Fore.WHITE+Style.BRIGHT+string
                 print response
             elif player.condition is "poisoned":
                 #Do stuff with "response"
                 string = re.sub(r"(.\d*.[\[].)","",str(response)[::-1])
+
                 print string
 
 if __name__ == "__main__":
