@@ -33,9 +33,6 @@ class Monster(object):
             self.killed = True
             return self.killed
 
-    def killed(killed):
-        self.killed = killed
-
     def takeDamage(self, damage):
         self.hp -= damage
         print Fore.GREEN+self.shortName+": 'AHHHRGWLWLW GROOOWAAR'\n"+Style.RESET_ALL
@@ -77,16 +74,17 @@ class Monster(object):
             self.setLoot(self.level)
 
 
-    def attack(self, room, player):
-        damage = player.strength + random.randint(0,2)
+    def attack(self,room,player):
 
-        if (self.getHP() - damage <= 0):
+        damage = player.getStrength()
+
+        if (self.hp - damage <= 0):
             room.killMonster()
             player.facesMonster = False
             if self.hasLoot:
-                player.addItem(self.getLoot())
+
                 return "You killed %s"%(self.getShortName())+" and it drops some Loot! " +\
-                        "Oh look, it's"+Fore.YELLOW+" %s!"%(self.getLoot().name+Style.RESET_ALL)
+                        "Oh look, it's"+Fore.YELLOW+" %s!"%(self.getLoot().name+Style.RESET_ALL) +"\n" +player.addItem(self.getLoot())
             else:
                 return "You killed %s"%(self.getShortName())
         else:
@@ -102,10 +100,10 @@ class Monster(object):
 
             if damage < 5:
                 return string +"You barely manage, stumbling through the darkness \n" + \
-                 self.player.takeDamage(damage)
+                 player.takeDamage(damage)
             else:
                 return string +"As you run through the darkness you fall and hit your head on something. \n" + \
-                  self.player.takeDamage(damage)
+                  player.takeDamage(damage)
 
 
     def spawn(self,room,player):

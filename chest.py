@@ -32,8 +32,8 @@ class Chest(object):
         print "The chest opens with a loud squeaky noise"
         self.opened = True
         if self.hasLoot:
-            self.player.addItem(self.getLoot())
-            string = "opened chest"
+            return self.player.addItem(self.getLoot())
+
         else:
             string = "You open the chest. It's empty."
 

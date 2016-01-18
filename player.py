@@ -13,6 +13,7 @@ class Player(object):
         self.inventory =[]
         self.hasItems=False
         self.is_in_room = False
+        self.equipped = []
 
 
     def is_alive(self):
@@ -38,18 +39,27 @@ class Player(object):
         self.facesMonster = status
 
     def addItem(self, item):
-
         self.inventory.append(item)
         self.hasItems = True
+        return self.equipItem(len(self.inventory)-1)
+
+    def equipItem(self,item):
+        slot = item
+
+        self.equipped = self.inventory[slot]
+        self.strength = 1
+        self.strength += self.equipped.damage
+        return "You now use "+Fore.YELLOW+self.inventory[slot].name+Style.RESET_ALL
+
+    def getStrength(self):
+        return self.strength
 
 
     def printInventory(self):
         string = "You own: "
+        for index,item in enumerate(self.inventory, start=1):
+             string = string+item.name+"[" + str(index) +"], "
+        string = string + "\nType"+Fore.CYAN +" equip 1 "+Style.RESET_ALL+"to equip the first item form the list."
+        return string
 
-        if len(self.inventory) > 1:
-            for item in self.inventory:
-                string = string +item.name+", "
-            return string
-        else:
-            return self.inventory[0].name
     #    return self.inventory[0].name + self.inventory[1].name
