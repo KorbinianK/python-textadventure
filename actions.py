@@ -39,6 +39,15 @@ class Actions():
                 return "nope"
 
         ##
+        ## Drinks a potion
+        ##
+
+        elif "drink" in self.action.lower():
+        
+            return self.player.heal()
+
+
+        ##
         ## Attacks the monster
         ##
         elif(self.action.lower()== "attack"):
@@ -116,7 +125,7 @@ class Actions():
         ##
 
         elif self.action == "p":
-            return str(self.player.getStrength())
+            return str(self.player.getStrength()) +" "+str(self.player.getHP())
 
         elif(self.action == "cheat"):
 

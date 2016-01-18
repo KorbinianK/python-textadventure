@@ -4,6 +4,7 @@ from actions import Actions as actions
 from settings import Settings
 from monster import Monster
 from room import Room
+from items import Items
 from colorama import init, Fore, Back, Style
 import random, time, re, sys
 
@@ -15,6 +16,7 @@ def play():
     settings = Settings()
     difficulty = settings.difficulty
     player = Player()
+    item = Items()
 
     print ("What is your name?\n")
     name_input = raw_input ('>: ')
@@ -27,9 +29,11 @@ def play():
     print '{:^80}'.format("Welcome to our world of pain and suffering!")
 
     if not player.is_in_room:
+        player.addItem(item.newPotion(0.2,5))
         room = Room(difficulty,player)
         room.newRoom()
         player.is_in_room = True
+
 
 #
 # Game Loop start

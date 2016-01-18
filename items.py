@@ -6,7 +6,7 @@ class Items():
 
     def __init__(self):
         self.weapon = Weapon()
-        # self.potion = Potion()
+        self.potion = Potion()
         #self.gold = Gold()
 
     def randomWeapon(self, value):
@@ -26,6 +26,8 @@ class Items():
             self.weapon.damage = 10
             return self.weapon
 
-    # def getPotion(self,strength):
-    #         self.potion.strength = strength
-    #         return self.potion
+    def newPotion(self,strength,uses):
+        print "potion!"
+        self.potion.strength = strength
+        self.potion.uses = uses
+        return self.potion

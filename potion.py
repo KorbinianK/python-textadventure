@@ -1,17 +1,14 @@
 class Potion(object):
 
-	def __init__(self, name, strength):
-		self.strength=strength
-		self.name=name
+	def __init__(self):
+		self.strength=0.2
+		self.name= "a Potion"
+		self.uses = 5
+		self.isEmpty = False
 
-	def __str__(self):
-		return ""
 
-	def setName(self, name):
-		self.name=name
-
-	def setValue(self, value):
-		self.value=value
-
-	def setStrength(self, strength):
-		self.strength=strength
+	def drink(self):
+		if self.uses > 0:
+			self.uses = self.uses - 1
+		else:
+			self.isEmpty = True

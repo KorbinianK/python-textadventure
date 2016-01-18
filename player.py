@@ -1,4 +1,6 @@
 from colorama import init, Fore, Back, Style
+from weapon import Weapon
+from potion import Potion
 class Player(object):
 
     def __init__(self):
@@ -41,15 +43,39 @@ class Player(object):
     def addItem(self, item):
         self.inventory.append(item)
         self.hasItems = True
-        return self.equipItem(len(self.inventory)-1)
+
+        if isinstance(item,Weapon):
+            return self.equipItem(len(self.inventory)-1)
 
     def equipItem(self,item):
         slot = item
-
         self.equipped = self.inventory[slot]
-        self.strength = 1
-        self.strength += self.equipped.damage
-        return "You now use "+Fore.YELLOW+self.inventory[slot].name+Style.RESET_ALL
+        string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Style.RESET_ALL+" in your hand."
+        if isinstance(item,Weapon):
+            self.strength = 1
+            self.strength += self.equipped.damage
+        else:
+            string += "\nDo you want to"+Fore.CYAN+" drink "+Style.RESET_ALL+"it?"
+        return string
+
+    def heal(self):
+        if isinstance(self.equipped,Potion):
+            if not self.equipped.isEmpty:
+                self.equipped.drink()
+                heal = int(self.hp*self.equipped.strength)
+                if self.hp + heal <= 100:
+                    self.hp += heal
+                    return "You healed "+str(heal)
+                else:
+                    self.hp = 100
+                    return "You are now at full health"
+            else:
+                return "It's empty."
+
+        elif isinstance(self.equipped,list):
+            return "You can't drink air..."
+        else:
+            return "You can't drink "+self.equipped.name
 
     def getStrength(self):
         return self.strength
