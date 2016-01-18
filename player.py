@@ -16,7 +16,7 @@ class Player(object):
         self.hasItems=False
         self.is_in_room = False
         self.equipped = []
-
+        self.triedWalk = False
 
     def is_alive(self):
         return self.hp > 0
@@ -26,7 +26,7 @@ class Player(object):
 
     def takeDamage(self, damage):
         self.hp -= damage
-        return "You take"+Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage."
+        return "You take"+Fore.RED +" "+ str(damage) +" "+ Style.RESET_ALL +"damage."
 
     def getHP(self):
         return self.hp
@@ -43,12 +43,11 @@ class Player(object):
     def addItem(self, item):
         self.inventory.append(item)
         self.hasItems = True
-
         if isinstance(item,Weapon):
-            return self.equipItem(len(self.inventory)-1)
+            return self.equipItem(len(self.inventory)-1,item)
 
-    def equipItem(self,item):
-        slot = item
+    def equipItem(self,pos,item):
+        slot = pos
         self.equipped = self.inventory[slot]
         string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Style.RESET_ALL+" in your hand."
         if isinstance(item,Weapon):
@@ -84,7 +83,7 @@ class Player(object):
     def printInventory(self):
         string = "You own: "
         for index,item in enumerate(self.inventory, start=1):
-             string = string+item.name+"[" + str(index) +"], "
+             string = string+Fore.YELLOW+item.name+Style.RESET_ALL+"[" + str(index) +"], "
         string = string + "\nType"+Fore.CYAN +" equip 1 "+Style.RESET_ALL+"to equip the first item form the list."
         return string
 

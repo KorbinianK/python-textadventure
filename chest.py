@@ -22,20 +22,21 @@ class Chest(object):
                 self.Loot = self.item.randomWeapon(self.level)
 
     def getLoot(self):
-        print "You found "+Fore.YELLOW+self.Loot.name+Style.RESET_ALL+"! It has been added to your"+Fore.CYAN+" inventory "+Style.RESET_ALL+"."
+
         return self.Loot
 
     def is_opened(self):
         return self.opened
 
     def open(self,player):
-        print "The chest opens with a loud squeaky noise"
         self.opened = True
         if self.hasLoot:
-            return self.player.addItem(self.getLoot())
+            return "You found "+Fore.YELLOW+self.Loot.name+Style.RESET_ALL+\
+            "! It has been added to your"+Fore.CYAN+" inventory "+Style.RESET_ALL+".\n"+\
+            self.player.addItem(self.getLoot())
 
         else:
-            string = "You open the chest. It's empty."
+            string = "It's empty."
 
         return string
 

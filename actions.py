@@ -1,7 +1,7 @@
 from settings import Settings
 from colorama import init, Fore, Back, Style
 import time
-import random,re
+import random,re,sys
 
 init()
 
@@ -19,18 +19,30 @@ class Actions():
         ##
         ## Summons a monster
         ##
-        if(self.action.lower()== "monster" ):
+        if self.action.lower()== "monster":
             if self.room.hasMonster:
                 return self.room.monster.spawn(self.room,self.player)
             else:
                 return "The room is empty... like your soul. Do you want to"+Fore.CYAN+" continue"+Fore.WHITE +" or"+Fore.CYAN+" look around"+Fore.WHITE +"?"
 
+        elif "go" in self.action.lower() or "walk" in self.action.lower() :
+            if self.room.hasMonster:
+                if not self.room.monster.killed:
+                    self.player.triedWalk = True
+                    return self.room.monster.attackPlayer(self.room,self.player)
+                    # response = "a"
+                else:
+                    return "You almost stumble over the carcass of "+str(self.room.monster.getShortName())
+                    # response = "b"
+            else:
+                return "Carefully you walk through the darkness.\nThen you hit your knee on something... Maybe you should"+Fore.CYAN+" look around "+Style.RESET_ALL+"first?"
+            return "response"
 
         ##
         ## Equips an item
         ##
 
-        elif("equip" in self.action.lower()):
+        elif "equip" in self.action.lower():
             slot = int(re.search(r'\d+', self.action.lower()).group())-1
 
             if len(self.player.inventory) > 0 and slot is not None:
@@ -43,7 +55,7 @@ class Actions():
         ##
 
         elif "drink" in self.action.lower():
-        
+
             return self.player.heal()
 
 
@@ -65,9 +77,14 @@ class Actions():
 
             time.sleep(2)
             if(self.player.facesMonster):
-                return self.room.monster.flee(self.room, self.player)
+                response = self.room.monster.flee(self.room, self.player)
             else:
-                return "'Coward! You stay exactly where you are!', shouts a voice and you tremble at it's power over you."
+                response = "'Coward! You stay exactly where you are!', shouts a voice and you tremble at it's power over you."
+            for x in range (0,5):
+                b = "Trying to flee" + "." * x
+                sys.stdout.write('\r'+b)
+                time.sleep(0.3)
+            return response
 
         ##
         ## Goes to next room, if possible
@@ -76,10 +93,14 @@ class Actions():
         elif(self.action.lower()== "continue"):
 
             if self.room.isDone:
-                time.sleep(2)
-                return "You progress to the next room"
+                response = "You walk through the door into the next room"
             else:
-                return "nope"
+                response = "The door is locked..."
+            for x in range (0,5):
+                b = "Moving towards the door" + "." * x
+                sys.stdout.write('\r'+b)
+                time.sleep(1)
+            return response
 
         ##
         ## Tells the player what the room has inside
@@ -88,12 +109,17 @@ class Actions():
         elif(self.action.lower()== "look around"):
             self.room.inspectRoom()
             if self.room.hasChest and not self.room.chest.opened:
-                time.sleep(2)
-                return "You see a"+Fore.YELLOW + " closed Chest "+Fore.WHITE+"in one corner of the room."
+                response = "You see a"+Fore.YELLOW + " closed Chest "+Fore.WHITE+"in one corner of the room."
             elif self.room.hasChest and self.room.chest.opened:
-                return "There seems to be only an open Chest in this room."
-            time.sleep(2)
-            return "You looked around. Good job."
+                response = "There seems to be only an open Chest in this room."
+            else:
+                response = "You looked around. Good job."
+            for x in range (0,5):
+                b = "Looking around" + ". " * x
+                sys.stdout.write('\r'+b)
+                time.sleep(1)
+
+            return response
 
         ##
         ## Let's the player open a chest, if he has inspected the room already
@@ -101,11 +127,16 @@ class Actions():
         elif(self.action.lower()== "open chest"):
             if self.room.inspected:
                 if self.room.hasChest and not self.room.chest.opened:
-                    return self.room.openChest()
+                    response = "The chest opens with a loud squeaky noise\n" + str(self.room.openChest())
                 elif self.room.chest.opened:
-                    return "Nice try... How about this instead? " + self.player.takeDamage(1)
+                    response = "Nice try... How about this instead? " + self.player.takeDamage(1)
             else:
-                return "You seem to imagine things in the darkness. Maybe"+Fore.CYAN+" look around "+Fore.WHITE+"first."
+                response = "You seem to imagine things in the darkness. Maybe"+Fore.CYAN+" look around "+Fore.WHITE+"first."
+            for x in range (0,5):
+                b = "You try to open the chest" + ". " * x
+                sys.stdout.write('\r'+b)
+                time.sleep(1)
+            return response
 
         ##
         ## Displays the items the player has
@@ -113,10 +144,14 @@ class Actions():
 
         elif(self.action.lower()== "inventory"):
             if self.player.hasItems:
-                return self.player.printInventory()
+                response = self.player.printInventory()
             else:
-                time.sleep(2)
-                return "You find some lint in your pockets, it looks pretty useless..."
+                response = "You find some lint in your pockets, it looks pretty useless..."
+            for x in range (0,5):
+                b = "You are searching your pockets" + "." * x
+                sys.stdout.write('\r'+b)
+                time.sleep(0.5)
+            return "\n\n"+response
 
 
 

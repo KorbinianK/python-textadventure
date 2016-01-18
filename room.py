@@ -1,6 +1,7 @@
 from monster import Monster
 from chest import Chest
-import random
+import random, time,sys
+from random import uniform
 
 class Room(object):
 
@@ -20,9 +21,17 @@ class Room(object):
     # Sets up a new Room and displays some "Intro Text"
     def newRoom(self):
         self.isDone = False
-        print '{:^80}'.format("###################################")
-        print '{:^80}'.format("You enter a dark room.")
-        print '{:^80}'.format("###################################")
+        # print '{:^80}'.format("###################################")
+        # time.sleep(0.2)
+        # print '{:^80}'.format("You enter a dark room.")
+        # time.sleep(0.2)
+        # print '{:^80}'.format("###################################")
+        # time.sleep(0.5)
+        for char in "###################################\n\nYou enter a dark room\n\n###################################\n\n":
+            time.sleep(uniform(0.05, 0.01))
+            sys.stdout.write('\033[39m'+char)
+            sys.stdout.flush()
+
 
         # Decides whether the room gets a monster or a chest
         rnd = random.randint(0,10)
@@ -37,7 +46,7 @@ class Room(object):
                 self.monster.setup(1,self.player.level)
             else:
                 self.monster.setup(2,self.player.level)
-            print self.monster.spawn(self,self.player)
+            # print self.monster.spawn(self,self.player)
             #self.player.facesMonster= False
         # Setup chest
         elif self.hasChest:
@@ -67,7 +76,6 @@ class Room(object):
 
     def attackMonster(self,player):
         room  = self
-        print player.getStrength()
         return self.monster.attack(room,player)
 
     # Opens the chest, required for the player to be able to continue -> Room set to "Done"

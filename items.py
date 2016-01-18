@@ -27,7 +27,6 @@ class Items():
             return self.weapon
 
     def newPotion(self,strength,uses):
-        print "potion!"
         self.potion.strength = strength
         self.potion.uses = uses
         return self.potion
