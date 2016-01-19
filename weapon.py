@@ -1,15 +1,11 @@
-class weapon(item):
-<<<<<<< HEAD
-	def __init__(self, name, value, damage):
-		super().__init__(name, value)
-		self.damage=damage
-=======
+class Weapon(object):
 
-	def __init__(self, name, value, damage):
-		super().__init__(name, value)
-		self.damage=damage
-		isBroken=false
->>>>>>> master
+	def __init__(self):
+		# super().__init__(name, value)
+		self.damage=1
+		self.name = "name"
+		self.value = 1
+		self.isBroken=False
 
 	def __str__(self):
 		return ""
@@ -17,19 +13,7 @@ class weapon(item):
 	def getName(self):
 		return self.name
 
-	def getValue (self):
-		return self.value
-
-	def setName(self, name):
-		self.name=name
-
-	def setValue(self, value):
-		self.value=value
-
 	def setDamage(self, damage):
-<<<<<<< HEAD
-		self.damage=damage
-=======
 		self.damage=damage
 
 	def destroy(self):
@@ -37,4 +21,3 @@ class weapon(item):
 
 	def isBroken(self):
 		return self.isBroken
->>>>>>> master
