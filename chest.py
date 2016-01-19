@@ -37,7 +37,7 @@ class Chest(object):
 
         else:
             string = "It's empty."
-
+        
         return string
 
     def has_loot(self):

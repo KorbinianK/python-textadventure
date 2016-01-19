@@ -1,6 +1,10 @@
 from colorama import init, Fore, Back, Style
+from settings import Settings
 from weapon import Weapon
 from potion import Potion
+import time,sys
+from random import uniform
+
 class Player(object):
 
     def __init__(self):
@@ -17,6 +21,8 @@ class Player(object):
         self.is_in_room = False
         self.equipped = []
         self.triedWalk = False
+        self.alive = True
+        self.settings = Settings()
 
     def is_alive(self):
         return self.hp > 0
@@ -24,9 +30,23 @@ class Player(object):
     def is_in_room(self):
         return self.is_in_room
 
-    def takeDamage(self, damage):
+    def takeDamage(self, damage, monster):
         self.hp -= damage
-        return "You take"+Fore.RED +" "+ str(damage) +" "+ Style.RESET_ALL +"damage."
+        if self.hp >=0:
+            return "You take"+Fore.RED +" "+ str(damage) +" "+ Style.RESET_ALL +"damage.\n"+\
+            Fore.CYAN +self.name+ Style.RESET_ALL + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Style.RESET_ALL +"\n"
+        else:
+            return self.die(monster)
+
+    def lvlUp(self):
+        print "goal: "+ self.settings.getGoal()
+        self.level +=1
+        print "lvl: "+ str(self.level)
+        if self.level >= self.settings.getGoal():
+            print "won"
+            self.victory = True
+        else:
+            print "\nCongratulations "+Fore.CYAN+self.name+Style.RESET_ALL+", you leveled up!\n"
 
     def getHP(self):
         return self.hp
@@ -75,6 +95,25 @@ class Player(object):
             return "You can't drink air..."
         else:
             return "You can't drink "+self.equipped.name
+
+    def die(self, monster):
+        if monster is not None:
+            string = "%s takes one last swing at you... The air escapes your lungs and a metallic taste fills your mouth\n \
+            One last thought rushes into your mind, screaming and trying to escape your mouth \n"%(monster.getShortName())
+        else:
+            string = "This was too much...  The air escapes your lungs and a metallic taste fills your mouth\n \
+            One last thought rushes into your mind, screaming and trying to escape your mouth \n"
+        for char in string:
+            time.sleep(uniform(0.05, 0.1))
+            sys.stdout.write('\033[35m'+char)
+            sys.stdout.flush()
+        stringtwo = "Do not forget me..."
+        for char in stringtwo:
+            time.sleep(uniform(0.6, 1))
+            sys.stdout.write('\033[33m'+char)
+            sys.stdout.flush()
+        self.alive = False
+        return Style.RESET_ALL+"\nYou are dead.\n\n"+Fore.CYAN+"restart "+Style.RESET_ALL+"or"+Fore.CYAN+"exit?"
 
     def getStrength(self):
         return self.strength

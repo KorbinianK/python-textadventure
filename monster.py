@@ -19,7 +19,6 @@ class Monster(object):
         self.item = Items()
         self.Loot = self.item.randomWeapon(self.level)
 
-
     def getFullName(self):
         return self.fullName
 
@@ -85,13 +84,14 @@ class Monster(object):
                 time.sleep(0.3)
             print "\n"
         print Fore.GREEN+str(self.getShortName())+Style.RESET_ALL+" strikes and hits you in the face.\n"
-        return player.takeDamage(damage)
+        return player.takeDamage(damage,room.monster)
 
     def attack(self,room,player):
-        damage = player.getStrength()
+        damage = player.getStrength()+random.randint(0,3)
         if (self.hp - damage <= 0):
             room.killMonster()
             player.facesMonster = False
+
             if self.hasLoot:
 
                 return "You killed %s"%(self.getShortName())+" and it drops some Loot! " +\
@@ -111,28 +111,32 @@ class Monster(object):
             time.sleep(0.5)
             if damage < 5:
                 return string +"You barely manage, stumbling through the darkness \n" + \
-                 player.takeDamage(damage)
+                 player.takeDamage(damage,room.monster)
             else:
                 return string +"As you run through the darkness you fall and hit your head on something. \n" + \
-                  player.takeDamage(damage)
+                  player.takeDamage(damage,room.monster)
 
 
     def spawn(self,room,player):
         if room.hasMonster:
             if not self.killed and player.facesMonster:
                 damage = random.randint(1,15)
-                player.takeDamage(damage)
-                return "You already face %s, and it attacks you. You take"%(self.getShortName()) + \
-                Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
-                "%s, your HP is now at "%(player.name)+ Fore.CYAN + str(player.getHP()) + Style.RESET_ALL +"\n"
+
+                if int(player.getHP())-damage >=0:
+                    player.takeDamage(damage,room.monster)
+                    response="You already face %s, and it attacks you."%(self.getShortName())
+
+                else:
+                    response="something went wrong"
+                return response
             elif room.hasMonster and not self.killed :
                 player.facesMonster = True
                 damage = random.randint(1,15)
                 if(int(player.getHP()) - damage < 0):
-                    player.takeDamage(damage)
+                    player.takeDamage(damage,room.monster)
                     return Style.RESET_ALL, "You took {0} damage, you are now dead".format(damage)
                 else:
-                    player.takeDamage(damage)
+                    player.takeDamage(damage,room.monster)
                     return Style.RESET_ALL +"\nA wild" +Fore.GREEN+ " %s "%(self.getFullName()) + \
                     Style.RESET_ALL+ "appears!\n%s attacks and you take"%(self.getShortName()) + \
                     Fore.RED + " %s " % (damage) + Style.RESET_ALL +"damage.\n" + \
