@@ -45,7 +45,7 @@ class Actions():
                         return "You almost stumble over the carcass of "+str(self.room.monster.getShortName()) + "\nYou walk through the door into the next room"
                         # response = "b"
                 elif not self.room.isDone:
-                    return "Carefully you walk through the darkness.\nThen you hit your knee on something... Maybe you should"+Fore.CYAN+" look around "+Style.RESET_ALL+"first?"
+                    return "Carefully you walk through the darkness.\nThen you hit your knee on something... Maybe you should"+Fore.CYAN+" look around "+Fore.WHITE+"first?"
                 else:
                     return "You walk through the door into the next room"
 
@@ -96,22 +96,6 @@ class Actions():
                     sys.stdout.write('\r'+b)
                     time.sleep(0.3)
                 return response
-
-            ##
-            ## Goes to next room, if possible
-            ##
-
-            # elif(self.action.lower()== "continue"):
-            #
-            #     if self.room.isDone:
-            #         response = "You walk through the door into the next room"
-            #     else:
-            #         response = "The door is locked..."
-            #     for x in range (0,5):
-            #         b = "Moving towards the door" + "." * x
-            #         sys.stdout.write('\r'+b)
-            #         time.sleep(0.4)
-            #     return response
 
             ##
             ## Tells the player what the room has inside

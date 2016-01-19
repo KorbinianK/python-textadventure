@@ -31,13 +31,13 @@ class Chest(object):
     def open(self,player):
         self.opened = True
         if self.hasLoot:
-            return "You found "+Fore.YELLOW+self.Loot.name+Style.RESET_ALL+\
-            "! It has been added to your"+Fore.CYAN+" inventory "+Style.RESET_ALL+".\n"+\
+            return "You found "+Fore.YELLOW+self.Loot.name+Fore.WHITE+\
+            "! It has been added to your"+Fore.CYAN+" inventory "+Fore.WHITE+".\n"+\
             self.player.addItem(self.getLoot())
 
         else:
             string = "It's empty."
-        
+
         return string
 
     def has_loot(self):

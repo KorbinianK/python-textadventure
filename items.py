@@ -1,13 +1,12 @@
 from weapon import Weapon
 from potion import Potion
-from gold import Gold
 
 class Items():
 
     def __init__(self):
         self.weapon = Weapon()
         self.potion = Potion()
-        #self.gold = Gold()
+
 
     def randomWeapon(self, value):
         if value < 5:

@@ -33,8 +33,8 @@ class Player(object):
     def takeDamage(self, damage, monster):
         self.hp -= damage
         if self.hp >=0:
-            return "You take"+Fore.RED +" "+ str(damage) +" "+ Style.RESET_ALL +"damage.\n"+\
-            Fore.CYAN +self.name+ Style.RESET_ALL + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Style.RESET_ALL +"\n"
+            return "You take"+Fore.RED +" "+ str(damage) +" "+ Fore.WHITE +"damage.\n"+\
+            Fore.CYAN +self.name+ Fore.WHITE + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Fore.WHITE +"\n"
         else:
             return self.die(monster)
 
@@ -46,7 +46,7 @@ class Player(object):
             print "won"
             self.victory = True
         else:
-            print "\nCongratulations "+Fore.CYAN+self.name+Style.RESET_ALL+", you leveled up!\n"
+            print "\nCongratulations "+Fore.CYAN+self.name+Fore.WHITE+", you leveled up!\n"
 
     def getHP(self):
         return self.hp
@@ -69,12 +69,12 @@ class Player(object):
     def equipItem(self,pos,item):
         slot = pos
         self.equipped = self.inventory[slot]
-        string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Style.RESET_ALL+" in your hand."
+        string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Fore.WHITE+" in your hand."
         if isinstance(item,Weapon):
             self.strength = 1
             self.strength += self.equipped.damage
         else:
-            string += "\nDo you want to"+Fore.CYAN+" drink "+Style.RESET_ALL+"it?"
+            string += "\nDo you want to"+Fore.CYAN+" drink "+Fore.WHITE+"it?"
         return string
 
     def heal(self):
@@ -113,7 +113,7 @@ class Player(object):
             sys.stdout.write('\033[33m'+char)
             sys.stdout.flush()
         self.alive = False
-        return Style.RESET_ALL+"\nYou are dead.\n\n"+Fore.CYAN+"restart "+Style.RESET_ALL+"or"+Fore.CYAN+"exit?"
+        return Fore.WHITE+"\nYou are dead.\n\n"+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+"exit?"
 
     def getStrength(self):
         return self.strength
@@ -122,8 +122,8 @@ class Player(object):
     def printInventory(self):
         string = "You own: "
         for index,item in enumerate(self.inventory, start=1):
-             string = string+Fore.YELLOW+item.name+Style.RESET_ALL+"[" + str(index) +"], "
-        string = string + "\nType"+Fore.CYAN +" equip 1 "+Style.RESET_ALL+"to equip the first item form the list."
+             string = string+Fore.YELLOW+item.name+Fore.WHITE+"[" + str(index) +"], "
+        string = string + "\nType"+Fore.CYAN +" equip 1 "+Fore.WHITE+"to equip the first item form the list."
         return string
 
     #    return self.inventory[0].name + self.inventory[1].name
