@@ -75,8 +75,6 @@ def play():
         time.sleep(0.5)
         room.newRoom()
         string = room.monster.spawn(room,player)
-        # string = re.sub(r'(\x1b[^m]*m)',r'', str(string))
-        # string = str(string)
         if room.hasMonster:
             print str(string)
         player.is_in_room = True
@@ -95,11 +93,14 @@ def play():
     #
         action_input = raw_input(Fore.CYAN + player.name+ '>: ')
         print Style.RESET_ALL
-        if room.is_done() and action_input.lower() == "continue":
+        if room.is_done() and ("go" in action_input.lower() or "walk" in action_input.lower() or "continue" in action_input.lower()):
             response = actions(action_input,player,room)
             print response
             room = room.getRoom(difficulty,player)
             room.newRoom()
+            string = room.monster.spawn(room,player)
+            if room.hasMonster:
+                print str(string)
         elif action_input.lower() == "restart":
             print Back.WHITE+"                  "+Fore.BLACK+"Game restarted"+ Back.WHITE +Fore.RED+"                  \n"+Style.RESET_ALL
             text_file.close()

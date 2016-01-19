@@ -35,7 +35,7 @@ class Room(object):
 
         # Decides whether the room gets a monster or a chest
         rnd = random.randint(0,10)
-        if rnd > 2:
+        if rnd > 1:
             self.hasMonster = True
         else:
             self.hasChest = True

@@ -25,18 +25,28 @@ class Actions():
             else:
                 return "The room is empty... like your soul. Do you want to"+Fore.CYAN+" continue"+Fore.WHITE +" or"+Fore.CYAN+" look around"+Fore.WHITE +"?"
 
-        elif "go" in self.action.lower() or "walk" in self.action.lower() :
+
+        ##
+        ## Continues
+        ##
+        elif "go" in self.action.lower() or "walk" in self.action.lower() or "continue" in self.action.lower():
+            for x in range (0,5):
+                b = "Moving towards the door" + "." * x
+                sys.stdout.write('\r'+b)
+                time.sleep(0.4)
+
             if self.room.hasMonster:
                 if not self.room.monster.killed:
                     self.player.triedWalk = True
                     return self.room.monster.attackPlayer(self.room,self.player)
                     # response = "a"
                 else:
-                    return "You almost stumble over the carcass of "+str(self.room.monster.getShortName())
+                    return "You almost stumble over the carcass of "+str(self.room.monster.getShortName()) + "\nYou walk through the door into the next room"
                     # response = "b"
-            else:
+            elif not self.room.isDone:
                 return "Carefully you walk through the darkness.\nThen you hit your knee on something... Maybe you should"+Fore.CYAN+" look around "+Style.RESET_ALL+"first?"
-            return "response"
+            else:
+                return "You walk through the door into the next room"
 
         ##
         ## Equips an item
@@ -46,7 +56,7 @@ class Actions():
             slot = int(re.search(r'\d+', self.action.lower()).group())-1
 
             if len(self.player.inventory) > 0 and slot is not None:
-                return self.player.equipItem(slot)
+                return self.player.equipItem(slot,self.player.inventory[slot])
             else:
                 return "nope"
 
@@ -90,17 +100,17 @@ class Actions():
         ## Goes to next room, if possible
         ##
 
-        elif(self.action.lower()== "continue"):
-
-            if self.room.isDone:
-                response = "You walk through the door into the next room"
-            else:
-                response = "The door is locked..."
-            for x in range (0,5):
-                b = "Moving towards the door" + "." * x
-                sys.stdout.write('\r'+b)
-                time.sleep(1)
-            return response
+        # elif(self.action.lower()== "continue"):
+        #
+        #     if self.room.isDone:
+        #         response = "You walk through the door into the next room"
+        #     else:
+        #         response = "The door is locked..."
+        #     for x in range (0,5):
+        #         b = "Moving towards the door" + "." * x
+        #         sys.stdout.write('\r'+b)
+        #         time.sleep(0.4)
+        #     return response
 
         ##
         ## Tells the player what the room has inside
@@ -117,7 +127,7 @@ class Actions():
             for x in range (0,5):
                 b = "Looking around" + ". " * x
                 sys.stdout.write('\r'+b)
-                time.sleep(1)
+                time.sleep(0.4)
 
             return response
 
@@ -135,7 +145,7 @@ class Actions():
             for x in range (0,5):
                 b = "You try to open the chest" + ". " * x
                 sys.stdout.write('\r'+b)
-                time.sleep(1)
+                time.sleep(0.2)
             return response
 
         ##

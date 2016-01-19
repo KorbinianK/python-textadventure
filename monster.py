@@ -1,7 +1,7 @@
 from randommonstername import RandomMonsterName
 from items import Items
 from colorama import init, Fore, Back, Style
-import random, time
+import random, time,sys
 
 class Monster(object):
 
@@ -78,8 +78,13 @@ class Monster(object):
         damage = self.strength
         if player.triedWalk:
             player.triedWalk = False
-            print "You carefully walk through the darkness towards the monster.\n"
-        print "\n"+Fore.GREEN+str(self.getShortName())+Style.RESET_ALL+" strikes and hits you in the face.\n"
+
+            for x in range (0,5):
+                b = "You carefully walk through the darkness towards the monster." + "." * x
+                sys.stdout.write('\r'+b)
+                time.sleep(0.3)
+            print "\n"
+        print Fore.GREEN+str(self.getShortName())+Style.RESET_ALL+" strikes and hits you in the face.\n"
         return player.takeDamage(damage)
 
     def attack(self,room,player):
