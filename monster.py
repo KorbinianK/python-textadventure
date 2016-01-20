@@ -1,11 +1,13 @@
 from randommonstername import RandomMonsterName
 from items import Items
+from stringhandler import Stringhandler
 from colorama import init, Fore, Back, Style
 import random, time,sys
 
 class Monster(object):
 
     def __init__(self):
+
         name = RandomMonsterName()
         self.fullName = name.getFullName()
         self.shortName = name.getShortName()
@@ -18,6 +20,7 @@ class Monster(object):
         self.level = 1
         self.item = Items()
         self.Loot = self.item.randomWeapon(self.level)
+        self.handler = Stringhandler()
 
     def getFullName(self):
         return self.fullName
@@ -94,10 +97,11 @@ class Monster(object):
 
             if self.hasLoot:
 
-                return "You killed %s"%(self.getShortName())+" and it drops some Loot! " +\
-                        "Oh look, it's"+Fore.YELLOW+" %s!"%(self.getLoot().name+Style.RESET_ALL) +"\n" +player.addItem(self.getLoot())
-            else:
-                return "You killed %s"%(self.getShortName())
+            #     return "You killed %s"%(self.getShortName())+" and it drops some Loot! " +\
+            #             "Oh look, it's"+Fore.YELLOW+" %s!"%(self.getLoot().name+Style.RESET_ALL) +"\n" +player.addItem(self.getLoot())
+            # else:
+            #     return "You killed %s"%(self.getShortName())
+                return self.handler.strMonster("killedLoot",self,player)+"\n"+player.addItem(self.getLoot())
         else:
             self.takeDamage(damage)
             return "You attack" + Fore.GREEN+" %s "%(self.getShortName())+ Style.RESET_ALL +\
