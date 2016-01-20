@@ -35,7 +35,7 @@ class Monster(object):
 
     def takeDamage(self, damage):
         self.hp -= damage
-        #print Fore.GREEN+self.shortName+":"
+
         string = '"'+self.handler.strMonster("hit",self,None)+'"\n'
         for char in string:
             time.sleep(uniform(0.01, 0.05))
@@ -58,6 +58,10 @@ class Monster(object):
     def kill(self):
         self.killed = True
 
+    def calcDamage(self):
+        damage = self.strength + random.randint(0,3)
+        return damage
+
     def setup(self,difficulty,player_level):
         if difficulty is 1:
             self.hp = player_level + random.randint(5,15)
@@ -71,7 +75,7 @@ class Monster(object):
         else:
             self.hp = player_level + random.randint(15,25)
             self.strength = player_level + random.randint(5,10)
-            # self.armor = random.randint(2,8)
+
             rnd = random.randint(0,10)
             if rnd > 7:
                 self.hasLoot = True
@@ -80,16 +84,15 @@ class Monster(object):
 
 
     def attackPlayer(self,room,player):
-        damage = self.strength
+        damage = self.calcDamage()
         if player.triedWalk:
             player.triedWalk = False
-
             for x in range (0,5):
                 b = "You carefully walk through the darkness towards the monster." + "." * x
                 sys.stdout.write('\r'+b)
                 time.sleep(0.3)
             print "\n"
-        print Fore.GREEN+str(self.getShortName())+Fore.WHITE+" strikes and hits you in the face.\n"
+        # print Fore.GREEN+str(self.getShortName())+Fore.WHITE+" strikes and hits you in the face.\n"
         return player.takeDamage(damage,room.monster)
 
     def attack(self,room,player):
@@ -105,44 +108,32 @@ class Monster(object):
 
         else:
             self.takeDamage(damage)
-            return "You attack" + Fore.GREEN+" %s "%(self.getShortName())+ Fore.WHITE +\
-             "and you deal" +Fore.RED+" %s "%(damage)+Fore.WHITE+"damage.\n"+\
-             "The Monster's Health is now at "+Fore.GREEN +str(self.getHP())+Fore.WHITE
+            return self.handler.strMonsterDamage("getAttacked",self,damage,player) +"\n"+\
+            self.handler.strMonsterDamage("returnHP",self,damage,player) +"\n"+self.attackPlayer(room,player)
 
     def flee(self, room, player):
             player.facesMonster = False
-            damage = random.randint(1,15)
-            string = Fore.RED +"%s "%(self.getShortName())+ Fore.WHITE+"laughs manically as you try to flee from it\n"
-            time.sleep(0.5)
+            damage = self.calcDamage()
+
             if damage < 5:
-                return string +"You barely manage, stumbling through the darkness \n" + \
-                 player.takeDamage(damage,room.monster)
+                return self.handler("flee",self,player) +" "+ self.handler("fleeSuccess",self,player)
             else:
-                return string +"As you run through the darkness you fall and hit your head on something. \n" + \
-                  player.takeDamage(damage,room.monster)
+                return self.handler("flee",self,player) +" "+ self.handler("fleeFail",self,player) +"\n" + player.takeDamage(damage,room.monster)
 
 
     def spawn(self,room,player):
         if room.hasMonster:
             if not self.killed and player.facesMonster:
-                damage = random.randint(1,15)
 
-                if int(player.getHP())-damage >=0:
-                    player.takeDamage(damage,room.monster)
-                    response="You already face %s, and it attacks you."%(self.getShortName())
-
-                else:
-                    response="something went wrong"
+                response="something went wrong"
                 return response
             elif room.hasMonster and not self.killed :
                 player.facesMonster = True
-                damage = random.randint(1,15)
+                damage = self.calcDamage()
                 if(int(player.getHP()) - damage < 0):
-                    player.takeDamage(damage,room.monster)
-                    return Fore.WHITE, "You took {0} damage, you are now dead".format(damage)
+                    # player.takeDamage(damage,room.monster)
+                    # return Fore.WHITE, "You took {0} damage, you are now dead".format(damage)
+                    return player.takeDamage(damage,room.monster)
                 else:
-                    player.takeDamage(damage,room.monster)
-                    return Fore.WHITE +"\nA wild" +Fore.GREEN+ " %s "%(self.getFullName()) + \
-                    Fore.WHITE+ "appears!\n%s attacks and you take"%(self.getShortName()) + \
-                    Fore.RED + " %s " % (damage) + Fore.WHITE +"damage.\n" + \
-                    Fore.CYAN +"\n%s"%(player.name)+ Fore.WHITE+", your HP is now at "+ Fore.CYAN + str(player.getHP()) + Fore.WHITE +"\n"
+
+                    return self.handler.strMonsterDamage("spawn",self,damage,player)+"\n"+player.takeDamage(damage,room.monster)

@@ -4,6 +4,7 @@ from weapon import Weapon
 from potion import Potion
 import time,sys
 from random import uniform
+from stringhandler import Stringhandler
 
 class Player(object):
 
@@ -23,6 +24,7 @@ class Player(object):
         self.triedWalk = False
         self.alive = True
         self.settings = Settings()
+        self.handler = Stringhandler()
 
     def is_alive(self):
         return self.hp > 0
@@ -33,8 +35,9 @@ class Player(object):
     def takeDamage(self, damage, monster):
         self.hp -= damage
         if self.hp >=0:
-            return "You take"+Fore.RED +" "+ str(damage) +" "+ Fore.WHITE +"damage.\n"+\
-            Fore.CYAN +self.name+ Fore.WHITE + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Fore.WHITE +"\n"
+            # return "You take"+Fore.RED +" "+ str(damage) +" "+ Fore.WHITE +"damage.\n"+\
+            # Fore.CYAN +self.name+ Fore.WHITE + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Fore.WHITE +"\n"
+            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 

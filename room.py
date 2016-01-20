@@ -24,7 +24,9 @@ class Room(object):
     def newRoom(self):
         self.isDone = False
 
-        string = "\n\n#######################################"+"\n\n"+self.handler.strRoom("opening",self)+"\n\n"+"#######################################"+"\n\n"
+        string = "\n\n#######################################"+"\n\n"+\
+        self.handler.strRoom("opening",self)+"\n\n"+\
+        "#######################################"+"\n\n"
         for char in string:
             time.sleep(uniform(0.05, 0.01))
             sys.stdout.write('\033[39m'+char)
