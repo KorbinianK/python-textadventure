@@ -39,9 +39,9 @@ class Player(object):
             return self.die(monster)
 
     def lvlUp(self):
-        print "goal: "+ self.settings.getGoal()
+        #print "goal: "+ self.settings.getGoal()
         self.level +=1
-        print "lvl: "+ str(self.level)
+        #print "lvl: "+ str(self.level)
         if self.level >= self.settings.getGoal():
             print "won"
             self.victory = True

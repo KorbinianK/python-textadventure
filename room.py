@@ -2,6 +2,7 @@ from monster import Monster
 from chest import Chest
 import random, time,sys
 from random import uniform
+from stringhandler import Stringhandler
 
 class Room(object):
 
@@ -15,6 +16,7 @@ class Room(object):
         self.chest = Chest(self.player)
         self.monster = Monster()
         self.inspected = False
+        self.handler = Stringhandler()
         #self.name = "default"+str(random.randint(0,10))
         #self.newRoom()
 
@@ -22,11 +24,11 @@ class Room(object):
     def newRoom(self):
         self.isDone = False
 
-        for char in "\n\n#####################\n\nYou enter a dark room\n\n#####################\n\n":
+        string = "\n\n#######################################"+"\n\n"+self.handler.strRoom("opening",self)+"\n\n"+"#######################################"+"\n\n"
+        for char in string:
             time.sleep(uniform(0.05, 0.01))
             sys.stdout.write('\033[39m'+char)
             sys.stdout.flush()
-
 
         # Decides whether the room gets a monster or a chest
         rnd = random.randint(0,10)

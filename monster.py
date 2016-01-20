@@ -3,6 +3,7 @@ from items import Items
 from colorama import init, Fore, Back, Style
 import random, time,sys
 from random import uniform
+from stringhandler import Stringhandler
 
 class Monster(object):
 
@@ -11,14 +12,13 @@ class Monster(object):
         self.fullName = name.getFullName()
         self.shortName = name.getShortName()
         self.hp = 10
-        self.condition = "normal"
         self.strength = 1
-        self.armor = 1
         self.killed = False
         self.hasLoot = False
         self.level = 1
         self.item = Items()
         self.Loot = self.item.randomWeapon(self.level)
+        self.handler = Stringhandler()
 
     def getFullName(self):
         return self.fullName
@@ -35,10 +35,10 @@ class Monster(object):
 
     def takeDamage(self, damage):
         self.hp -= damage
-        print Fore.GREEN+self.shortName+":\n"
-
-        for char in "AHHHRGWLWLW GROOOWAAR\n":
-            time.sleep(uniform(0.05, 0.1))
+        #print Fore.GREEN+self.shortName+":"
+        string = '"'+self.handler.strMonster("hit",self,None)+'"\n'
+        for char in string:
+            time.sleep(uniform(0.01, 0.05))
             sys.stdout.write('\033[35m'+'\033[1m'+char)
             sys.stdout.flush()
         print Fore.WHITE
@@ -62,7 +62,6 @@ class Monster(object):
         if difficulty is 1:
             self.hp = player_level + random.randint(5,15)
             self.strength = player_level + random.randint(1,5)
-            # self.armor = random.randint(0,5)
             rnd = random.randint(1,10)
             if rnd > 3:
                 self.hasLoot = True
@@ -100,11 +99,10 @@ class Monster(object):
             player.facesMonster = False
 
             if self.hasLoot:
-
-                return "You killed %s"%(self.getShortName())+" and it drops some Loot! " +\
-                        "Oh look, it's"+Fore.YELLOW+" %s!"%(self.getLoot().name+Fore.WHITE) +"\n" +player.addItem(self.getLoot())
+                return self.handler.strMonster("killedLoot",self,player)+"\n"+player.addItem(self.getLoot())
             else:
-                return "You killed %s"%(self.getShortName())
+                return self.handler.strMonster("killed",self,player)
+
         else:
             self.takeDamage(damage)
             return "You attack" + Fore.GREEN+" %s "%(self.getShortName())+ Fore.WHITE +\
