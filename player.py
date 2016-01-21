@@ -37,7 +37,7 @@ class Player(object):
         if self.hp >=0:
             # return "You take"+Fore.RED +" "+ str(damage) +" "+ Fore.WHITE +"damage.\n"+\
             # Fore.CYAN +self.name+ Fore.WHITE + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Fore.WHITE +"\n"
-            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 
@@ -49,7 +49,7 @@ class Player(object):
             print "won"
             self.victory = True
         else:
-            print "\nCongratulations "+Fore.CYAN+self.name+Fore.WHITE+", you leveled up!\n"
+            print self.handler.strPlayer("lvl",self)
 
     def getHP(self):
         return self.hp

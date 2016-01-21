@@ -2,6 +2,7 @@ from monster import Monster
 from chest import Chest
 import random, time,sys
 from random import uniform
+from colorama import init, Fore, Back, Style
 from stringhandler import Stringhandler
 
 class Room(object):
@@ -29,9 +30,10 @@ class Room(object):
         "#######################################"+"\n\n"
         for char in string:
             time.sleep(uniform(0.05, 0.01))
-            sys.stdout.write('\033[39m'+char)
+            sys.stdout.write('\033[35m'+char)
             sys.stdout.flush()
 
+        print Fore.WHITE
         # Decides whether the room gets a monster or a chest
         rnd = random.randint(0,10)
         if rnd > 1:

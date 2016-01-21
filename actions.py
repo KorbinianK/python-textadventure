@@ -76,7 +76,6 @@ class Actions():
             elif(self.action.lower()== "attack"):
 
                 if not self.monster.killed and self.player.facesMonster:
-
                     return self.room.attackMonster(self.player)
                 else:
                     return "You shake your fists and try to attack your shadows"
@@ -124,7 +123,7 @@ class Actions():
                     if self.room.hasChest and not self.room.chest.opened:
                         response = "The chest opens with a loud squeaky noise\n" + str(self.room.openChest())
                     elif self.room.chest.opened:
-                        response = "Nice try... How about this instead? " + self.player.takeDamage(1,None)
+                        response = "Nice try... How about this instead? "
                 else:
                     response = "You seem to imagine things in the darkness. Maybe"+Fore.CYAN+" look around "+Fore.WHITE+"first."
                 for x in range (0,5):

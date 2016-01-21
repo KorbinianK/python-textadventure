@@ -27,7 +27,7 @@ def play():
 #
 # Asks for the player Name
 #
-    print Style.BRIGHT
+    print Style.BRIGHT + Fore.WHITE
     string = re.sub(r'(\x1b[^m]*m)',r'\1', str("Hello %s"%(player.name)+"!\nWelcome to our world of pain and suffering!\n"))
     pos = string.find(player.name)
     for index, char in enumerate(string):
@@ -35,9 +35,9 @@ def play():
         if index >= pos and index < pos+len(player.name):
             sys.stdout.write('\033[36m'+char)
         elif index == pos+len(player.name):
-            sys.stdout.write('\033[39m'+char)
+            sys.stdout.write('\033[37m'+char)
         else:
-            sys.stdout.write('\033[39m'+char)
+            sys.stdout.write('\033[37m'+char)
         sys.stdout.flush()
 
     if not player.is_in_room:
@@ -87,13 +87,7 @@ def play():
             if player.condition is "normal":
 
                 string = str(response)
-
-                if "You attack" in string:
-                    print string
-                    time.sleep(0.5)
-                    print room.monster.attackPlayer(room,player)
-                else:
-                    print string
+                print string
 
             elif player.condition is "poisoned":
                 #Do stuff with "response"
