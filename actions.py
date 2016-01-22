@@ -1,5 +1,6 @@
 from settings import Settings
 from colorama import init, Fore, Back, Style
+from stringhandler import Stringhandler
 import time
 import random,re,sys
 
@@ -13,6 +14,7 @@ class Actions():
         self.room = room
         self.monster = room.monster
         self.chest = room.chest
+        self.handler = Stringhandler()
 
     def __repr__(self):
 
@@ -24,15 +26,16 @@ class Actions():
                 if self.room.hasMonster:
                     return self.room.monster.spawn(self.room,self.player)
                 else:
-                    return "The room is empty... like your soul. Do you want to"+Fore.CYAN+" continue"+Fore.WHITE +" or"+Fore.CYAN+" look around"+Fore.WHITE +"?"
+                    return self.handler.strActions("roomEmpty",self.player,self.room)
 
 
             ##
             ## Continues
             ##
             elif "go" in self.action.lower() or "walk" in self.action.lower() or "continue" in self.action.lower():
+                text = self.handler.strActions("moving",self.player,self.room)
                 for x in range (0,5):
-                    b = "Moving towards the door" + "." * x
+                    b = text + "." * x
                     sys.stdout.write('\r'+b)
                     time.sleep(0.4)
 
@@ -42,13 +45,16 @@ class Actions():
                         return self.room.monster.attackPlayer(self.room,self.player)
                         # response = "a"
                     else:
-                        return "You almost stumble over the carcass of "+str(self.room.monster.getShortName()) + "\nYou walk through the door into the next room"
+                        return self.handler.strActions("nextRoomMonster",self.player,self.room) +\
+                         "\n"+self.handler.strActions("nextRoom",self.player,self.room)
                         # response = "b"
                 elif not self.room.isDone:
-                    return "Carefully you walk through the darkness.\nThen you hit your knee on something... Maybe you should"+Fore.CYAN+" look around "+Fore.WHITE+"first?"
+                    return self.handler.strActions("moveChest",self.player,self.room)
                 else:
-                    return "You walk through the door into the next room"
+                    return self.handler.strActions("nextRoom",self.player,self.room)
 
+            elif "die" == self.action.lower():
+                return self.player.die(self.room.monster)
             ##
             ## Equips an item
             ##
@@ -78,7 +84,7 @@ class Actions():
                 if not self.monster.killed and self.player.facesMonster:
                     return self.room.attackMonster(self.player)
                 else:
-                    return "You shake your fists and try to attack your shadows"
+                    return self.handler.strActions("attackNoMonster",self.player,self.room)
 
             ##
             ## Flees from a monster
@@ -89,9 +95,10 @@ class Actions():
                 if(self.player.facesMonster):
                     response = self.room.monster.flee(self.room, self.player)
                 else:
-                    response = "'Coward! You stay exactly where you are!', shouts a voice and you tremble at it's power over you."
+                    response = self.handler.strActions("fleeNoMonster",self.player,self.room)
+                text = self.handler.strActions("fleeing",self.player,self.room)
                 for x in range (0,5):
-                    b = "Trying to flee" + "." * x
+                    b = text + "." * x
                     sys.stdout.write('\r'+b)
                     time.sleep(0.3)
                 return response
@@ -103,13 +110,14 @@ class Actions():
             elif(self.action.lower()== "look around"):
                 self.room.inspectRoom()
                 if self.room.hasChest and not self.room.chest.opened:
-                    response = "You see a"+Fore.YELLOW + " closed Chest "+Fore.WHITE+"in one corner of the room."
+                    response = self.handler.strActions("lookClosedChest",self.player,self.room)
                 elif self.room.hasChest and self.room.chest.opened:
-                    response = "There seems to be only an open Chest in this room."
+                    response = self.handler.strActions("lookOpenChest",self.player,self.room)
                 else:
-                    response = "You looked around. Good job."
+                    response = self.handler.strActions("lookNothing",self.player,self.room)
+                text = self.handler.strActions("looking",self.player,self.room)
                 for x in range (0,5):
-                    b = "Looking around" + "." * x
+                    b = text + "." * x
                     sys.stdout.write('\r'+b)
                     time.sleep(0.4)
 
@@ -121,13 +129,14 @@ class Actions():
             elif(self.action.lower()== "open chest"):
                 if self.room.inspected:
                     if self.room.hasChest and not self.room.chest.opened:
-                        response = "The chest opens with a loud squeaky noise\n" + str(self.room.openChest())
+                        response = self.handler.strActions("chestOpens",self.player,self.room) + str(self.room.openChest())
                     elif self.room.chest.opened:
                         response = "Nice try... How about this instead? "
                 else:
-                    response = "You seem to imagine things in the darkness. Maybe"+Fore.CYAN+" look around "+Fore.WHITE+"first."
+                    response = self.handler.strActions("openChestNoLook",self.player,self.room)
+                text = self.handler.strActions("tryOpenChest",self.player,self.room)
                 for x in range (0,5):
-                    b = "You try to open the chest" + "." * x
+                    b = text + "." * x
                     sys.stdout.write('\r'+b)
                     time.sleep(0.2)
                 return response
@@ -141,8 +150,9 @@ class Actions():
                     response = self.player.printInventory()
                 else:
                     response = "You find some lint in your pockets, it looks pretty useless..."
+                text = self.handler.strActions("searchingInventory",self.player,self.room)
                 for x in range (0,5):
-                    b = "You are searching your pockets" + "." * x
+                    b = text + "." * x
                     sys.stdout.write('\r'+b)
                     time.sleep(0.5)
                 return "\n\n"+response
@@ -154,13 +164,13 @@ class Actions():
             ##
 
             elif self.action == "info":
-                return "Strengrn: "+str(self.player.getStrength()) + \
+                return "Strength: "+str(self.player.getStrength()) + \
                 "\nHP: "+str(self.player.getHP()) + \
                 "\nLvl: "+str(self.player.level)+\
                 "\nVictory: "+str(self.player.victory)
 
             elif(self.action == "cheat"):
-                print self.player.lvlUp()
+                self.player.lvlUp()
                 self.player.strength = 100
                 self.player.name ="Lazy Cheater"
                 return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Fore.WHITE
@@ -170,7 +180,9 @@ class Actions():
             ##
 
             elif(self.action.lower() =="help"):
-                return Back.WHITE + Fore.BLACK +"[monster] [attack] [inventory] [flee] [info] [help]" + Fore.WHITE
+                return Back.WHITE + Fore.BLACK +"[attack] [inventory] [flee] [info] [go] [walk]\n\
+                [equip] [inventory] [look around] [open chest] [continue] [help]" + Style.RESET_ALL + Style.BRIGHT
+
             ##
             ## Message if invalid command was used
             ##

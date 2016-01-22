@@ -26,7 +26,7 @@ class Room(object):
         self.isDone = False
 
         string = "\n\n#######################################"+"\n\n"+\
-        self.handler.strRoom("opening",self)+"\n\n"+\
+        self.handler.strRoom("intro",self)+"\n\n"+\
         "#######################################"+"\n\n"
         for char in string:
             time.sleep(uniform(0.05, 0.01))

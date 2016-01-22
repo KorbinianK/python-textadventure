@@ -85,14 +85,7 @@ class Monster(object):
 
     def attackPlayer(self,room,player):
         damage = self.calcDamage()
-        if player.triedWalk:
-            player.triedWalk = False
-            for x in range (0,5):
-                b = "You carefully walk through the darkness towards the monster." + "." * x
-                sys.stdout.write('\r'+b)
-                time.sleep(0.3)
-            print "\n"
-        # print Fore.GREEN+str(self.getShortName())+Fore.WHITE+" strikes and hits you in the face.\n"
+        
         return player.takeDamage(damage,room.monster)
 
     def attack(self,room,player):

@@ -35,18 +35,17 @@ class Player(object):
     def takeDamage(self, damage, monster):
         self.hp -= damage
         if self.hp >=0:
-            # return "You take"+Fore.RED +" "+ str(damage) +" "+ Fore.WHITE +"damage.\n"+\
-            # Fore.CYAN +self.name+ Fore.WHITE + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Fore.WHITE +"\n"
+
             return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 
     def lvlUp(self):
-        #print "goal: "+ self.settings.getGoal()
+
+
         self.level +=1
-        #print "lvl: "+ str(self.level)
-        if self.level >= self.settings.getGoal():
-            print "won"
+
+        if int(self.level) >= int(self.settings.getGoal()):
             self.victory = True
         else:
             print self.handler.strPlayer("lvl",self)
@@ -100,23 +99,33 @@ class Player(object):
             return "You can't drink "+self.equipped.name
 
     def die(self, monster):
+        stringtwo = ""
         if monster is not None:
-            string = "%s takes one last swing at you... The air escapes your lungs and a metallic taste fills your mouth\n \
-            One last thought rushes into your mind, screaming and trying to escape your mouth \n"%(monster.getShortName())
+            string = self.handler.strPlayer("dies",self)
         else:
-            string = "This was too much...  The air escapes your lungs and a metallic taste fills your mouth\n \
-            One last thought rushes into your mind, screaming and trying to escape your mouth \n"
+            string = self.handler.strPlayer("dies",self)+"\n"
+        if "SHAKESPEAR" in string:
+
+            string =string.replace("SHAKESPEAR ","")
+            stringtwo = "to die, to sleep..."
+        elif "FORGET" in string:
+            string = string.replace("FORGET ","")
+            stringtwo = "\nDo not forget me..."
+        elif "FIREFLY" in string:
+            string = string.replace("FIREFLY ","")
+            stringtwo = "\nCurse your sudden but inevitable betrayal..."
+
         for char in string:
             time.sleep(uniform(0.05, 0.1))
-            sys.stdout.write('\033[35m'+char)
+            sys.stdout.write('\033[36m'+char)
             sys.stdout.flush()
-        stringtwo = "Do not forget me..."
+
         for char in stringtwo:
-            time.sleep(uniform(0.6, 1))
-            sys.stdout.write('\033[33m'+char)
+            time.sleep(uniform(0.1, 0.6))
+            sys.stdout.write('\033[36m'+char)
             sys.stdout.flush()
         self.alive = False
-        return Fore.WHITE+"\nYou are dead.\n\n"+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+"exit?"
+        return Fore.WHITE+"\n\n\nYou are dead.\n\n"+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+" exit?"
 
     def getStrength(self):
         return self.strength

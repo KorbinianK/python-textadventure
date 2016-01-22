@@ -1,5 +1,6 @@
 from items import Items
 from colorama import init, Fore, Back, Style
+from stringhandler import Stringhandler
 import random
 
 class Chest(object):
@@ -10,6 +11,7 @@ class Chest(object):
         self.player = player
         self.level = player.level
         self.item = Items()
+        self.handler = Stringhandler()
         self.hasLoot = True
         if self.level > 5:
             self.Loot = self.item.randomWeapon(self.level)
@@ -31,12 +33,10 @@ class Chest(object):
     def open(self,player):
         self.opened = True
         if self.hasLoot:
-            return "You found "+Fore.YELLOW+self.Loot.name+Fore.WHITE+\
-            "! It has been added to your"+Fore.CYAN+" inventory "+Fore.WHITE+".\n"+\
-            self.player.addItem(self.getLoot())
+            return self.handler.strChest("open",self.getLoot())+"\n"+self.player.addItem(self.getLoot())
 
         else:
-            string = "It's empty."
+            string = self.handler.strChest("empty",self.getLoot())
 
         return string
 
