@@ -1,7 +1,7 @@
+from colorama import init, Fore, Back, Style
 from randommonstername import RandomMonsterName
 from items import Items
-from colorama import init, Fore, Back, Style
-import random, time,sys
+import random, time,sys 
 from random import uniform
 from stringhandler import Stringhandler
 
@@ -35,7 +35,6 @@ class Monster(object):
 
     def takeDamage(self, damage,player):
         self.hp -= damage
-#####################
         string = '"'+self.handler.strMonster("hit",self,player)+'"\n'
         for char in string:
             time.sleep(uniform(0.01, 0.05))
@@ -85,7 +84,6 @@ class Monster(object):
 
     def attackPlayer(self,room,player):
         damage = self.calcDamage()
-        
         return player.takeDamage(damage,room.monster)
 
     def attack(self,room,player):
@@ -122,10 +120,5 @@ class Monster(object):
             elif room.hasMonster and not self.killed :
                 player.facesMonster = True
                 damage = self.calcDamage()
-                # if(int(player.getHP()) - damage < 0):
-                #     # player.takeDamage(damage,room.monster)
-                #     # return Fore.WHITE, "You took {0} damage, you are now dead".format(damage)
-                #     return player.takeDamage(damage,room.monster)
-                # else:
 
                 return self.handler.strMonsterDamage("spawn",self,damage,player)+"\n"+player.takeDamage(damage,room.monster)

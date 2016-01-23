@@ -4,6 +4,7 @@ from player import Player
 from actions import Actions as actions
 from settings import Settings
 from monster import Monster
+
 from room import Room
 from items import Items
 from colorama import init, Fore, Back, Style
@@ -16,9 +17,11 @@ def play():
 
     handler = Stringhandler()
     settings = Settings()
+    goal = settings.getGoal()
     difficulty = settings.difficulty
     player = Player()
     item = Items()
+
 
     intro = handler.strIntro()
     for char in "\n"+intro+"\n":
@@ -61,7 +64,6 @@ def play():
 # Game Loop start
 #
     while player.is_alive():
-
         if player.victory:
             break;
         else:
@@ -90,11 +92,18 @@ def play():
     if player.victory:
         print "Victory!"
 
-def setupNew(self,room,difficulty,player):
+def setupNew(room,difficulty,player):
     room = room.getRoom(difficulty,player)
     room.newRoom()
-    string = room.monster.spawn(room,player)
-    if room.hasMonster:
+    settings = Settings()
+    goal = settings.getGoal()
+
+    if player.level <= goal:
+        # string = room.monster.spawn(room,player)
+        string = room.hasBoss
+        print str(string)
+    else:
+        string = "a"
         print str(string)
 
 if __name__ == "__main__":

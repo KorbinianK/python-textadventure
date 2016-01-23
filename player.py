@@ -12,6 +12,7 @@ class Player(object):
     	self.name = "a"
         self.hp = 100
         self.facesMonster = False
+        self.facesBoss = False
         self.victory = False
         self.condition = "normal"
         self.strength = 1
@@ -44,11 +45,11 @@ class Player(object):
 
 
         self.level +=1
-
-        if int(self.level) >= int(self.settings.getGoal()):
-            self.victory = True
-        else:
-            print self.handler.strPlayer("lvl",self)
+        print self.handler.strPlayer("lvl",self)
+        # if int(self.level) >= int(self.settings.getGoal()):
+        #     self.victory = True
+        # else:
+        #     print self.handler.strPlayer("lvl",self)
 
     def getHP(self):
         return self.hp

@@ -8,5 +8,8 @@ class Weapon(object):
 	def getName(self):
 		return self.name
 
+	def getShortName(self):
+		return self.nameshort
+
 	def setDamage(self, damage):
 		self.damage=damage

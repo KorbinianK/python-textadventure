@@ -1,4 +1,6 @@
 from monster import Monster
+from endboss import Endboss
+from settings import Settings
 from chest import Chest
 import random, time,sys
 from random import uniform
@@ -10,16 +12,20 @@ class Room(object):
     def __init__(self,difficulty,player):
 
         self.hasMonster = False
+        self.hasBoss = False
         self.hasChest = False
         self.isDone = False
         self.difficulty = difficulty
+        self.settings = Settings()
+        self.goal = self.settings.getGoal()
         self.player = player
         self.chest = Chest(self.player)
         self.monster = Monster()
         self.inspected = False
         self.handler = Stringhandler()
-        #self.name = "default"+str(random.randint(0,10))
-        #self.newRoom()
+        self.endBoss = Endboss()
+        self.boss = self.endBoss.randomBoss(player)
+
 
     # Sets up a new Room and displays some "Intro Text"
     def newRoom(self):
@@ -35,29 +41,32 @@ class Room(object):
 
         print Fore.WHITE
         # Decides whether the room gets a monster or a chest
-        rnd = random.randint(0,10)
-        if rnd > 1:
-            self.hasMonster = True
-        else:
-            self.hasChest = True
+        if self.player.level < self.goal:
 
-        # Setup monster
-        if self.hasMonster:
-            if self.difficulty == "easy":
-                self.monster.setup(1,self.player.level)
+            rnd = random.randint(0,10)
+            if rnd > 1:
+                self.hasMonster = True
             else:
-                self.monster.setup(2,self.player.level)
+                self.hasChest = True
 
+            # Setup monster
+            if self.hasMonster:
+                if self.difficulty == "easy":
+                    self.monster.setup(1,self.player.level)
+                else:
+                    self.monster.setup(2,self.player.level)
+            # Setup chest
+            elif self.hasChest:
 
-        # Setup chest
-        elif self.hasChest:
-
-            if self.difficulty == "easy":
-                self.chest.level = random.randint(1,10)
+                if self.difficulty == "easy":
+                    self.chest.level = random.randint(1,10)
+                else:
+                    self.chest.level = random.randint(1,10)
             else:
-                self.chest.level = random.randint(1,10)
+                self.finish()
         else:
-            self.finish()
+            self.hasBoss = True
+            self.boss.spawn()
 
     def getRoom(self,difficulty,player):
 

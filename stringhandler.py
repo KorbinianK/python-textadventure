@@ -241,7 +241,7 @@ class Stringhandler(object):
             self.strlist.append(name+ ' is dead! Oh look something is on the ground.')
             self.strlist.append('The mighty oh glorious '+name+' left you something special after his death. Just take a moment and appreciate it.')
             self.strlist.append(name+" passed on! This monster is no more! It has ceased to be!\n"+\
-            +name+ "'s expired and gone to meet its maker! It's a stiff! Bereft of life, it rests in peace!\n"+\
+            name+ "'s expired and gone to meet its maker! It's a stiff! Bereft of life, it rests in peace!\n"+\
             "If you hadn't nailed it to the perch it'd be pushing up the daisies! It's metabolic processes are now!\n"+\
             "It's off the twig! It's kicked the bucket, It's shuffled off its mortal coil, run down the curtain and joined the bleedin' choir invisible!!\n"+\
             "THIS IS AN EX-MONSTER!!")
@@ -260,7 +260,7 @@ class Stringhandler(object):
             Strings, when a monster without any items has been killed
             """
             self.strlist.append(name+" passed on! This monster is no more! It has ceased to be!\n"+\
-            +name+ "'s expired and gone to meet its maker! It's a stiff! Bereft of life, it rests in peace!\n"+\
+            name+ "'s expired and gone to meet its maker! It's a stiff! Bereft of life, it rests in peace!\n"+\
             "If you hadn't nailed it to the perch it'd be pushing up the daisies! It's metabolic processes are now!\n"+\
             "It's off the twig! It's kicked the bucket, It's shuffled off its mortal coil, run down the curtain and joined the bleedin' choir invisible!!\n"+\
             "THIS IS AN EX-MONSTER!!")
@@ -546,6 +546,31 @@ class Stringhandler(object):
         elif type == "exit":
             string = str(Back.RED+"                  "+Fore.WHITE+"Game exited"+ Back.RED +"                  "+Style.RESET_ALL)
         return string
+
+
+    def strBoss (self,type,player,damage):
+        if type == "bHit":
+            self.strlist.append("01101111 01110101 01110100 01100011 01101000")
+            self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+
+        if type == "bDie":
+            self.strlist.append("59 6f 75 20 77 69 6c 6c 20 72 65 67 72 65 74 20 74 68 69 73 21")
+            self.strlist.append("4e 4f 4f 4f 4f")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+
+        if type == "bSpawn":
+            self.strlist.append("Oh shit... it's a MEGABYTE!!!!")
+            # self.strlist.append("4e 4f 4f 4f 4f")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+        del self.strlist[:]
+        return self.modify(string,player)
 
     def modify(self,string,player):
         """

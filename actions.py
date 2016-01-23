@@ -19,10 +19,11 @@ class Actions():
     def __repr__(self):
 
         if self.player.alive:
+            
             ##
             ## Summons a monster
             ##
-            if self.action.lower()== "monster":
+            if self.action.lower()== "boss":
                 if self.room.hasMonster:
                     return self.room.monster.spawn(self.room,self.player)
                 else:
@@ -52,9 +53,9 @@ class Actions():
                     return self.handler.strActions("moveChest",self.player,self.room)
                 else:
                     return self.handler.strActions("nextRoom",self.player,self.room)
-
             elif "die" == self.action.lower():
                 return self.player.die(self.room.monster)
+
             ##
             ## Equips an item
             ##
@@ -83,6 +84,8 @@ class Actions():
 
                 if not self.monster.killed and self.player.facesMonster:
                     return self.room.attackMonster(self.player)
+                elif self.player.facesBoss:
+                    return self.boss.attack(self.player)
                 else:
                     return self.handler.strActions("attackNoMonster",self.player,self.room)
 
@@ -156,8 +159,6 @@ class Actions():
                     sys.stdout.write('\r'+b)
                     time.sleep(0.5)
                 return "\n\n"+response
-
-
 
             ##
             ## Just for debugging
