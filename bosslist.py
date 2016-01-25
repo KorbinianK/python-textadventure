@@ -7,7 +7,8 @@ from stringhandler import Stringhandler
 class ByteBoss(object):
 
     def __init__(self):
-        name = "Megabyte"
+        self.name = "Megabyte"
+        self.isBoss = True
         self.hp = 128
         self.strength = 8
         self.killed = False
@@ -25,8 +26,9 @@ class ByteBoss(object):
     def calcDamage(self):
         damage = self.strength + random.randint(0,3)
         return damage
+    # def attack(self,player,damage):
 
-    def attackPlayer(self,player):
+    def attackFromPlayer(self,player):
         damage = player.getStrength()+random.randint(0,3)
         if (self.hp - damage <= 0):
             self.kill()
@@ -37,8 +39,9 @@ class ByteBoss(object):
             return self.handler.strBoss("bHit",player,damage)
 
     def spawn(self,player):
+
         player.facesBoss = True
         damage = self.calcDamage()
-        print self.handler.strBoss("bspawn",player,None)
+        print self.handler.strBoss("bSpawn",player,None)
 
-        return self.handler.strBoss("bspawn",player,None)
+        return self.handler.strBoss("bSpawn",player,None)

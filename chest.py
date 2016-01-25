@@ -24,7 +24,6 @@ class Chest(object):
                 self.Loot = self.item.randomWeapon(self.level)
 
     def getLoot(self):
-
         return self.Loot
 
     def is_opened(self):
@@ -32,9 +31,9 @@ class Chest(object):
 
     def open(self,player):
         self.opened = True
+        player.lvlUp()
         if self.hasLoot:
-            return self.handler.strChest("open",self.getLoot())+"\n"+self.player.addItem(self.getLoot())
-
+            return self.handler.strChest("open",self.getLoot().name)+"\n"+self.player.addItem(self.getLoot())
         else:
             string = self.handler.strChest("empty",self.getLoot())
 

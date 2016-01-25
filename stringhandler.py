@@ -21,6 +21,31 @@ class Stringhandler(object):
     #     del self.strlist[:]
     #     return self.modify(string,player)
 
+    def strBoss (self,type,player,damage):
+
+        if type == "bHit":
+            self.strlist.append("01101111 01110101 01110100 01100011 01101000")
+            self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+
+        if type == "bDie":
+            self.strlist.append("59 6f 75 20 77 69 6c 6c 20 72 65 67 72 65 74 20 74 68 69 73 21 (dead)")
+            self.strlist.append("4e 4f 4f 4f 4f (dead)")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+
+        if type == "bSpawn":
+            self.strlist.append("Oh shit... it's a MEGABYTE!!!!")
+            # self.strlist.append("4e 4f 4f 4f 4f")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+        del self.strlist[:]
+        return self.modify(string,player)
+
     def strIntro(self):
         """
         The intro text for the player, asking for his/her name
@@ -43,7 +68,7 @@ class Stringhandler(object):
         self.strlist.append('Hello '+playername+'!\nWelcome to our world of pain and suffering!')
         self.strlist.append('MWAHAHAHAHAHAHA!\nNow you are trapped here, ' +playername+'!')
         self.strlist.append('Welcome to the DARKSIDE '+playername+'!\nHere take some cookies! *evillaugh*')
-        self.strlist.append('Welcome to our little dungeon, '+playername+'\nWe hope you enjoy your stay and survive so you can recommend us to your friends.')
+        self.strlist.append('Welcome to our little dungeon, '+playername+'!\nWe hope you enjoy your stay and survive so you can recommend us to your friends.')
         string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -125,7 +150,7 @@ class Stringhandler(object):
                 self.strlist.append("You see "+ chest +" in one corner of the room.")
                 self.strlist.append("A pretty big "+ chest +" is on your left side and it's kinda sparkling. You should check it out!")
                 self.strlist.append("After looking around you see a massive "+ chest +" in the middle of the room.")
-                self.strlist.append("But wait, what is that? A  "+ chest +"? You do some quick math, which confirms what you already thought: Chest = loot!")
+                self.strlist.append("But wait, what is that? A "+ chest +"? You do some quick math, which confirms what you already thought: Chest = loot!")
                 string = random.choice(self.strlist)
 
         if type == "lookOpenChest":
@@ -154,7 +179,7 @@ class Stringhandler(object):
 
         if type == "chestOpens":
 
-                self.strlist.append("The chest opens with a loud squeaky noise")
+                self.strlist.append("The chest opens with a loud squeaky noise.")
                 self.strlist.append("A strong scent of blood is escaping the chest as you opening it.")
                 self.strlist.append("You just opened the chest.")
                 self.strlist.append('What do we have here?')
@@ -170,7 +195,7 @@ class Stringhandler(object):
 
         if type == "tryOpenChest":
 
-                self.strlist.append("You try to open the chest")
+                self.strlist.append("You try to open the chest.")
                 self.strlist.append("You want to open the chest, but it's harder than expected.")
                 self.strlist.append("This chest is sealed. It takes your time opening it.")
                 # self.strlist.append("")
@@ -197,14 +222,16 @@ class Stringhandler(object):
 
 
     def strChest (self,type,item):
-        item = str(Fore.YELLOW+item.name+Fore.WHITE)
-        itemshort = str(Fore.YELLOW+item.nameshort+Fore.WHITE)
+        player = None
         if type == "open":
+
+            item = Fore.YELLOW + item +Fore.WHITE
+            itemshort = Fore.YELLOW +item.replace("a ","",1) +Fore.WHITE
 
             self.strlist.append("You found " + item +"! It has been added to your inventory")
             self.strlist.append("Oooh. Shiny! You got " + item+"!" )
             self.strlist.append("*plop* Wow a new " + itemshort+"!")
-            self.strlist.append("Hey, I wonder if " + itemshort+ "is part of a set...")
+            self.strlist.append("Hey, I wonder if this " + itemshort+ " is part of a set...")
             self.strlist.append("This is now MINE! My " + itemshort+"! My PRECIOUS!")
             #         self.strlist.append("")
             #         self.strlist.append("")
@@ -247,7 +274,7 @@ class Stringhandler(object):
             "THIS IS AN EX-MONSTER!!")
             self.strlist.append("Oh Lord! You did it! The Monster is on his way to hell.")
             self.strlist.append("You've got my huge respect dude! You just beaten up MONSTER and it's dead. Congrats!")
-            self.strlist.append("A farewell to one of the unique monsters. It died a very hurtfull death by your hands.")
+            self.strlist.append("A farewell to one of the unique monsters. It died a very painful death by your hands.")
             self.strlist.append("You complete your mission."+name+" is dead finally! Congrats! Go get some cookies!")
             self.strlist.append("Hey man, this "+name+" was endangered! Might have been the last of its kind...")
             self.strlist.append("You killed "+ name+"!")
@@ -337,8 +364,8 @@ class Stringhandler(object):
         """
         The strings for Monster where some damage value is returned
         """
-        name = str(Fore.GREEN+" "+monster.getShortName()+" "+ Fore.WHITE)
-        namelong = str(Fore.GREEN+" "+monster.getFullName()+" "+ Fore.WHITE)
+        name = str(Fore.GREEN+""+monster.getShortName()+""+ Fore.WHITE)
+        namelong = str(Fore.GREEN+""+monster.getFullName()+""+ Fore.WHITE)
         damage =str(Fore.RED+" "+str(damage)+" "+Fore.WHITE)
         hp = str(Fore.GREEN +" "+ str(monster.getHP()) +" "+ Fore.WHITE)
 
@@ -350,8 +377,8 @@ class Stringhandler(object):
             self.strlist.append('Boom. Right in his face! Keep going.' + damage + 'damage for the monster.')
             self.strlist.append('You attack ' +name+ ' and you deal' + damage + 'damage.')
             self.strlist.append(name+ " is down! You've just dealt" + damage + "damage! You have my respect! Keep going!")
-            self.strlist.append("I think you just broke"+name+ "'s arm. That was"+ damage +"damage.")
-            self.strlist.append("A brutal kick in the gut!"+name+" suffers"+ damage +"damage.")
+            self.strlist.append("I think you just broke "+name+ "'s arm. That was"+ damage +"damage.")
+            self.strlist.append("A brutal kick in the gut! "+name+" suffers"+ damage +"damage.")
             # self.strlist.append("")
             string = random.choice(self.strlist)
 
@@ -369,10 +396,10 @@ class Stringhandler(object):
             """
             Notifies the player that a monster has spawned
             """
-            self.strlist.append('A wild'+ namelong + 'appears!'+ name + 'attacks you.')
-            self.strlist.append("What's this?! Oh no it's"+ namelong+ "!")
-            self.strlist.append('Crap, not another one of those... \nThis one looks like'+ namelong+ "!")
-            self.strlist.append("'Why hello there! I am" + namelong +"\nPleased to meet you. NOT!'")
+            self.strlist.append('A wild '+ namelong + ' appears! '+ name + ' attacks you.')
+            self.strlist.append("What's this?! Oh no it's "+ namelong+ "!")
+            self.strlist.append('Crap, not another one of those... \nThis one looks like '+ namelong+ "!")
+            self.strlist.append("'Why hello there! I am " + namelong +"\nPleased to meet you. NOT!'")
             string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -511,6 +538,7 @@ class Stringhandler(object):
         """
         Strings for the player that involve items
         """
+        print item
         item = str(Fore.YELLOW + item.name + Fore.WHITE)
         itemshort = str(Fore.YELLOW + item.nameshort + Fore.WHITE)
         if type =="drinkItem":
@@ -546,31 +574,6 @@ class Stringhandler(object):
         elif type == "exit":
             string = str(Back.RED+"                  "+Fore.WHITE+"Game exited"+ Back.RED +"                  "+Style.RESET_ALL)
         return string
-
-
-    def strBoss (self,type,player,damage):
-        if type == "bHit":
-            self.strlist.append("01101111 01110101 01110100 01100011 01101000")
-            self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            string = random.choice(self.strlist)
-
-        if type == "bDie":
-            self.strlist.append("59 6f 75 20 77 69 6c 6c 20 72 65 67 72 65 74 20 74 68 69 73 21")
-            self.strlist.append("4e 4f 4f 4f 4f")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            string = random.choice(self.strlist)
-
-        if type == "bSpawn":
-            self.strlist.append("Oh shit... it's a MEGABYTE!!!!")
-            # self.strlist.append("4e 4f 4f 4f 4f")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            string = random.choice(self.strlist)
-        del self.strlist[:]
-        return self.modify(string,player)
 
     def modify(self,string,player):
         """

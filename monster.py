@@ -1,7 +1,7 @@
 from colorama import init, Fore, Back, Style
 from randommonstername import RandomMonsterName
 from items import Items
-import random, time,sys 
+import random, time,sys
 from random import uniform
 from stringhandler import Stringhandler
 
@@ -62,6 +62,7 @@ class Monster(object):
         return damage
 
     def setup(self,difficulty,player_level):
+        self.killed = False
         if difficulty is 1:
             self.hp = player_level + random.randint(5,15)
             self.strength = player_level + random.randint(1,5)
@@ -70,6 +71,7 @@ class Monster(object):
                 self.hasLoot = True
             self.level = random.randint(1,10)
             self.setLoot(self.level)
+
 
         else:
             self.hp = player_level + random.randint(15,25)
@@ -114,11 +116,10 @@ class Monster(object):
     def spawn(self,room,player):
         if room.hasMonster:
             if not self.killed and player.facesMonster:
-
                 response="something went wrong"
                 return response
             elif room.hasMonster and not self.killed :
                 player.facesMonster = True
                 damage = self.calcDamage()
-
-                return self.handler.strMonsterDamage("spawn",self,damage,player)+"\n"+player.takeDamage(damage,room.monster)
+                return self.handler.strMonsterDamage("spawn",self,damage,player)+"\n"+\
+                player.takeDamage(damage,room.monster)

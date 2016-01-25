@@ -40,11 +40,13 @@ class Room(object):
             sys.stdout.flush()
 
         print Fore.WHITE
+
         # Decides whether the room gets a monster or a chest
-        if self.player.level < self.goal:
+
+        if int(self.player.level) <= int(self.goal):
 
             rnd = random.randint(0,10)
-            if rnd > 1:
+            if rnd > 4:
                 self.hasMonster = True
             else:
                 self.hasChest = True
@@ -55,32 +57,33 @@ class Room(object):
                     self.monster.setup(1,self.player.level)
                 else:
                     self.monster.setup(2,self.player.level)
+
             # Setup chest
             elif self.hasChest:
-
                 if self.difficulty == "easy":
                     self.chest.level = random.randint(1,10)
+                    return self.handler.strActions("roomEmpty",self.player,self)
                 else:
                     self.chest.level = random.randint(1,10)
             else:
                 self.finish()
         else:
             self.hasBoss = True
-            self.boss.spawn()
+            print "boss" +str(self.boss.name)
+            return self.boss.spawn(self.player)
 
     def getRoom(self,difficulty,player):
-
         return Room(difficulty,player)
 
+    def getBoss(self):
+        return self.boss
     # If the player has used "look around" the room should be set to inspected
     # room.inspectRoom()
     def inspectRoom(self):
-
         self.inspected = True
 
     # Kills the monster in this Room, required for the player to be able to continue -> Room set to "Done"
     def killMonster(self):
-
         self.monster.kill()
         self.player.lvlUp()
         self.finish()

@@ -21,6 +21,7 @@ class Endboss(object):
         # self.bossList.append("")
         # self.bossList.append("")
         boss = random.choice(self.bossList)
+        
         return boss
 
     # def setupBoss(self,player):

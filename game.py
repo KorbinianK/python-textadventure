@@ -4,7 +4,6 @@ from player import Player
 from actions import Actions as actions
 from settings import Settings
 from monster import Monster
-
 from room import Room
 from items import Items
 from colorama import init, Fore, Back, Style
@@ -73,11 +72,15 @@ def play():
             if room.is_done() and ("go" in action_input.lower() or "walk" in action_input.lower() or "continue" in action_input.lower()):
                 response = actions(action_input,player,room)
                 print response
-                setupNew(room,difficulty,player)
+                room = room.getRoom(difficulty,player)
+                room.newRoom()
+                string = room.monster.spawn(room,player)
+                if room.hasMonster:
+                    print str(string)
+
             elif action_input.lower() == "restart":
                 player.alive = True
                 print handler.strBasic("restart")
-
                 play()
             elif action_input.lower() == "exit":
                 print handler.strBasic("exit")
@@ -92,19 +95,7 @@ def play():
     if player.victory:
         print "Victory!"
 
-def setupNew(room,difficulty,player):
-    room = room.getRoom(difficulty,player)
-    room.newRoom()
-    settings = Settings()
-    goal = settings.getGoal()
 
-    if player.level <= goal:
-        # string = room.monster.spawn(room,player)
-        string = room.hasBoss
-        print str(string)
-    else:
-        string = "a"
-        print str(string)
 
 if __name__ == "__main__":
     play()

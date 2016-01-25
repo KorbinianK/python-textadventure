@@ -19,7 +19,7 @@ class Actions():
     def __repr__(self):
 
         if self.player.alive:
-            
+
             ##
             ## Summons a monster
             ##
@@ -85,7 +85,8 @@ class Actions():
                 if not self.monster.killed and self.player.facesMonster:
                     return self.room.attackMonster(self.player)
                 elif self.player.facesBoss:
-                    return self.boss.attack(self.player)
+                    boss = self.room.getBoss()
+                    return boss.attackFromPlayer(self.player)
                 else:
                     return self.handler.strActions("attackNoMonster",self.player,self.room)
 
@@ -132,7 +133,7 @@ class Actions():
             elif(self.action.lower()== "open chest"):
                 if self.room.inspected:
                     if self.room.hasChest and not self.room.chest.opened:
-                        response = self.handler.strActions("chestOpens",self.player,self.room) + str(self.room.openChest())
+                        response = self.handler.strActions("chestOpens",self.player,self.room) +"\n"+ str(self.room.openChest())
                     elif self.room.chest.opened:
                         response = "Nice try... How about this instead? "
                 else:
