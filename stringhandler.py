@@ -1,5 +1,5 @@
 from colorama import init, Fore, Back, Style
-import random
+import random,sys,re
 
 
 class Stringhandler(object):

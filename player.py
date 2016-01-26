@@ -2,7 +2,7 @@ from colorama import init, Fore, Back, Style
 from settings import Settings
 from weapon import Weapon
 from potion import Potion
-import time,sys,random
+import time,sys,random,re
 from random import uniform
 from stringhandler import Stringhandler
 
@@ -47,11 +47,12 @@ class Player(object):
     def takeDamage(self, damage, monster):
         self.hp -= damage
         rnd = random.randint(0,20)
+        # self.condition = "poisoned"
         # print rnd
-        if rnd > 3:
-            # print "poisoned"
+        if rnd <  3:
+            print "You got poisoned"
             self.condition = "poisoned"
-        if rnd is 10 or 15 or 20:
+        elif rnd is 10 or 15 or 20:
             self.condition = "normal"
         if self.hp >=0:
             return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
