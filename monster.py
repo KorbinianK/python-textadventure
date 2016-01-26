@@ -64,18 +64,17 @@ class Monster(object):
     def setup(self,difficulty,player_level):
         self.killed = False
         if difficulty is 1:
-            self.hp = player_level + random.randint(5,15)
-            self.strength = player_level + random.randint(1,5)
-            rnd = random.randint(1,10)
+            self.hp = player_level + random.randint(10,25)
+            self.strength = player_level + random.randint(1,9)
+            rnd = random.randint(0,10)
             if rnd > 3:
                 self.hasLoot = True
             self.level = random.randint(1,10)
             self.setLoot(self.level)
 
-
         else:
-            self.hp = player_level + random.randint(15,25)
-            self.strength = player_level + random.randint(5,10)
+            self.hp = player_level + random.randint(15,35)
+            self.strength = player_level + random.randint(5,15)
 
             rnd = random.randint(0,10)
             if rnd > 7:

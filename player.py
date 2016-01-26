@@ -69,15 +69,19 @@ class Player(object):
         if isinstance(item,Weapon):
             return self.equipItem(len(self.inventory)-1,item)
 
-    def equipItem(self,pos,item):
+    def equipItem(self,pos):
         slot = pos
-        self.equipped = self.inventory[slot]
-        string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Fore.WHITE+" in your hand."
-        if isinstance(item,Weapon):
-            self.strength = 1
-            self.strength += self.equipped.damage
+    
+        if int(slot) >= len(self.inventory):
+            string = "Sorry Dave, I'm afraid I can't let you do that."
         else:
-            string += "\nDo you want to"+Fore.CYAN+" drink "+Fore.WHITE+"it?"
+            self.equipped = self.inventory[slot]
+            string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Fore.WHITE+" in your hand."
+            if isinstance(item,Weapon):
+                self.strength = 1
+                self.strength += self.equipped.damage
+            else:
+                string += "\nDo you want to"+Fore.CYAN+" drink "+Fore.WHITE+"it?"
         return string
 
     def heal(self):

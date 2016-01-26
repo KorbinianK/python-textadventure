@@ -63,10 +63,7 @@ class Actions():
             elif "equip" in self.action.lower():
                 slot = int(re.search(r'\d+', self.action.lower()).group())-1
 
-                if len(self.player.inventory) > 0 and slot is not None:
-                    return self.player.equipItem(slot,self.player.inventory[slot])
-                else:
-                    return "nope"
+                return self.player.equipItem(slot)
 
             ##
             ## Drinks a potion

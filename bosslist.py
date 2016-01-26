@@ -9,7 +9,7 @@ class ByteBoss(object):
     def __init__(self):
         self.name = "Megabyte"
         self.isBoss = True
-        self.hp = 128
+        self.hp = 64
         self.strength = 8
         self.killed = False
         self.handler = Stringhandler()
@@ -51,7 +51,7 @@ class HipsterBoss(object):
     def __init__(self):
         self.name = "the Hipster"
         self.isBoss = True
-        self.hp = 128
+        self.hp = 50
         self.strength = 8
         self.killed = False
         self.handler = Stringhandler()
@@ -75,6 +75,7 @@ class HipsterBoss(object):
         if (self.hp - damage <= 0):
             self.kill()
             player.facesBoss = False
+            player.victory = True
             return self.handler.strBoss("hDie",player,damage)
         else:
             self.takeDamage(damage,player)
