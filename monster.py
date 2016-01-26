@@ -37,10 +37,11 @@ class Monster(object):
         self.hp -= damage
         string = '"'+self.handler.strMonster("hit",self,player)+'"\n'
         for char in string:
-            time.sleep(uniform(0.01, 0.05))
-            sys.stdout.write('\033[35m'+'\033[1m'+char)
+            time.sleep(uniform(0.05, 0.08))
+            sys.stdout.write('\033[32m'+'\033[1m'+char)
             sys.stdout.flush()
         print Fore.WHITE
+        time.sleep(0.5)
 
     def getHP(self):
         return self.hp

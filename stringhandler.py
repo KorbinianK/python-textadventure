@@ -25,9 +25,16 @@ class Stringhandler(object):
         """
         Megabyte Boss
         """
+        damage = Fore.RED + str(damage)+Fore.WHITE
         if type == "bHit":
-            self.strlist.append("01101111 01110101 01110100 01100011 01101000")
+            self.strlist.append("01101111 01110101 0110"+damage+Fore.GREEN+" 01110100 01100011 01101000")
             self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
+            self.strlist.append("print: response(playerHit)")
+            # self.strlist.append("")
+            string = Fore.GREEN + random.choice(self.strlist) + Fore.WHITE
+
+        if type == "bAttack":
+
             # self.strlist.append("")
             # self.strlist.append("")
             string = random.choice(self.strlist)
@@ -40,8 +47,8 @@ class Stringhandler(object):
             string = random.choice(self.strlist)
 
         if type == "bSpawn":
-            self.strlist.append("Oh shit... it's a MEGABYTE!!!!")
-            # self.strlist.append("4e 4f 4f 4f 4f")
+            self.strlist.append("Oh shit... it's "+Fore.GREEN+"a MEGABYTE!!!!"+ Fore.WHITE)
+            self.strlist.append("This almost sounds like R2D2... but no wait... this is..."+Fore.GREEN+"A MEGABYTE!"+ Fore.WHITE)
             # self.strlist.append("")
             # self.strlist.append("")
             string = random.choice(self.strlist)
@@ -53,7 +60,7 @@ class Stringhandler(object):
             self.strlist.append("In front of you you see a man or more like a boy.\nThe lack of light you again has you unsure what exactly you are facing... could it be"+Fore.GREEN+"the Hipster"+Fore.WHITE+"?! No please, not "+Fore.GREEN+"the Hipster"+Fore.WHITE+".")
             self.strlist.append("As soon as you enter the next room you hear some strange voice:\n"+\
              Fore.GREEN+ "'Oh boy is this a classy vintage room'"+Fore.WHITE+" and"+Fore.GREEN+ " 'yolo who cares about light, don't let the negative vibes catch you'\n"+Fore.WHITE+\
-             "Scared shitless you realize: it's the cursed lair of"+Fore.GREEN+"the Hipster"+Fore.WHITE+"!")
+             "Scared shitless you realize: it's the cursed lair of "+Fore.GREEN+"the Hipster"+Fore.WHITE+"!")
             self.strlist.append("You enter a room, in front of you a person, you would describe to others as weirdly dressed man.\n"+\
             "His face framed by an excellent long beard. He wears skinny jeans much closer to leggings than they should be... "+Fore.GREEN+"a Hipster"+Fore.WHITE+".")
             string = random.choice(self.strlist)
@@ -216,10 +223,18 @@ class Stringhandler(object):
                 self.strlist.append('What do we have here?')
                 string = random.choice(self.strlist)
 
+        if type == "chestOpenAgain":
+
+                self.strlist.append("You found a flaw in this game, you are looting the chest again...NOT\nDid you really think you could cheat the system?! Think again...")
+                self.strlist.append("Alzheimer is strong with this one, you just looted this chest.")
+                self.strlist.append("Sure, always double check.")
+                self.strlist.append("Didn't you like what you got the first time? No refunds here!")
+                string = random.choice(self.strlist)
+
         if type == "openChestNoLook":
 
-                self.strlist.append("You seem to imagine things in the darkness. Maybe "+look+" first.")
-                # self.strlist.append("")
+                self.strlist.append("You seem to imagine things in the darkness. Maybe "+look+" first?")
+                self.strlist.append("Even with your powerful imagination, you cannot make things appear in front of you.\nMaybe "+look+" first?")
                 # self.strlist.append("")
                 # self.strlist.append("")
                 string = random.choice(self.strlist)
@@ -240,13 +255,7 @@ class Stringhandler(object):
                 self.strlist.append('"I am sure I had something useful in there somewhere"')
                 string = random.choice(self.strlist)
 
-        # if type == "":
-        #
-        #         self.strlist.append("")
-        #         self.strlist.append("")
-        #         self.strlist.append("")
-        #         self.strlist.append("")
-        #         string = random.choice(self.strlist)
+
 
         del self.strlist[:]
         return self.modify(string,player)
@@ -276,7 +285,7 @@ class Stringhandler(object):
             self.strlist.append("As empty as your hops and dreams.")
             self.strlist.append("Well, at least there was no trap inside...")
             self.strlist.append("You find... nothing.")
-            self.strlist.append("Sorry, one cannot loot cobwebs.")
+            self.strlist.append("Sorry, only cobwebs, nothing of use.")
             self.strlist.append("These bugs are definitely no feature.")
             # self.strlist.append("")
             string = random.choice(self.strlist)
@@ -324,7 +333,7 @@ class Stringhandler(object):
             "THIS IS AN EX-MONSTER!!")
             self.strlist.append("Oh Lord! You did it! The Monster is on his way to hell.")
             self.strlist.append("You've got my huge respect dude! You just beaten up "+name+" and it's dead. Congrats!")
-            self.strlist.append("A farewell to one of the unique monsters. It died a very hurtfull death by your hands.")
+            self.strlist.append("A farewell to one of the unique monsters. It died a very painful death by your hands.")
             self.strlist.append("You complete your mission."+name+" is dead finally! Congrats! Go get some cookies!")
             self.strlist.append("Hey man, this "+name+" was endangered! Might have been the last of its kind...")
             self.strlist.append("You killed "+ name+"!")
@@ -407,7 +416,7 @@ class Stringhandler(object):
             self.strlist.append('Bam, right in the muzzle. That was' + damage + 'damage!')
             self.strlist.append('Boom. Right in his face! Keep going.' + damage + 'damage for the monster.')
             self.strlist.append('You attack ' +name+ ' and you deal' + damage + 'damage.')
-            self.strlist.append(name+ " is down! You've just dealt" + damage + "damage! You have my respect! Keep going!")
+            self.strlist.append(name+ " is almost down! You've just dealt" + damage + "damage! You have my respect! Keep going!")
             self.strlist.append("I think you just broke "+name+ "'s arm. That was"+ damage +"damage.")
             self.strlist.append("A brutal kick in the gut! "+name+" suffers"+ damage +"damage.")
             # self.strlist.append("")
@@ -459,23 +468,26 @@ class Stringhandler(object):
         """
         Handles the player strings that include damage values
         """
-        damage =str(Fore.RED+" "+str(damage)+" "+Fore.WHITE)
+        damage =str(Fore.RED+""+str(damage)+" "+Fore.WHITE)
         hp = str(Fore.CYAN +" "+ str(player.getHP()) +" "+ Fore.WHITE)
         playerName = str(Fore.CYAN +" "+player.name +" "+Fore.WHITE)
         monster = str(Fore.GREEN +monster.getShortName()+Fore.WHITE)
+
+        print player.name
+        print player.getCondition()
 
         if type == "takeDamage":
             """
             The player took some damage from a monster
             """
-            self.strlist.append(monster+' hits you hard. You take'+damage+'damage!')
+            self.strlist.append(monster+' hits you hard. You take '+damage+'damage!')
             self.strlist.append(monster+" just whipped your ASS. "+damage+"damage for you.")
-            self.strlist.append("You got hit by "+monster+ " very badly. You take"+damage+"damage.")
-            self.strlist.append(monster+" is out of control. It is attacking you non stop and you can't protect yourself. You suffer" +damage+ "damage.")
-            self.strlist.append("A brutal attack from "+monster+". You suffer"+damage+"damage.")
-            self.strlist.append("What a hit!"+damage+"damage!")
-            self.strlist.append(damage+"damage! BRUTAL!")
-            self.strlist.append("Ouch! That must have hurt... "+damage+"damage right to the face.")
+            self.strlist.append("You've got hit by "+monster+ " very badly. You take "+damage+"damage.")
+            self.strlist.append(monster+" is out of control. It is attacking you non stop and you can't protect yourself. You suffer " +damage+ "damage.")
+            self.strlist.append("A brutal attack from "+monster+". You suffer "+damage+"damage.")
+            self.strlist.append("The monster throws everything at you it has. What a hit ! "+damage+"damage!")
+            self.strlist.append("It strikes back! "+damage+"damage! BRUTAL!")
+            self.strlist.append("You try to dodge "+monster+"'s attack and fail. Ouch! That must have hurt... "+damage+"damage right to the face.")
 
             string = random.choice(self.strlist)
 
@@ -505,8 +517,8 @@ class Stringhandler(object):
             Informs the player that he gained a level
             """
             self.strlist.append('\nCongratulations'+playerName+', you leveled up!\n')
-            self.strlist.append('\nDing.\n')
-            self.strlist.append('\nDong.\n')
+            self.strlist.append('\n*ding* Level up!\n')
+            self.strlist.append('\n*dong* Next level!\n')
             self.strlist.append('\nNext Level! Here you go!\n')
             string = random.choice(self.strlist)
         if type == "heal":
@@ -610,13 +622,16 @@ class Stringhandler(object):
         """
         Modifies the strings before returning, depending on his condition
         """
+
         if player is not None:
-            if player.condition == "normal":
+            print player.getCondition()
+            if player.getCondition() == "normal":
                 return string
                 #return self.killString(string)
-            elif player.condition == "poisoned":
+            elif player.getCondition() == "poisoned":
                 print "poisoned"
-                return self.killString(string)
+                # return self.killString(string)
+                return self.reverseString(string)
         else:
             return string
             # print "else"
@@ -636,3 +651,10 @@ class Stringhandler(object):
     		else:
     			builder += letter
     	return newString
+
+    def reverseString(self,string):
+        """
+        Modifier: Returns the entire string -> gnirts eritne eht snruteR
+        """
+        newString = re.sub(r'(\x1b[^m]*m)',"",string)[::-1]
+        return newString

@@ -2,7 +2,7 @@ from colorama import init, Fore, Back, Style
 from settings import Settings
 from weapon import Weapon
 from potion import Potion
-import time,sys
+import time,sys,random
 from random import uniform
 from stringhandler import Stringhandler
 
@@ -32,24 +32,37 @@ class Player(object):
 
     def is_in_room(self):
         return self.is_in_room
+    def getCondition(self):
+        print "player"+self.condition
+        return self.condition
+
+    def setCondition(self,condition):
+        self.condition = condition
+
+    def wins(self):
+        self.facesBoss = False
+        self.facesMonster = False
+        self.victory = True
 
     def takeDamage(self, damage, monster):
         self.hp -= damage
-        if self.hp >=0:
 
+        rnd = random.randint(0,20)
+        print rnd
+        if rnd > 3:
+            print "poisoned"
+            self.condition = "poisoned"
+        if rnd is 10 or 15 or 20:
+            self.condition = "normal"
+        if self.hp >=0:
             return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 
+
     def lvlUp(self):
-
-
         self.level +=1
         print self.handler.strPlayer("lvl",self)
-        # if int(self.level) >= int(self.settings.getGoal()):
-        #     self.victory = True
-        # else:
-        #     print self.handler.strPlayer("lvl",self)
 
     def getHP(self):
         return self.hp
@@ -69,9 +82,8 @@ class Player(object):
         if isinstance(item,Weapon):
             return self.equipItem(len(self.inventory)-1,item)
 
-    def equipItem(self,pos):
+    def equipItem(self,pos,item):
         slot = pos
-    
         if int(slot) >= len(self.inventory):
             string = "Sorry Dave, I'm afraid I can't let you do that."
         else:

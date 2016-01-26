@@ -33,7 +33,7 @@ class Chest(object):
         self.opened = True
         player.lvlUp()
         if self.hasLoot:
-            return self.handler.strChest("open",self.getLoot().name)+"\n"+self.player.addItem(self.getLoot())
+            return self.handler.strChest("open",self.getLoot().name)+"\n\n"+self.player.addItem(self.getLoot())
         else:
             string = self.handler.strChest("empty",self.getLoot())
 

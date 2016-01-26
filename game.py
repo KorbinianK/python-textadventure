@@ -27,7 +27,7 @@ def play():
         time.sleep(uniform(0.05, 0.1))
         sys.stdout.write('\033[35m'+'\033[1m'+char)
         sys.stdout.flush()
-    name_input = raw_input (Fore.CYAN +'\n>: ')
+    name_input = raw_input (Fore.CYAN +'\nYour name? >: ')
     player.name = name_input
 #
 # Asks for the player Name
@@ -52,31 +52,36 @@ def play():
         player.addItem(item.newPotion(0.2,5))
         room = Room(difficulty,player)
         time.sleep(0.5)
-        room.newRoom()
+        chest = room.newRoom()
         string = room.monster.spawn(room,player)
         if room.hasMonster:
+            player.is_in_room = True
             print str(string)
-        player.is_in_room = True
+        else:
+            print chest
 
 
 #
 # Game Loop start
 #
     while player.is_alive():
+
         if player.victory:
-            break;
+            print "Do you want to"+Fore.CYAN+"restart"+Fore.WHITE+"or"+Fore.CYAN+"exit"+Fore.WHITE+"?"
         else:
-            print ("\nWhat do you want to do?\n")
-            action_input = raw_input(Fore.CYAN + player.name+ '>: ')
+            #print ("\nWhat do you want to do?\n")
+            action_input = raw_input(Fore.CYAN +"\n"+ player.name+ '>: ')
             print Fore.WHITE
             if room.is_done() and ("go" in action_input.lower() or "walk" in action_input.lower() or "continue" in action_input.lower()):
                 response = actions(action_input,player,room)
                 print response
                 room = room.getRoom(difficulty,player)
-                room.newRoom()
+                chest = room.newRoom()
                 string = room.monster.spawn(room,player)
                 if room.hasMonster:
                     print str(string)
+                else:
+                    print chest
 
             elif action_input.lower() == "restart":
                 player.alive = True
@@ -88,6 +93,7 @@ def play():
 
             else:
                 # The magic happens here:
+                time.sleep(0.5)
                 print actions(action_input,player,room)
 
 

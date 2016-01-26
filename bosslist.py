@@ -42,7 +42,7 @@ class ByteBoss(object):
 
         player.facesBoss = True
         damage = self.calcDamage()
-        print self.handler.strBoss("bSpawn",player,None)
+        # print self.handler.strBoss("bSpawn",player,None)
 
         return self.handler.strBoss("bSpawn",player,None)
 
@@ -68,14 +68,16 @@ class HipsterBoss(object):
     def calcDamage(self):
         damage = self.strength + random.randint(0,3)
         return damage
-    # def attack(self,player,damage):
+
+    def attack(self,player,damage):
+        return self.handler.strBoss("bAttack",player,damage)
 
     def attackFromPlayer(self,player):
         damage = player.getStrength()+random.randint(0,3)
         if (self.hp - damage <= 0):
             self.kill()
-            player.facesBoss = False
-            player.victory = True
+
+            player.wins()
             return self.handler.strBoss("hDie",player,damage)
         else:
             self.takeDamage(damage,player)

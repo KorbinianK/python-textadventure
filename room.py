@@ -46,7 +46,7 @@ class Room(object):
         if int(self.player.level) <= int(self.goal):
 
             rnd = random.randint(0,10)
-            if rnd > 4:
+            if rnd > 1:
                 self.hasMonster = True
             else:
                 self.hasChest = True
@@ -69,7 +69,7 @@ class Room(object):
                 self.finish()
         else:
             self.hasBoss = True
-            print "boss" +str(self.boss.name)
+
             return self.boss.spawn(self.player)
 
     def getRoom(self,difficulty,player):

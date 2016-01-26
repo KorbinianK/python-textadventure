@@ -63,7 +63,7 @@ class Actions():
             elif "equip" in self.action.lower():
                 slot = int(re.search(r'\d+', self.action.lower()).group())-1
 
-                return self.player.equipItem(slot)
+                return self.player.equipItem(slot,self.player.inventory[slot])
 
             ##
             ## Drinks a potion
@@ -111,7 +111,10 @@ class Actions():
             elif(self.action.lower()== "look around"):
                 self.room.inspectRoom()
                 if self.room.hasChest and not self.room.chest.opened:
-                    response = self.handler.strActions("lookClosedChest",self.player,self.room)
+                    if self.room.inspected:
+                        response = self.handler.strActions("lookClosedChest",self.player,self.room)
+                    else:
+                        response = self.handler.strActions("openChestNoLook",self.player,self.room)
                 elif self.room.hasChest and self.room.chest.opened:
                     response = self.handler.strActions("lookOpenChest",self.player,self.room)
                 else:
@@ -122,7 +125,7 @@ class Actions():
                     sys.stdout.write('\r'+b)
                     time.sleep(0.4)
 
-                return response
+                return "\n"+response
 
             ##
             ## Let's the player open a chest, if he has inspected the room already
@@ -132,7 +135,7 @@ class Actions():
                     if self.room.hasChest and not self.room.chest.opened:
                         response = self.handler.strActions("chestOpens",self.player,self.room) +"\n"+ str(self.room.openChest())
                     elif self.room.chest.opened:
-                        response = "Nice try... How about this instead? "
+                        return "\n"+self.handler.strActions("chestOpenAgain",self.player,self.room)
                 else:
                     response = self.handler.strActions("openChestNoLook",self.player,self.room)
                 text = self.handler.strActions("tryOpenChest",self.player,self.room)
@@ -140,7 +143,7 @@ class Actions():
                     b = text + "." * x
                     sys.stdout.write('\r'+b)
                     time.sleep(0.2)
-                return response
+                return "\n"+response
 
             ##
             ## Displays the items the player has
@@ -166,7 +169,8 @@ class Actions():
                 return "Strength: "+str(self.player.getStrength()) + \
                 "\nHP: "+str(self.player.getHP()) + \
                 "\nLvl: "+str(self.player.level)+\
-                "\nVictory: "+str(self.player.victory)
+                "\nVictory: "+str(self.player.victory)+\
+                "\nCondition: "+str(self.player.getCondition())
 
             elif(self.action == "cheat"):
                 self.player.lvlUp()
@@ -179,8 +183,7 @@ class Actions():
             ##
 
             elif(self.action.lower() =="help"):
-                return Back.WHITE + Fore.BLACK +"[attack] [inventory] [flee] [info] [go] [walk]\n\
-                [equip] [inventory] [look around] [open chest] [continue] [help]" + Style.RESET_ALL + Style.BRIGHT
+                return Back.WHITE + Fore.BLACK +"[attack] [inventory] [flee] [info] [continue] [equip x] [inventory] [look around] [open chest]" +Back.BLACK + Style.RESET_ALL + Style.BRIGHT
 
             ##
             ## Message if invalid command was used
