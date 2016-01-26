@@ -94,6 +94,8 @@ class Stringhandler(object):
         self.strlist.append('Hello there new fella!\nWould you mind telling us your name?')
         self.strlist.append('Ok, take a deep breath. This might be the most important decision of your life.\nHow will you name yourself? ')
         self.strlist.append('No no no, take your time.\nI understand that remembering your name might be hard.')
+        self.strlist.append('Who are we looking at here?')
+        self.strlist.append('Hail traveller! Would you mind introducing yourself?')
         string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -103,10 +105,12 @@ class Stringhandler(object):
         Greets the new player
         """
         playername = str(Fore.CYAN+player.name+ Fore.WHITE)
-        self.strlist.append('Hello '+playername+'!\nWelcome to our world of pain and suffering!')
+        self.strlist.append('Hello '+playername+'!\nWelcome to a world of pain and suffering! Or was it miracles and wonders??')
         self.strlist.append('MWAHAHAHAHAHAHA!\nNow you are trapped here, ' +playername+'!')
         self.strlist.append('Welcome to the DARKSIDE '+playername+'!\nHere take some cookies! *evillaugh*')
         self.strlist.append('Welcome to our little dungeon, '+playername+'!\nWe hope you enjoy your stay and survive so you can recommend us to your friends.')
+        self.strlist.append('Welcome '+playername+'!\nAs they say: my house is your house! Or in this case, my cave is your cave. But beware of the shadows!')
+        self.strlist.append("H-hello "+playername+"?!\nCan you hear me?? ... \nWell let's start then")
         string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -124,31 +128,32 @@ class Stringhandler(object):
             self.strlist.append("The room is empty... like your soul.\nDo you want to " + cont +" or " + look +"?")
             self.strlist.append("It seems like the room is all empty.\nDo you want to " + cont +" or " + look +"?")
             self.strlist.append("Wanna " + look +"? Something might be hidden in this room.")
-            # self.strlist.append("")
+            self.strlist.append("At the first glimpse, the room seems empty. Wanna risk another?")
+            self.strlist.append("Nothing to see here! Keep moving!")
             string = random.choice(self.strlist)
 
         if type == "moving":
 
             self.strlist.append("Moving towards the door")
             self.strlist.append("You are toddling slowly to the door")
-            # self.strlist.append("")
-            # self.strlist.append("")
+            self.strlist.append("You decide to try your luck in another room")
+            self.strlist.append("Eagerly you leave the room to find out, what this place still has to offer")
             string = random.choice(self.strlist)
 
         if type == "nextRoomMonster":
 
             self.strlist.append("You almost stumble over the carcass of "+monstershort+" as you walk through the door into the next room.")
-            self.strlist.append("Finally, you overturned the foe. Weakend, but still breating, you continue your journey.")
-            # self.strlist.append("")
-            # self.strlist.append("")
+            self.strlist.append("Finally, you overturned the foe. Weakend, but still breathing, you continue your journey.")
+            self.strlist.append(monstershort+" is no more. Pumped with adrenaline, you head for the next room.")
+            self.strlist.append("Legends and tales might be told about this moment. But this is not the time. More trials await!")
             string = random.choice(self.strlist)
 
         if type == "moveChest":
 
-                self.strlist.append("Carefully you walk through the darkness. Then you hit your knee on something...\nMaybe you should " + look +" first?")
-                self.strlist.append("You toddle very carefully through the darkness without a special direction.\nYou should " + look +" before continuing with your mission.")
-                # self.strlist.append("")
-                # self.strlist.append("")
+                self.strlist.append("Carefully you walk through the darkness. Then you hit your knee on something...\nMaybe you should "+look+" first?")
+                self.strlist.append("You toddle very carefully through the darkness without a special direction.\nYou should "+look+" before continuing with your mission.")
+                self.strlist.append("You notice a box-like shadow in the far corner of the room. Try to"+look+" and find out , what it is.")
+                self.strlist.append("No monster this time. But you can't shake the feeling, that there is more to this room than it seems. Perhaps you could "+look+" and find out?")
                 string = random.choice(self.strlist)
 
         if type == "nextRoom":
@@ -162,17 +167,17 @@ class Stringhandler(object):
         if type == "attackNoMonster":
 
                 self.strlist.append("You shake your fists and try to attack your shadows")
-                # self.strlist.append("")
-                # self.strlist.append("")
-                # self.strlist.append("")
+                self.strlist.append("Save your breath! There is nothing in here!")
+                self.strlist.append("You sure are funny to watch! What do you think you're doing??")
+                self.strlist.append("You charge into the room and hit a rock.")
                 string = random.choice(self.strlist)
 
         if type == "fleeNoMonster":
 
                 self.strlist.append("'Coward! You stay exactly where you are!', shouts a voice and you tremble at its power over you.")
                 self.strlist.append("'Leaving so soon?' a voice asked smugly, rooting you in place.")
-                # self.strlist.append("")
-                # self.strlist.append("")
+                self.strlist.append("Who are you hiding from you coward?")
+                self.strlist.append("Why leave?? You haven't met my special friends yet!")
                 string = random.choice(self.strlist)
 
         if type == "fleeing":
@@ -180,7 +185,7 @@ class Stringhandler(object):
                 self.strlist.append("Trying to flee")
                 self.strlist.append("Fly, you fool!")
                 self.strlist.append("Run,for heaven's sake!!!")
-                # self.strlist.append("")
+                self.strlist.append("'Hell No!', you think, running for the exit")
                 string = random.choice(self.strlist)
 
         if type == "lookClosedChest":
@@ -195,8 +200,8 @@ class Stringhandler(object):
 
                 self.strlist.append("There seems to be only an open chest in this room.")
                 self.strlist.append("Oh cruel fate! The only chest in this room has already been looted.")
-                # self.strlist.append("")
-                # self.strlist.append("")
+                self.strlist.append("Nothing but spiderwebs and dust left in this chest!")
+                self.strlist.append("You snooze, you loose! Someone has opened this chest already. Or was it you?")
                 string = random.choice(self.strlist)
 
         if type == "lookNothing":
@@ -204,7 +209,7 @@ class Stringhandler(object):
                 self.strlist.append("You looked around. Good job")
                 self.strlist.append("Look who's all nosy.")
                 self.strlist.append("Someone wants to be an investigator, huh?")
-                # self.strlist.append("")
+                self.strlist.append("We'll done Sherlock Holmes!")
                 string = random.choice(self.strlist)
 
         if type == "looking":
@@ -212,7 +217,7 @@ class Stringhandler(object):
                 self.strlist.append("Looking around")
                 self.strlist.append("Inspecting the room")
                 self.strlist.append("Paranoid as you are, you scan the room thoroughly.")
-                # self.strlist.append("")
+                self.strlist.append("Carefully you stride through the shadows, looking for something useful")
                 string = random.choice(self.strlist)
 
         if type == "chestOpens":
@@ -229,14 +234,15 @@ class Stringhandler(object):
                 self.strlist.append("Alzheimer is strong with this one, you just looted this chest.")
                 self.strlist.append("Sure, always double check.")
                 self.strlist.append("Didn't you like what you got the first time? No refunds here!")
+                self.strlist.append("Nothing but lost hopes and dreams left in this chest!")
                 string = random.choice(self.strlist)
 
         if type == "openChestNoLook":
 
                 self.strlist.append("You seem to imagine things in the darkness. Maybe "+look+" first?")
                 self.strlist.append("Even with your powerful imagination, you cannot make things appear in front of you.\nMaybe "+look+" first?")
-                # self.strlist.append("")
-                # self.strlist.append("")
+                self.strlist.append("So, where is this chest you'd like to open? Carry one in your backpack, do you?")
+                self.strlist.append("How about finding an actual chest for starters?? "+look+" and then try again")
                 string = random.choice(self.strlist)
 
         if type == "tryOpenChest":
@@ -244,7 +250,8 @@ class Stringhandler(object):
                 self.strlist.append("You try to open the chest.")
                 self.strlist.append("You want to open the chest, but it's harder than expected.")
                 self.strlist.append("This chest is sealed. It takes your time opening it.")
-                # self.strlist.append("")
+                self.strlist.append("Hastily you try to rip the chest open.")
+                self.strlist.append("Easy, easy ... you will break the lock!")
                 string = random.choice(self.strlist)
 
         if type == "searchingInventory":
@@ -268,13 +275,13 @@ class Stringhandler(object):
             item = Fore.YELLOW + item +Fore.WHITE
             itemshort = Fore.YELLOW +item.replace("a ","",1) +Fore.WHITE
 
-            self.strlist.append("You found " + item +"! It has been added to your inventory")
-            self.strlist.append("Oooh. Shiny! You got " + item+"!" )
-            self.strlist.append("*plop* Wow a new " + itemshort+"!")
-            self.strlist.append("Hey, I wonder if this " + itemshort+ " is part of a set...")
-            self.strlist.append("This is now MINE! My " + itemshort+"! My PRECIOUS!")
-            #         self.strlist.append("")
-            #         self.strlist.append("")
+            self.strlist.append("You found "+item+"! It has been added to your inventory")
+            self.strlist.append("Oooh. Shiny! You got "+item+"!" )
+            self.strlist.append("*plop* Wow a new "+itemshort+"!")
+            self.strlist.append("Hey, I wonder if this "+itemshort+" is part of a set...")
+            self.strlist.append("This is now MINE! My "+itemshort+"! My PRECIOUS!")
+            self.strlist.append("Oh yes, a "+item+"! Exactly what I needed!")
+            self.strlist.append("Winner winner, chicken dinner! It's a "+item)
             string = random.choice(self.strlist)
 
         if type == "empty":
@@ -287,7 +294,8 @@ class Stringhandler(object):
             self.strlist.append("You find... nothing.")
             self.strlist.append("Sorry, only cobwebs, nothing of use.")
             self.strlist.append("These bugs are definitely no feature.")
-            # self.strlist.append("")
+            self.strlist.append("Only used scrolls an empty flasks...")
+            self.strlist.append("Nothing ... really??")
             string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -319,6 +327,7 @@ class Stringhandler(object):
             self.strlist.append("Hey man, this "+name+" was endangered! Might have been the last of its kind...")
             self.strlist.append("You killed "+ name+"!")
             self.strlist.append('You beat ' +name+ ' into oblivion.')
+            self.strlist.append('The great ' +name+ ' is no more. Songs of this epic moment will be sung through all eternity ... \nbut not for you. Not now! There is still work to do!')
             self.strlist.append(name+ ' is dead!')
             string = random.choice(self.strlist)
 
@@ -336,8 +345,9 @@ class Stringhandler(object):
             self.strlist.append("A farewell to one of the unique monsters. It died a very painful death by your hands.")
             self.strlist.append("You complete your mission."+name+" is dead finally! Congrats! Go get some cookies!")
             self.strlist.append("Hey man, this "+name+" was endangered! Might have been the last of its kind...")
-            self.strlist.append("You killed "+ name+"!")
-            self.strlist.append('You beat ' +name+ ' into oblivion.')
+            self.strlist.append("You killed "+name+"!")
+            self.strlist.append('You beat '+name+' into oblivion.')
+            self.strlist.append('The great '+name+' is no more. Songs of this epic moment will be sung through all eternity ... \nbut not for you. Not now! There is still work to do!')
             self.strlist.append(name+ ' is dead!')
             string = random.choice(self.strlist)
 
@@ -349,6 +359,7 @@ class Stringhandler(object):
             self.strlist.append('Someone seems to favour you... A new '+item+'!')
             self.strlist.append('uuuuh, look what you found! You better keep that little precious '+item+", 'cause you will never know when you need it. *blink*")
             self.strlist.append("MY PRECIOUS! It's "+item)
+            self.strlist.append("Celebrating your victory, you almost forgot to take "+item+" with you.")
             string = random.choice(self.strlist)
 
         elif type == "hit":
@@ -374,7 +385,10 @@ class Stringhandler(object):
             self.strlist.append('"Your soul is mine!"')
             self.strlist.append("'Nope dude! You ain't going nowhere!'")
             self.strlist.append("'Where do you think you're going?!'")
-            self.strlist.append('')
+            self.strlist.append('Tell me '+playername+'. Do you fear death?')
+            self.strlist.append('Why leave so soon?')
+            self.strlist.append('How rude! Right as I started to like you!')
+            self.strlist.append("The party ain't over yet!")
             string = random.choice(self.strlist)
 
         elif type == "fleeSuccess":
@@ -385,6 +399,8 @@ class Stringhandler(object):
             self.strlist.append('Close call, mate. Try not to die, will you?')
             self.strlist.append('To be, or not to be?')
             self.strlist.append('Can you please watch out. You almost died.')
+            self.strlist.append('Running for your life, you manage to reach a temporary safe spot.')
+            self.strlist.append("With a desperate move, you head for the exit. Barely alive and all out of breath, you're safe at last ... for the moment")
             string = random.choice(self.strlist)
 
         elif type == "fleeFail":
@@ -393,8 +409,9 @@ class Stringhandler(object):
             """
             self.strlist.append('As you run through the darkness you fall and hit your head on something.')
             self.strlist.append('You are tumbling through the darkness, trusting your reflexes to keep yourself on track.\nBut, alas, you have been betraid! You stuble, and your head crashes into a rock.')
-
             self.strlist.append('Can you please watch out. You almost died.')
+            self.strlist.append('Hastily trying to flee you stumble over your own feet.')
+            self.strlist.append('You try to run for good, but the angry stomps of '+name+' throws you off your feet and on your back.')
             string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -419,7 +436,8 @@ class Stringhandler(object):
             self.strlist.append(name+ " is almost down! You've just dealt" + damage + "damage! You have my respect! Keep going!")
             self.strlist.append("I think you just broke "+name+ "'s arm. That was"+ damage +"damage.")
             self.strlist.append("A brutal kick in the gut! "+name+" suffers"+ damage +"damage.")
-            # self.strlist.append("")
+            self.strlist.append("You hit "+name+" right between the eyes and deal "+damage+" damage. Blinded by your hit, "+name+" gets furious and blindly swings at you.")
+            self.strlist.append("A solid hit for "+damage+" damage. Well done champ!")
             string = random.choice(self.strlist)
 
 
@@ -428,7 +446,9 @@ class Stringhandler(object):
             Some strings to let the player know the monster lost health
             """
             self.strlist.append("The monster's health is now at"+hp )
-            self.strlist.append('If it bleeds, you can kill it!')
+            self.strlist.append('If it bleeds, you can kill it! '+hp+' life left!')
+            self.strlist.append(name+" already took a good beating. Only "+hp+" life left. Keep going!")
+            self.strlist.append('The defenses are weakened. Health now at '+hp)
             string = random.choice(self.strlist)
 
 
@@ -440,6 +460,8 @@ class Stringhandler(object):
             self.strlist.append("What's this?! Oh no it's "+ namelong+ "!")
             self.strlist.append('Crap, not another one of those... \nThis one looks like '+ namelong+ "!")
             self.strlist.append("'Why hello there! I am " + namelong +"\nPleased to meet you. NOT!'")
+            self.strlist.append("I'll be damned, the legends are true! It's "+namelong+"!")
+            self.strlist.append("From the shadows, a mysterious figure emerges. As you draw closer, you recognize this figure as "+namelong+"!")
             string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -459,6 +481,8 @@ class Stringhandler(object):
             self.strlist.append("You are going inside a room and it is so pitch black that you feel\nlike the darkness is going to swallow you up.\nYou hate the darkness, already.")
             self.strlist.append("A cold shiver ran down your spine as you enter a dark room.")
             self.strlist.append("You are entering a room full of the scent of fear, tears, torture and death.\nAnd you know right ahead, your journey will be a tough one.")
+            self.strlist.append("As you enter a cold and unwelcoming room, you try to remember, \nwhy on earth you HAD to leave your couch tonight.")
+            self.strlist.append("Wandering step by step into the mysterious darkness, \nwondering how you even got here")
             string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
@@ -483,7 +507,7 @@ class Stringhandler(object):
             self.strlist.append(monster+' hits you hard. You take '+damage+'damage!')
             self.strlist.append(monster+" just whipped your ASS. "+damage+"damage for you.")
             self.strlist.append("You've got hit by "+monster+ " very badly. You take "+damage+"damage.")
-            self.strlist.append(monster+" is out of control. It is attacking you non stop and you can't protect yourself. You suffer " +damage+ "damage.")
+            self.strlist.append(monster+" is out of control. It is attacking you non stop and you can't protect yourself. You suffer "+damage+"damage.")
             self.strlist.append("A brutal attack from "+monster+". You suffer "+damage+"damage.")
             self.strlist.append("The monster throws everything at you it has. What a hit ! "+damage+"damage!")
             self.strlist.append("It strikes back! "+damage+"damage! BRUTAL!")
