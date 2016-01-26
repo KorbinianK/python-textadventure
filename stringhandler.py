@@ -473,8 +473,8 @@ class Stringhandler(object):
         playerName = str(Fore.CYAN +" "+player.name +" "+Fore.WHITE)
         monster = str(Fore.GREEN +monster.getShortName()+Fore.WHITE)
 
-        print player.name
-        print player.getCondition()
+        # print player.name
+        # print player.getCondition()
 
         if type == "takeDamage":
             """
@@ -624,12 +624,12 @@ class Stringhandler(object):
         """
 
         if player is not None:
-            print player.getCondition()
+            # print player.getCondition()
             if player.getCondition() == "normal":
                 return string
                 #return self.killString(string)
             elif player.getCondition() == "poisoned":
-                print "poisoned"
+                # print "poisoned"
                 # return self.killString(string)
                 return self.reverseString(string)
         else:

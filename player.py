@@ -33,7 +33,7 @@ class Player(object):
     def is_in_room(self):
         return self.is_in_room
     def getCondition(self):
-        print "player"+self.condition
+        # print "player"+self.condition
         return self.condition
 
     def setCondition(self,condition):
@@ -46,11 +46,10 @@ class Player(object):
 
     def takeDamage(self, damage, monster):
         self.hp -= damage
-
         rnd = random.randint(0,20)
-        print rnd
+        # print rnd
         if rnd > 3:
-            print "poisoned"
+            # print "poisoned"
             self.condition = "poisoned"
         if rnd is 10 or 15 or 20:
             self.condition = "normal"
