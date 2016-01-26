@@ -22,7 +22,9 @@ class Stringhandler(object):
     #     return self.modify(string,player)
 
     def strBoss (self,type,player,damage):
-
+        """
+        Megabyte Boss
+        """
         if type == "bHit":
             self.strlist.append("01101111 01110101 01110100 01100011 01101000")
             self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
@@ -43,6 +45,35 @@ class Stringhandler(object):
             # self.strlist.append("")
             # self.strlist.append("")
             string = random.choice(self.strlist)
+        """
+        Hipster Boss
+        """
+        if type == "hSpawn":
+            self.strlist.append("You are not sure, but you think you heard someone mumbeling "+Fore.GREEN+ "'Yolo'"+Fore.WHITE+" in a shrill and strange voice")
+            self.strlist.append("In front of you you see a man or more like a boy.\nThe lack of light you again has you unsure what exactly you are facing... could it be"+Fore.GREEN+"the Hipster"+Fore.WHITE+"?! No please, not "+Fore.GREEN+"the Hipster"+Fore.WHITE+".")
+            self.strlist.append("As soon as you enter the next room you hear some strange voice:\n"+\
+             Fore.GREEN+ "'Oh boy is this a classy vintage room'"+Fore.WHITE+" and"+Fore.GREEN+ " 'yolo who cares about light, don't let the negative vibes catch you'\n"+Fore.WHITE+\
+             "Scared shitless you realize: it's the cursed lair of"+Fore.GREEN+"the Hipster"+Fore.WHITE+"!")
+            self.strlist.append("You enter a room, in front of you a person, you would describe to others as weirdly dressed man.\n"+\
+            "His face framed by an excellent long beard. He wears skinny jeans much closer to leggings than they should be... "+Fore.GREEN+"a Hipster"+Fore.WHITE+".")
+            string = random.choice(self.strlist)
+        if type == "hHit":
+            damage = str(Fore.RED + str(damage) + Fore.WHITE)
+            self.strlist.append("He softly and sensitives looks through his nerdy glasses. While catching his ultra positive vibes you take "+damage+" damage")
+            self.strlist.append("Oh holy crap you looked him in the eye! He begins to tell you about an alternative life style and you take "+damage+" damage by only listening.")
+            self.strlist.append("Not understanding how one can run so fast in such skinny jeans, he jumps forward to hand you a flyer- you take "+damage+" damage")
+            self.strlist.append("Oh no, he throws his hessian bag towards you! You get XX damage!")
+            self.strlist.append("Hearing a loud 'YOLO' the hipster jumps towards you, beating you with his skinny arms. You take "+damage+" damage.")
+            string = random.choice(self.strlist)
+        if type == "hDie":
+            self.strlist.append("You got away from the hipster! Finally, you see ....a unicorn coming towards you?!. You jump on it and ride towards the rainbow on the horizon.")
+            self.strlist.append("Surprisingly, well not really all that surprising, you win! The hipster allows you to shave his beard!\nYou rescued the princess... ehm..."+Fore.GREEN+" the Hipster"+Fore.WHITE+" and you won the game!")
+            self.strlist.append("As the room starts to crumble a unicorn suddenly appears and runs across the room, you just manage to jump on it!\nTogether you are riding towards the glittery sunrise while the room around you collapses and buries "+Fore.GREEN+ "the Hipster"+Fore.WHITE+" for good.")
+            self.strlist.append("You catch the moment while"+Fore.GREEN+" the Hipster "+Fore.WHITE+"is playing gameboy and ran out of the room into the freedom! Congratulation you won.")
+            self.strlist.append(Fore.GREEN+"'Screw you! I played text adventures before it was cool!'"+Fore.WHITE+"\nhe shouted before exploding into a million, definitely cool, pieces.")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+
         del self.strlist[:]
         return self.modify(string,player)
 

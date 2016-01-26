@@ -14,14 +14,15 @@ class Endboss(object):
         self.handler = Stringhandler()
         self.bossList = []
         self.byteBoss = Bosslist.ByteBoss()
+        self.hipsterBoss = Bosslist.HipsterBoss()
 
     def randomBoss(self,player):
         self.bossList.append(self.byteBoss)
-        # self.bossList.append("")
+        self.bossList.append(self.hipsterBoss)
         # self.bossList.append("")
         # self.bossList.append("")
         boss = random.choice(self.bossList)
-        
+
         return boss
 
     # def setupBoss(self,player):
