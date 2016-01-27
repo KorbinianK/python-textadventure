@@ -59,7 +59,6 @@ class Player(object):
         else:
             return self.die(monster)
 
-
     def lvlUp(self):
         self.level +=1
         print self.handler.strPlayer("lvl",self)
@@ -88,7 +87,7 @@ class Player(object):
             string = "Sorry Dave, I'm afraid I can't let you do that."
         else:
             self.equipped = self.inventory[slot]
-            string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Fore.WHITE+" in your hand."
+            return "\n"+self.handler.strPlayerItem("newItem", self, item)
             if isinstance(item,Weapon):
                 self.strength = 1
                 self.strength += self.equipped.damage
@@ -103,15 +102,15 @@ class Player(object):
                 heal = int(self.hp*self.equipped.strength)
                 if self.hp + heal <= 100:
                     self.hp += heal
-                    return "You healed "+str(heal)
+                    return "\n"+self.handler.strPlayer("heal", self)
                 else:
                     self.hp = 100
-                    return "You are now at full health"
+                    return "\n"+self.handler.strPlayer("healFull", self)
             else:
-                return "It's empty."
+                return "\n"+self.handler.strPlayer("emptyPot", self)
 
         elif isinstance(self.equipped,list):
-            return "You can't drink air..."
+            return "\n"+self.handler.strPlayer("drinkAir", self)
         else:
             return "You can't drink "+self.equipped.name
 
@@ -121,6 +120,7 @@ class Player(object):
             string = self.handler.strPlayer("dies",self)
         else:
             string = self.handler.strPlayer("dies",self)+"\n"
+
         if "SHAKESPEAR" in string:
 
             string =string.replace("SHAKESPEAR ","")
@@ -153,6 +153,6 @@ class Player(object):
         for index,item in enumerate(self.inventory, start=1):
              string = string+Fore.YELLOW+item.name+Fore.WHITE+"[" + str(index) +"], "
         string = string + "\nType"+Fore.CYAN +" equip 1 "+Fore.WHITE+"to equip the first item form the list."
-        return string
+        return self.handler.modify(string, self)
 
     #    return self.inventory[0].name + self.inventory[1].name
