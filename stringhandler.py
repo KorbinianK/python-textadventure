@@ -35,6 +35,12 @@ class Stringhandler(object):
 
         if type == "bAttack":
 
+            self.strlist.append("He hits you and you take "+damage+" damage.")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
             # self.strlist.append("")
             # self.strlist.append("")
             string = random.choice(self.strlist)
@@ -78,6 +84,16 @@ class Stringhandler(object):
             self.strlist.append("As the room starts to crumble a unicorn suddenly appears and runs across the room, you just manage to jump on it!\nTogether you are riding towards the glittery sunrise while the room around you collapses and buries "+Fore.GREEN+ "the Hipster"+Fore.WHITE+" for good.")
             self.strlist.append("You catch the moment while"+Fore.GREEN+" the Hipster "+Fore.WHITE+"is playing gameboy and ran out of the room into the freedom! Congratulation you won.")
             self.strlist.append(Fore.GREEN+"'Screw you! I played text adventures before it was cool!'"+Fore.WHITE+"\nhe shouted before exploding into a million, definitely cool, pieces.")
+            # self.strlist.append("")
+            string = random.choice(self.strlist)
+
+        if type == "hAttack":
+            self.strlist.append("He hits you and you take "+damage+" damage.")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
             # self.strlist.append("")
             string = random.choice(self.strlist)
 

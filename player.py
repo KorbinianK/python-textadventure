@@ -16,7 +16,7 @@ class Player(object):
         self.victory = False
         self.condition = "normal"
         self.previous = "normal"
-        self.strength = 1
+        self.strength = 5
         self.armor = 1
         self.level = 1
         self.inventory =[]

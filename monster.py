@@ -84,12 +84,13 @@ class Monster(object):
             self.setLoot(self.level)
 
 
-    def attackPlayer(self,room,player):
-        damage = self.calcDamage()
+    def attackPlayer(self,room,player,damage):
+
         return player.takeDamage(damage,room.monster)
 
     def attack(self,room,player):
         damage = player.getStrength()+random.randint(0,3)
+        damageplayer = self.calcDamage()
         if (self.hp - damage <= 0):
             room.killMonster()
             player.facesMonster = False
@@ -98,10 +99,12 @@ class Monster(object):
             else:
                 return self.handler.strMonster("killed",self,player)
 
+        elif player.hp - damageplayer <=0:
+            return "\n"+self.attackPlayer(room,player,damageplayer)
         else:
             self.takeDamage(damage,player)
             return self.handler.strMonsterDamage("getAttacked",self,damage,player) +"\n"+\
-            self.handler.strMonsterDamage("returnHP",self,damage,player) +"\n"+self.attackPlayer(room,player)
+            self.handler.strMonsterDamage("returnHP",self,damage,player) +"\n"+self.attackPlayer(room,player,damageplayer)
 
     def flee(self, room, player):
             player.facesMonster = False

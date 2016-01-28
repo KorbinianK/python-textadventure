@@ -1,5 +1,6 @@
 from monster import Monster
 from endboss import Endboss
+from bosslist import ByteBoss,HipsterBoss
 from settings import Settings
 from chest import Chest
 import random, time,sys
@@ -23,8 +24,8 @@ class Room(object):
         self.monster = Monster()
         self.inspected = False
         self.handler = Stringhandler()
-        self.endBoss = Endboss()
-        self.boss = self.endBoss.randomBoss(player)
+        self.boss = Endboss()
+        self.endboss = self.boss.randomBoss(player)
 
 
     # Sets up a new Room and displays some "Intro Text"
