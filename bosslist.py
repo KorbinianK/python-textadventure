@@ -19,6 +19,7 @@ class ByteBoss(object):
 
     def takeDamage(self,damage,player):
         self.hp -= damage
+        player.victory = True
 
     def getHP(self):
         return self.hp

@@ -67,7 +67,7 @@ def play():
     while player.is_alive():
 
         if player.victory:
-            print "Do you want to"+Fore.CYAN+"restart"+Fore.WHITE+"or"+Fore.CYAN+"exit"+Fore.WHITE+"?"
+            print "Do you want to "+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+" exit"+Fore.WHITE+"?"
             end_input = raw_input(Fore.CYAN +"\n"+ player.name+ '>: ')
             if end_input.lower() == "restart":
                 # player.alive = True
@@ -88,8 +88,9 @@ def play():
                 string = room.monster.spawn(room,player)
                 if room.hasMonster:
                     print str(string)
-                else:
+                elif not room.hasBoss:
                     print chest
+                
 
             elif action_input.lower() == "restart":
                 player.alive = True

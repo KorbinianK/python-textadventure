@@ -57,7 +57,7 @@ class Stringhandler(object):
         """
         if type == "hSpawn":
             self.strlist.append("You are not sure, but you think you heard someone mumbeling "+Fore.GREEN+ "'Yolo'"+Fore.WHITE+" in a shrill and strange voice")
-            self.strlist.append("In front of you you see a man or more like a boy.\nThe lack of light you again has you unsure what exactly you are facing... could it be"+Fore.GREEN+"the Hipster"+Fore.WHITE+"?! No please, not "+Fore.GREEN+"the Hipster"+Fore.WHITE+".")
+            self.strlist.append("In front of you you see a man or more like a boy.\nThe lack of light you again has you unsure what exactly you are facing...\nCould it be? "+Fore.GREEN+"A Hipster"+Fore.WHITE+"?! No please, not "+Fore.GREEN+"the Hipster"+Fore.WHITE+".")
             self.strlist.append("As soon as you enter the next room you hear some strange voice:\n"+\
              Fore.GREEN+ "'Oh boy is this a classy vintage room'"+Fore.WHITE+" and"+Fore.GREEN+ " 'yolo who cares about light, don't let the negative vibes catch you'\n"+Fore.WHITE+\
              "Scared shitless you realize: it's the cursed lair of "+Fore.GREEN+"the Hipster"+Fore.WHITE+"!")
@@ -550,6 +550,7 @@ class Stringhandler(object):
                 self.strlist.append('\nYou are '+condition+'.\n')
                 return random.choice(self.strlist)
             elif player.previous == "poisoned":
+                player.previous = "normal"
                 self.strlist.append("This attack knocked you right back into reality.")
                 self.strlist.append("The "+Fore.MAGENTA+"Poison"+Fore.WHITE+" seems to have faded.")
                 # self.strlist.append("")
@@ -640,24 +641,25 @@ class Stringhandler(object):
         """
         Strings for the player that involve items
         """
-        item = str(Fore.YELLOW + item.name + Fore.WHITE)
-        itemshort = Fore.YELLOW + item.nameshort + Fore.WHITE
+        itemname =  Fore.YELLOW +item.name + Fore.WHITE
+        itemshort = Fore.YELLOW+ item.nameshort + Fore.WHITE
+
         if type =="drinkItem":
             """
             If the player tries to drink items
             """
-            self.strlist.append("You can't drink "+item)
+            self.strlist.append("You can't drink "+itemname)
             self.strlist.append("This is not a potion, fool!")
-            self.strlist.append("Why on earth did you think you can drink "+item+"?! Are you drunk?")
+            self.strlist.append("Why on earth did you think you can drink "+itemname+"?! Are you drunk?")
             self.strlist.append("I would not drink that if I were you...")
-            self.strlist.append("Sure! I mean you can try drinking "+item+". But you have to know, that's impossible!")
+            self.strlist.append("Sure! I mean you can try drinking "+itemname+". But you have to know, that's impossible!")
             string = random.choice(self.strlist)
 
         if type =="newItem":
             """
             Informs the player about a new item he found
             """
-            self.strlist.append("You now have "+item+" in your hand.")
+            self.strlist.append("You now have "+itemname+" in your hand.")
             self.strlist.append("Oh, ah shiny new "+itemshort+".")
             self.strlist.append("Wow the new "+itemshort+" feels nice.")
             self.strlist.append("What a nice "+itemshort+ "! Feels heavy.")

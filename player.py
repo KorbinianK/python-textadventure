@@ -57,6 +57,9 @@ class Player(object):
             if self.condition == "poisoned":
                 self.condition = "normal"
                 self.previous = "poisoned"
+        else:
+            self.condition= "normal"
+            self.previous ="normal"
         if self.hp >=0:
             return "\n"+self.handler.strPlayer("condition",self)+"\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
