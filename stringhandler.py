@@ -223,7 +223,7 @@ class Stringhandler(object):
         if type == "chestOpens":
 
                 self.strlist.append("The chest opens with a loud squeaky noise.")
-                self.strlist.append("A strong scent of blood is escaping the chest as you opening it.")
+                self.strlist.append("A strong scent of blood is escaping the chest as you open it.")
                 self.strlist.append("You just opened the chest.")
                 self.strlist.append('What do we have here?')
                 string = random.choice(self.strlist)
@@ -514,10 +514,10 @@ class Stringhandler(object):
             self.strlist.append("It strikes back! "+damage+"damage! BRUTAL!")
             self.strlist.append("You try to dodge "+monster+"'s attack and fail. Ouch! That must have hurt... "+damage+"damage right to the face.")
             self.strlist.append("A strong hit from "+monster+" throws you hard on your back. You suffer "+damage+" damage!")
-            self.strlist.append("FATALITY!!! "+damage+" damage!")  
+            self.strlist.append("FATALITY!!! "+damage+" damage!")
             self.strlist.append(monster+" gets at you for "+damage+" damage! You almost passed out!")
             self.strlist.append("Relentlessly, the monster unleashes blow after blow. In your despair, you seek for shelter or retreat, no chance! "+damage+"  damage dealt!")
-            self.strlist.append("You took an arrow to the knee! "+damage+" damage!")  
+            self.strlist.append("You took an arrow to the knee! "+damage+" damage!")
             string = random.choice(self.strlist)
 
         if type == "hp":
@@ -540,6 +540,23 @@ class Stringhandler(object):
         """
         hp = str(Fore.CYAN +" "+ str(player.getHP()) +" "+ Fore.WHITE)
         playerName = str(Fore.CYAN +" "+player.name +""+Fore.WHITE)
+
+        if type == "condition":
+            condition = Fore.MAGENTA+player.getCondition()+Fore.WHITE
+            if player.getCondition() == "poisoned":
+                self.strlist.append('\nYou feel a strange sting in your arm... you got '+condition+'.\n')
+                self.strlist.append('\nYour head starts spinning and you want to throw up. You got '+condition+'.\n')
+                self.strlist.append('\nThis new wound is leaking some blue liquid... It is '+Fore.MAGENTA+'Poison!'+Fore.WHITE+'\n')
+                self.strlist.append('\nYou are '+condition+'.\n')
+                return random.choice(self.strlist)
+            elif player.previous == "poisoned":
+                self.strlist.append("This attack knocked you right back into reality.")
+                self.strlist.append("The "+Fore.MAGENTA+"Poison"+Fore.WHITE+" seems to have faded.")
+                # self.strlist.append("")
+                # self.strlist.append("")
+                return random.choice(self.strlist)
+            else:
+                return ""
 
         if type == "lvl":
             """
@@ -624,6 +641,7 @@ class Stringhandler(object):
         Strings for the player that involve items
         """
         item = str(Fore.YELLOW + item.name + Fore.WHITE)
+        itemshort = Fore.YELLOW + item.nameshort + Fore.WHITE
         if type =="drinkItem":
             """
             If the player tries to drink items
@@ -639,11 +657,11 @@ class Stringhandler(object):
             """
             Informs the player about a new item he found
             """
-            self.strlist.append("You now have a"+item+" in your hand.")
-            self.strlist.append("Oh, ah shiny new "+item+".")
-            self.strlist.append("Wow the new "+item+" feels nice.")
-            self.strlist.append("What a nice "+item+ "! Feels heavy.")
-            self.strlist.append("You grasp the "+item+" and swing it through the air for a testdrive! Nice!")
+            self.strlist.append("You now have "+item+" in your hand.")
+            self.strlist.append("Oh, ah shiny new "+itemshort+".")
+            self.strlist.append("Wow the new "+itemshort+" feels nice.")
+            self.strlist.append("What a nice "+itemshort+ "! Feels heavy.")
+            self.strlist.append("You grasp the "+itemshort+" and swing it through the air for a testdrive! Nice!")
             string = random.choice(self.strlist)
 
         del self.strlist[:]

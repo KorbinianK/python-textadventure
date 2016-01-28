@@ -15,6 +15,7 @@ class Player(object):
         self.facesBoss = False
         self.victory = False
         self.condition = "normal"
+        self.previous = "normal"
         self.strength = 1
         self.armor = 1
         self.level = 1
@@ -50,12 +51,14 @@ class Player(object):
         # self.condition = "poisoned"
         # print rnd
         if rnd <  3:
-            print "You got poisoned"
             self.condition = "poisoned"
+            self.previous = "normal"
         elif rnd is 10 or 15 or 20:
-            self.condition = "normal"
+            if self.condition == "poisoned":
+                self.condition = "normal"
+                self.previous = "poisoned"
         if self.hp >=0:
-            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+            return "\n"+self.handler.strPlayer("condition",self)+"\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 
