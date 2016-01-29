@@ -2,8 +2,9 @@ from colorama import init, Fore, Back, Style
 from settings import Settings
 from weapon import Weapon
 from potion import Potion
-import time,sys
+import time,sys,random,re
 from random import uniform
+from stringhandler import Stringhandler
 
 class Player(object):
 
@@ -11,9 +12,11 @@ class Player(object):
     	self.name = "a"
         self.hp = 100
         self.facesMonster = False
+        self.facesBoss = False
         self.victory = False
         self.condition = "normal"
-        self.strength = 1
+        self.previous = "normal"
+        self.strength = 5
         self.armor = 1
         self.level = 1
         self.inventory =[]
@@ -23,6 +26,7 @@ class Player(object):
         self.triedWalk = False
         self.alive = True
         self.settings = Settings()
+        self.handler = Stringhandler()
 
     def is_alive(self):
         return self.hp > 0
@@ -30,29 +34,47 @@ class Player(object):
     def is_in_room(self):
         return self.is_in_room
 
+    def getCondition(self):
+        return self.condition
+
+    def setCondition(self,condition):
+        self.condition = condition
+
+    def wins(self):
+        self.facesBoss = False
+        self.facesMonster = False
+        self.victory = True
+
     def takeDamage(self, damage, monster):
         self.hp -= damage
+        rnd = random.randint(0,20)
+        # self.condition = "poisoned"
+        # print rnd
+        if rnd < 10:
+            self.previous = self.condition
+            self.condition = "poisoned"
+        elif rnd is 10 or 15 or 20:
+            if self.condition == "poisoned":
+                self.condition = "normal"
+                self.previous = "poisoned"
+        else:
+            self.previous = self.condition
         if self.hp >=0:
-            return "You take"+Fore.RED +" "+ str(damage) +" "+ Style.RESET_ALL +"damage.\n"+\
-            Fore.CYAN +self.name+ Style.RESET_ALL + " your HP is now at "+ Fore.CYAN + str(self.getHP()) + Style.RESET_ALL +"\n"
+            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 
     def lvlUp(self):
-        # print "goal: "+ self.settings.getGoal()
         self.level +=1
-        # print "lvl: "+ str(self.level)
-        if self.level >= self.settings.getGoal():
-            print "won"
-            self.victory = True
-        else:
-            print "\nCongratulations "+Fore.CYAN+self.name+Style.RESET_ALL+", you leveled up!\n"
+        print self.handler.strPlayer("lvl",self)
 
     def getHP(self):
         return self.hp
 
     def setCondition(self, condition):
     	self.condition = condition
+    def getPrevious(self):
+        return self.previous
 
     def is_facing_Monster(self):
         return self.facesMonster
@@ -68,13 +90,16 @@ class Player(object):
 
     def equipItem(self,pos,item):
         slot = pos
-        self.equipped = self.inventory[slot]
-        string = "You now have "+Fore.YELLOW+self.inventory[slot].name+Style.RESET_ALL+" in your hand."
-        if isinstance(item,Weapon):
-            self.strength = 1
-            self.strength += self.equipped.damage
+        if int(slot) >= len(self.inventory):
+            string = "Sorry Dave, I'm afraid I can't let you do that."
         else:
-            string += "\nDo you want to"+Fore.CYAN+" drink "+Style.RESET_ALL+"it?"
+            self.equipped = self.inventory[slot]
+            return "\n"+self.handler.strPlayerItem("newItem", self, item)
+            if isinstance(item,Weapon):
+                self.strength = 1
+                self.strength += self.equipped.damage
+            else:
+                string += "\nDo you want to"+Fore.CYAN+" drink "+Fore.WHITE+"it?"
         return string
 
     def heal(self):
@@ -84,36 +109,47 @@ class Player(object):
                 heal = int(self.hp*self.equipped.strength)
                 if self.hp + heal <= 100:
                     self.hp += heal
-                    return "You healed "+str(heal)
+                    return "\n"+self.handler.strPlayer("heal", self)
                 else:
                     self.hp = 100
-                    return "You are now at full health"
+                    return "\n"+self.handler.strPlayer("healFull", self)
             else:
-                return "It's empty."
+                return "\n"+self.handler.strPlayer("emptyPot", self)
 
         elif isinstance(self.equipped,list):
-            return "You can't drink air..."
+            return "\n"+self.handler.strPlayer("drinkAir", self)
         else:
-            return "You can't drink "+self.equipped.name
+            return self.handler.strPlayerItem("drinkItem", self,self.equipped)
 
     def die(self, monster):
+        stringtwo = ""
         if monster is not None:
-            string = "%s takes one last swing at you... The air escapes your lungs and a metallic taste fills your mouth\n \
-            One last thought rushes into your mind, screaming and trying to escape your mouth \n"%(monster.getShortName())
+            string = self.handler.strPlayer("dies",self)
         else:
-            string = "This was too much...  The air escapes your lungs and a metallic taste fills your mouth\n \
-            One last thought rushes into your mind, screaming and trying to escape your mouth \n"
+            string = self.handler.strPlayer("dies",self)+"\n"
+
+        if "SHAKESPEAR" in string:
+
+            string =string.replace("SHAKESPEAR ","")
+            stringtwo = "to die, to sleep..."
+        elif "FORGET" in string:
+            string = string.replace("FORGET ","")
+            stringtwo = "\nDo not forget me..."
+        elif "FIREFLY" in string:
+            string = string.replace("FIREFLY ","")
+            stringtwo = "\nCurse your sudden but inevitable betrayal..."
+
         for char in string:
             time.sleep(uniform(0.05, 0.1))
-            sys.stdout.write('\033[35m'+char)
+            sys.stdout.write('\033[36m'+char)
             sys.stdout.flush()
-        stringtwo = "Do not forget me..."
+
         for char in stringtwo:
-            time.sleep(uniform(0.6, 1))
-            sys.stdout.write('\033[33m'+char)
+            time.sleep(uniform(0.1, 0.6))
+            sys.stdout.write('\033[36m'+char)
             sys.stdout.flush()
         self.alive = False
-        return Style.RESET_ALL+"\nYou are dead.\n\n"+Fore.CYAN+"restart "+Style.RESET_ALL+"or"+Fore.CYAN+"exit?"
+        return Fore.WHITE+"\n\n\nYou are dead.\n\n"+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+" exit?"
 
     def getStrength(self):
         return self.strength
@@ -122,8 +158,8 @@ class Player(object):
     def printInventory(self):
         string = "You own: "
         for index,item in enumerate(self.inventory, start=1):
-             string = string+Fore.YELLOW+item.name+Style.RESET_ALL+"[" + str(index) +"], "
-        string = string + "\nType"+Fore.CYAN +" equip 1 "+Style.RESET_ALL+"to equip the first item form the list."
-        return string
+             string = string+Fore.YELLOW+item.name+Fore.WHITE+"[" + str(index) +"], "
+        string = string + "\nType"+Fore.CYAN +" equip 1 "+Fore.WHITE+"to equip the first item form the list."
+        return self.handler.modify(string, self)
 
     #    return self.inventory[0].name + self.inventory[1].name
