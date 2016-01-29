@@ -88,6 +88,9 @@ def play():
                 string = room.monster.spawn(room,player)
                 if room.hasMonster:
                     print str(string)
+                # elif room.hasBoss:
+                #     #do nothing here
+                #     print
                 else:
                     print chest
 

@@ -28,9 +28,9 @@ class ByteBoss(object):
     #     damage = self.strength + random.randint(0,3)
     #     return damage
 
-    def attack(self,player,damage):
-
-        return self.handler.strBoss("bAttack",player,damage)
+    # def attack(self,player,damage):
+    #
+    #     return self.handler.strBoss("bAttack",player,damage)
 
     # def attackFromPlayer(self,player):
     #     damage = player.getStrength()+random.randint(0,3)
@@ -55,7 +55,7 @@ class HipsterBoss(object):
     def __init__(self):
         self.name = "the Hipster"
         self.isBoss = True
-        self.hp = 50
+        self.hp = 60
         self.strength = 8
         self.killed = False
         self.handler = Stringhandler()

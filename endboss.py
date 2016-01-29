@@ -1,5 +1,6 @@
 
 import bosslist as Bosslist
+from bosslist import ByteBoss,HipsterBoss
 import random, time,sys
 from random import uniform
 from stringhandler import Stringhandler
@@ -51,34 +52,34 @@ class Endboss(object):
             self.kill()
             player.facesBoss = False
             player.victory = True
-            if self.boss is isinstance(self,self.byteBoss):
+            if isinstance(self.boss,ByteBoss):
                 return self.handler.strBoss("bDie",player,damage)
-            elif self.boss is isinstance(self,self.hipsterBoss):
+            elif isinstance(self.boss,HipsterBoss):
                 return self.handler.strBoss("hDie",player,damage)
             else:
                 return "Error 404: Boss not found"
         else:
             self.takeDamage(damage,player)
             print "hit"
-            if isinstance(self.boss,self.byteBoss):
+            if isinstance(self.boss,ByteBoss):
 
-                return self.handler.strBoss("bHit",player,damage)+self.attack(player)
-            elif isinstance(self.boss,self.hipsterBoss()):
-                return self.handler.strBoss("hHit",player,damage)+self.attack(player)
+                return self.handler.strBoss("bHit",player,damage)+"\n"+self.attack(player)
+            elif isinstance(self.boss,HipsterBoss):
+                return self.handler.strBoss("hHit",player,damage)+"\n"+self.attack(player)
 
     def attack(self,player):
         damage = self.calcDamage()
-        if isinstance(self.boss,self.byteBoss):
-            return self.handler.strBoss("bAttack",player,damage)
-        elif isinstance(self.boss,self.hipsterBoss):
-            return self.handler.strBoss("hAttack",player,damage)
+        if isinstance(self.boss,ByteBoss):
+            return self.handler.strBoss("bAttack",player,damage)+player.takeDamage(damage,self.boss)
+        elif isinstance(self.boss,HipsterBoss):
+            return self.handler.strBoss("hAttack",player,damage)+player.takeDamage(damage,self.boss)
 
     def spawn(self,player):
 
         player.facesBoss = True
         damage = self.calcDamage()
         # print self.handler.strBoss("bSpawn",player,None)
-        if isinstance(self.boss,self.byteBoss):
+        if isinstance(self.boss,ByteBoss):
             return self.handler.strBoss("bSpawn",player,damage)
-        elif isinstance(self.boss,self.hipsterBoss):
+        elif isinstance(self.boss,HipsterBoss):
             return self.handler.strBoss("hSpawn",player,damage)

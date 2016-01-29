@@ -1,4 +1,5 @@
 from colorama import init, Fore, Back, Style
+from weapon import Weapon
 import random,sys,re
 
 
@@ -337,7 +338,7 @@ class Stringhandler(object):
             "It's off the twig! It's kicked the bucket, It's shuffled off its mortal coil, run down the curtain and joined the bleedin' choir invisible!!\n"+\
             "THIS IS AN EX-MONSTER!!")
             self.strlist.append("Oh Lord! You did it! The Monster is on his way to hell.")
-            self.strlist.append("You've got my huge respect dude! You just beaten up "+name+" and it's dead. Congrats!")
+            self.strlist.append("You've got my huge respect dude! You've just beaten up "+name+" and it's dead. Congrats!")
             self.strlist.append("A farewell to one of the unique monsters. It died a very painful death by your hands.")
             self.strlist.append("You complete your mission."+name+" is dead finally! Congrats! Go get some cookies!")
             self.strlist.append("Hey man, this "+name+" was endangered! Might have been the last of its kind...")
@@ -675,11 +676,15 @@ class Stringhandler(object):
             """
             Informs the player about a new item he found
             """
-            self.strlist.append("You now have "+itemname+" in your hand.")
-            self.strlist.append("Oh, ah shiny new "+itemshort+".")
-            self.strlist.append("Wow the new "+itemshort+" feels nice.")
-            self.strlist.append("What a nice "+itemshort+ "! Feels heavy.")
-            self.strlist.append("You grasp the "+itemshort+" and swing it through the air for a testdrive! Nice!")
+            if isinstance(item,Weapon):
+                self.strlist.append("You now have "+itemname+" in your hand.")
+                self.strlist.append("Oh, ah shiny new "+itemshort+".")
+                self.strlist.append("Wow the new "+itemshort+" feels nice.")
+                self.strlist.append("What a nice "+itemshort+ "! Feels heavy.")
+                self.strlist.append("You grasp the "+itemshort+" and swing it through the air for a testdrive! Nice!")
+            else:
+                self.strlist.append("A sip from this mighty"+itemshort+"should help.")
+                # self.strlist.append("")
             string = random.choice(self.strlist)
 
         del self.strlist[:]

@@ -43,7 +43,8 @@ class Actions():
                 if self.room.hasMonster:
                     if not self.room.monster.killed:
                         self.player.triedWalk = True
-                        return self.room.monster.attackPlayer(self.room,self.player)
+                        damage = self.room.monster.calcDamage()
+                        return self.room.monster.attackPlayer(self.room,self.player,damage)
                         # response = "a"
                     else:
                         return self.handler.strActions("nextRoomMonster",self.player,self.room) +\
@@ -174,7 +175,7 @@ class Actions():
 
             elif(self.action == "cheat"):
                 self.player.lvlUp()
-                self.player.strength = 100
+                self.player.strength = 10
                 self.player.name ="Lazy Cheater"
                 return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Fore.WHITE
 

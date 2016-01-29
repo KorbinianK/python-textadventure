@@ -118,7 +118,7 @@ class Player(object):
         elif isinstance(self.equipped,list):
             return "\n"+self.handler.strPlayer("drinkAir", self)
         else:
-            return "You can't drink "+self.equipped.name
+            return self.handler.strPlayerItem("drinkItem", self,self.equipped)
 
     def die(self, monster):
         stringtwo = ""
