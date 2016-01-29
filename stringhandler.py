@@ -70,6 +70,8 @@ class Stringhandler(object):
              "Scared shitless you realize: it's the cursed lair of "+Fore.GREEN+"the Hipster"+Fore.WHITE+"!")
             self.strlist.append("You enter a room, in front of you a person, you would describe to others as weirdly dressed man.\n"+\
             "His face framed by an excellent long beard. He wears skinny jeans much closer to leggings than they should be... "+Fore.GREEN+"a Hipster"+Fore.WHITE+".")
+            self.strlist.append("You're entering a new room.\nThis time its not dark, a massive chandelier with blood splashes is hanging from the ceiling and brightens up the room.\nYou realize that the vibe of this room is all different. In so many ways!\nEverything is like in a vintage style, but with a darker feeling. As you look around you catch a sight of the THING living in this room.\nA huge skinny boyish-looking man/monster with skinny jeans up to his ankles, with the newest nike shoes, long beard and the hair in a bun, huge nerd glasses covering up almost all of his face, and a huge watch on his wrist.\n\nYou immediatly know, what is standing in front of you! IT'S"+Fore.GREEN+" A HIPSTER "+Fore.WHITE+"!\nYour nightmare! He is looking at you and grinning. In that very moment you see his shark like teeth and he starts speaking:\n"+Fore.GREEN+"'So you little gnom you accomplished all the other rooms and defeated the monsters... my CREATIONS.\nThis is your end stop. You have to fight against me in order to leave this room. I just warn you.\nI am a vegan, but i think I can make an excuse this time for my evening meal. YOLO son!'"+Fore.WHITE)
+
             string = random.choice(self.strlist)
         if type == "hHit":
             damage = str(Fore.RED + str(damage) + Fore.WHITE)
@@ -727,7 +729,11 @@ class Stringhandler(object):
             elif player.getCondition() == "poisoned" and not player.getPrevious() == "normal":
                 # print "poisoned"
                 # return self.killString(string)
-                return self.reverseString(string,player)
+                rnd = random.randint(0,10)
+                if rnd < 100:
+                    return self.reverseString(string)
+                else:
+                    return self.killString(string)
             else:
                 player.previous = "poisoned"
                 return string
@@ -736,20 +742,31 @@ class Stringhandler(object):
 
     def killString(self,string):
         """
-        Modifier: Swaps letters -> String = gtrinS
+        Modifier: Swaps letters - String = gtrinS
         """
         newString = ""
-    	builder = ""
-    	for i in range(len(string)):
-    		letter = string[i]
-    		if((letter == " ") or (letter == ".") or (letter == ",")):
-    			newString += builder[-1] + builder[1: -1] + builder[0] + " "
-    			builder = ""
-    		else:
-    			builder += letter
-    	return newString
+        text = string.split()
+        for word in text:
+            i = re.sub(r'(\x1b[^m]*m)',"", word)
+            if (i[-1] == "."):
+                if (len(i) > 3):
+                    if (i[-2]== "." and i[-3] == "."):
+                        newString += i[-4] + i[1:-4] + i[0] + i[-3] + i[-2] + i[-1] + " "
+                    else:
+                        newString += i[-2] + i[1:-2] + i[0] + i[-1] +" "
 
-    def reverseString(self,string,player):
+            elif(i[-1] == "," and i[-2]=="'" or i[-1] =="." and i[-2]=="'"):
+                newString += i[-3] + i[1:-3] + i[0] + i[-2] + i[-1] +" "
+            elif (i[0] == "'"):
+                newString += i[0] + i[-1] + i[2:-1] + i[1] +" "
+            elif (i[-1] == "'" or i[-1] == "," or i[-1] =="!" or i[-1]=="?" or i[-1]==":"):
+                newString += i[-2] + i[1:-2] + i[0] + i[-1] +" "
+            else:
+                newString += i[-1] + i[1: -1] + i[0] + " "
+
+        return (Fore.RED + newString)
+
+    def reverseString(self,string):
         """
         Modifier: Returns the entire string -> gnirts eritne eht snruteR
         """
