@@ -92,6 +92,7 @@ class Room(object):
 
     def attackMonster(self,player):
         room  = self
+        
         return self.monster.attack(room,player)
 
     # Opens the chest, required for the player to be able to continue -> Room set to "Done"

@@ -33,8 +33,8 @@ class Player(object):
 
     def is_in_room(self):
         return self.is_in_room
+
     def getCondition(self):
-        # print "player"+self.condition
         return self.condition
 
     def setCondition(self,condition):
@@ -50,18 +50,17 @@ class Player(object):
         rnd = random.randint(0,20)
         # self.condition = "poisoned"
         # print rnd
-        if rnd <  3:
+        if rnd < 10:
+            self.previous = self.condition
             self.condition = "poisoned"
-            self.previous = "normal"
         elif rnd is 10 or 15 or 20:
             if self.condition == "poisoned":
                 self.condition = "normal"
                 self.previous = "poisoned"
         else:
-            self.condition= "normal"
-            self.previous ="normal"
+            self.previous = self.condition
         if self.hp >=0:
-            return "\n"+self.handler.strPlayer("condition",self)+"\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+' '+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 
@@ -74,6 +73,8 @@ class Player(object):
 
     def setCondition(self, condition):
     	self.condition = condition
+    def getPrevious(self):
+        return self.previous
 
     def is_facing_Monster(self):
         return self.facesMonster

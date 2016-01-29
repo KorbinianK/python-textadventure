@@ -81,6 +81,7 @@ class Actions():
             elif(self.action.lower()== "attack"):
 
                 if not self.monster.killed and self.player.facesMonster:
+
                     return self.room.attackMonster(self.player)
                 elif self.player.facesBoss:
                     boss = self.room.getBoss()
@@ -171,7 +172,8 @@ class Actions():
                 "\nHP: "+str(self.player.getHP()) + \
                 "\nLvl: "+str(self.player.level)+\
                 "\nVictory: "+str(self.player.victory)+\
-                "\nCondition: "+str(self.player.getCondition())
+                "\nCondition: "+str(self.player.getCondition())+\
+                "\nPrevCond: "+str(self.player.getPrevious())
 
             elif(self.action == "cheat"):
                 self.player.lvlUp()
@@ -179,6 +181,9 @@ class Actions():
                 self.player.name ="Lazy Cheater"
                 return "You cheater! From now on we will refer to you as"+Fore.CYAN+" %s"%(self.player.name)+Fore.WHITE
 
+            elif(self.action == "p"):
+                self.player.condition = "poisoned"
+                return "poisoned"
             ##
             ## Displays available commands
             ##

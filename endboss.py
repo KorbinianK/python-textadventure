@@ -24,20 +24,13 @@ class Endboss(object):
         # self.bossList.append("")
         # self.bossList.append("")
         self.boss = random.choice(self.bossList)
-
         return self.boss
-
-    # def setupBoss(self,player):
-
-    def kill(self):
-        self.boss.killed = True
 
     def kill(self):
         self.boss.killed = True
 
     def takeDamage(self,damage,player):
         self.boss.hp -= damage
-        # player.victory = True
 
     def getHP(self):
         return self.boss.hp
@@ -48,7 +41,7 @@ class Endboss(object):
 
     def attackFromPlayer(self,player):
         damage = player.getStrength()+random.randint(0,3)
-        if (self.hp - damage <= 0):
+        if (self.boss.hp - damage <= 0):
             self.kill()
             player.facesBoss = False
             player.victory = True
@@ -60,7 +53,7 @@ class Endboss(object):
                 return "Error 404: Boss not found"
         else:
             self.takeDamage(damage,player)
-            print "hit"
+
             if isinstance(self.boss,ByteBoss):
 
                 return self.handler.strBoss("bHit",player,damage)+"\n"+self.attack(player)
@@ -75,10 +68,9 @@ class Endboss(object):
             return self.handler.strBoss("hAttack",player,damage)+player.takeDamage(damage,self.boss)
 
     def spawn(self,player):
-
+        
         player.facesBoss = True
         damage = self.calcDamage()
-        # print self.handler.strBoss("bSpawn",player,None)
         if isinstance(self.boss,ByteBoss):
             return self.handler.strBoss("bSpawn",player,damage)
         elif isinstance(self.boss,HipsterBoss):

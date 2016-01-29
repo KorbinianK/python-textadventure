@@ -34,7 +34,9 @@ class Monster(object):
             return self.killed
 
     def takeDamage(self, damage,player):
+
         self.hp -= damage
+        #########
         string = '"'+self.handler.strMonster("hit",self,player)+'"\n'
         for char in string:
             time.sleep(uniform(0.05, 0.08))
@@ -42,6 +44,7 @@ class Monster(object):
             sys.stdout.flush()
         print Fore.WHITE
         time.sleep(0.5)
+
 
     def getHP(self):
         return self.hp
@@ -97,11 +100,14 @@ class Monster(object):
             if self.hasLoot:
                 return self.handler.strMonster("killedLoot",self,player)+"\n"+player.addItem(self.getLoot())
             else:
+
                 return self.handler.strMonster("killed",self,player)
 
         elif player.hp - damageplayer <=0:
+
             return "\n"+self.attackPlayer(room,player,damageplayer)
         else:
+
             self.takeDamage(damage,player)
             return self.handler.strMonsterDamage("getAttacked",self,damage,player) +"\n"+\
             self.handler.strMonsterDamage("returnHP",self,damage,player) +"\n"+self.attackPlayer(room,player,damageplayer)
@@ -124,5 +130,4 @@ class Monster(object):
             elif room.hasMonster and not self.killed :
                 player.facesMonster = True
                 damage = self.calcDamage()
-                return self.handler.strMonsterDamage("spawn",self,damage,player)+"\n"+\
-                player.takeDamage(damage,room.monster)
+                return self.handler.strMonsterDamage("spawn",self,damage,player)+"\n"+player.takeDamage(damage,room.monster)

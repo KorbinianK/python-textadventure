@@ -311,7 +311,7 @@ class Stringhandler(object):
             self.strlist.append("You find... nothing.")
             self.strlist.append("Sorry, only cobwebs, nothing of use.")
             self.strlist.append("These bugs are definitely no feature.")
-            self.strlist.append("Only used scrolls an empty flasks...")
+            self.strlist.append("Only used scrolls and empty flasks...")
             self.strlist.append("Nothing ... really??")
             string = random.choice(self.strlist)
         del self.strlist[:]
@@ -340,7 +340,7 @@ class Stringhandler(object):
             self.strlist.append("Oh Lord! You did it! The Monster is on his way to hell.")
             self.strlist.append("You've got my huge respect dude! You've just beaten up "+name+" and it's dead. Congrats!")
             self.strlist.append("A farewell to one of the unique monsters. It died a very painful death by your hands.")
-            self.strlist.append("You complete your mission."+name+" is dead finally! Congrats! Go get some cookies!")
+            self.strlist.append("You complete your mission. "+name+" is dead finally! Congrats! Go get some cookies!")
             self.strlist.append("Hey man, this "+name+" was endangered! Might have been the last of its kind...")
             self.strlist.append("You killed "+ name+"!")
             self.strlist.append('You beat ' +name+ ' into oblivion.')
@@ -447,6 +447,7 @@ class Stringhandler(object):
             """
             The player hit the monster
             """
+
             self.strlist.append('Bam, right in the muzzle. That was' + damage + 'damage!')
             self.strlist.append('Boom. Right in his face! Keep going.' + damage + 'damage for the monster.')
             self.strlist.append('You attack ' +name+ ' and you deal' + damage + 'damage.')
@@ -462,6 +463,7 @@ class Stringhandler(object):
             """
             Some strings to let the player know the monster lost health
             """
+
             self.strlist.append("The monster's health is now at"+hp )
             self.strlist.append('If it bleeds, you can kill it! '+hp+' life left!')
             self.strlist.append(name+" already took a good beating. Only "+hp+" life left. Keep going!")
@@ -510,6 +512,7 @@ class Stringhandler(object):
         """
         Handles the player strings that include damage values
         """
+
         damage =str(Fore.RED+""+str(damage)+" "+Fore.WHITE)
         hp = str(Fore.CYAN +" "+ str(player.getHP()) +" "+ Fore.WHITE)
         playerName = str(Fore.CYAN +" "+player.name +" "+Fore.WHITE)
@@ -560,21 +563,24 @@ class Stringhandler(object):
 
         if type == "condition":
             condition = Fore.MAGENTA+player.getCondition()+Fore.WHITE
-            if player.getCondition() == "poisoned":
+            if player.getCondition() == "poisoned" and not player.previous =="normal":
                 self.strlist.append('\nYou feel a strange sting in your arm... you got '+condition+'.\n')
                 self.strlist.append('\nYour head starts spinning and you want to throw up. You got '+condition+'.\n')
                 self.strlist.append('\nThis new wound is leaking some blue liquid... It is '+Fore.MAGENTA+'Poison!'+Fore.WHITE+'\n')
                 self.strlist.append('\nYou are '+condition+'.\n')
-                return random.choice(self.strlist)
+                string = random.choice(self.strlist)
+
             elif player.previous == "poisoned":
                 player.previous = "normal"
                 self.strlist.append("This attack knocked you right back into reality.")
                 self.strlist.append("The "+Fore.MAGENTA+"Poison"+Fore.WHITE+" seems to have faded.")
                 # self.strlist.append("")
                 # self.strlist.append("")
-                return random.choice(self.strlist)
+                string = random.choice(self.strlist)
             else:
-                return ""
+                string = ""
+            del self.strlist[:]
+            return string
 
         if type == "lvl":
             """
@@ -589,6 +595,9 @@ class Stringhandler(object):
             self.strlist.append('\nLevel up... but where are those damn cookies??\n')
             self.strlist.append('\nWelcome to the next level of greatness, hero!\n')
             string = random.choice(self.strlist)
+            del self.strlist[:]
+            return self.modify(string,player)
+
         if type == "heal":
             """
             Informs the player that he healed
@@ -600,6 +609,8 @@ class Stringhandler(object):
             self.strlist.append('You think to hear a short curse after you heal, thus stepping away from the brink of death once more. Health now at '+hp)
             self.strlist.append('Comforting, the mysterious liquid trickles down your throat. You already feel renewed! Health now at '+hp)
             string = random.choice(self.strlist)
+            del self.strlist[:]
+            return self.modify(string,player)
 
         if type == "healFull":
             """
@@ -612,6 +623,8 @@ class Stringhandler(object):
             self.strlist.append("Alive and kickin'!")
             self.strlist.append("Dont't worry, you're fine!")
             string = random.choice(self.strlist)
+            del self.strlist[:]
+            return self.modify(string,player)
 
         if type =="emptyPot":
             """
@@ -625,6 +638,8 @@ class Stringhandler(object):
             self.strlist.append('All gone!')
             self.strlist.append('Someone drank it all up. Might have been you.')
             string = random.choice(self.strlist)
+            del self.strlist[:]
+            return self.modify(string,player)
 
         if type =="drinkAir":
             """
@@ -635,7 +650,8 @@ class Stringhandler(object):
             self.strlist.append("Just fyi: You can't drink air ;)")
             self.strlist.append('What an earth are you doing??')
             string = random.choice(self.strlist)
-
+            del self.strlist[:]
+            return self.modify(string,player)
 
         if type == "dies":
             self.strlist.append("FORGET The air escapes your lungs and a metallic taste fills your mouth.\n"+\
@@ -650,8 +666,8 @@ class Stringhandler(object):
             "You think of your loved ones, who you will never see again. Ah, death, I thought we had a deal...\n")
             self.strlist.append("Always look on the bright side of death, a-just before you draw your terminal breath.")
             string = random.choice(self.strlist)
-        del self.strlist[:]
-        return self.modify(string,player)
+            del self.strlist[:]
+            return string
 
 
     def strPlayerItem(self,type,player,item):
@@ -683,7 +699,7 @@ class Stringhandler(object):
                 self.strlist.append("What a nice "+itemshort+ "! Feels heavy.")
                 self.strlist.append("You grasp the "+itemshort+" and swing it through the air for a testdrive! Nice!")
             else:
-                self.strlist.append("A sip from this mighty"+itemshort+"should help.")
+                self.strlist.append("A sip from this mighty "+itemshort+" should help.")
                 # self.strlist.append("")
             string = random.choice(self.strlist)
 
@@ -704,18 +720,19 @@ class Stringhandler(object):
         """
 
         if player is not None:
-            # print player.getCondition()
+
             if player.getCondition() == "normal":
                 return string
                 #return self.killString(string)
-            elif player.getCondition() == "poisoned":
+            elif player.getCondition() == "poisoned" and not player.getPrevious() == "normal":
                 # print "poisoned"
                 # return self.killString(string)
-                return self.reverseString(string)
+                return self.reverseString(string,player)
+            else:
+                player.previous = "poisoned"
+                return string
         else:
             return string
-            # print "else"
-            # return self.killString(string)
 
     def killString(self,string):
         """
@@ -732,9 +749,10 @@ class Stringhandler(object):
     			builder += letter
     	return newString
 
-    def reverseString(self,string):
+    def reverseString(self,string,player):
         """
         Modifier: Returns the entire string -> gnirts eritne eht snruteR
         """
+
         newString = re.sub(r'(\x1b[^m]*m)',"",string)[::-1]
         return newString
