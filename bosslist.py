@@ -2,7 +2,6 @@
 
 import random, time,sys
 from random import uniform
-from stringhandler import Stringhandler
 
 class ByteBoss(object):
 
@@ -13,10 +12,12 @@ class ByteBoss(object):
         self.hp = 64
         self.strength = 8
         self.killed = False
-        self.handler = Stringhandler()
 
     def getShortName(self):
         return self.shortname
+    def getHP(self):
+        return self.hp
+
 
 class HipsterBoss(object):
 
@@ -27,7 +28,8 @@ class HipsterBoss(object):
         self.hp = 60
         self.strength = 8
         self.killed = False
-        self.handler = Stringhandler()
 
     def getShortName(self):
         return self.shortname
+    def getHP(self):
+        return self.hp

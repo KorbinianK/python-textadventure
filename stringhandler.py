@@ -1,7 +1,7 @@
 from colorama import init, Fore, Back, Style
 from weapon import Weapon
+from bosslist import ByteBoss,HipsterBoss
 import random,sys,re
-
 
 class Stringhandler(object):
 
@@ -440,10 +440,17 @@ class Stringhandler(object):
         """
         The strings for Monster where some damage value is returned
         """
-        name = str(Fore.GREEN+""+monster.getShortName()+""+ Fore.WHITE)
-        namelong = str(Fore.GREEN+""+monster.getFullName()+""+ Fore.WHITE)
-        damage =str(Fore.RED+" "+str(damage)+" "+Fore.WHITE)
-        hp = str(Fore.GREEN +" "+ str(monster.getHP()) +" "+ Fore.WHITE)
+        if isinstance(monster,ByteBoss) or isinstance(monster,HipsterBoss):
+            name = str(Fore.GREEN+""+monster.getShortName()+""+ Fore.WHITE)
+            namelong = str(Fore.GREEN+""+monster.getShortName()+""+ Fore.WHITE)
+            damage =str(Fore.RED+" "+str(damage)+" "+Fore.WHITE)
+            hp = str(Fore.GREEN +" "+ str(monster.getHP()) +" "+ Fore.WHITE)
+
+        else:
+            name = str(Fore.GREEN+""+monster.getShortName()+""+ Fore.WHITE)
+            namelong = str(Fore.GREEN+""+monster.getFullName()+""+ Fore.WHITE)
+            damage =str(Fore.RED+" "+str(damage)+" "+Fore.WHITE)
+            hp = str(Fore.GREEN +" "+ str(monster.getHP()) +" "+ Fore.WHITE)
 
         if type == "getAttacked":
             """
@@ -465,14 +472,12 @@ class Stringhandler(object):
             """
             Some strings to let the player know the monster lost health
             """
-
             self.strlist.append("The monster's health is now at"+hp )
             self.strlist.append('If it bleeds, you can kill it! '+hp+' life left!')
             self.strlist.append(name+" already took a good beating. Only "+hp+" life left. Keep going!")
             self.strlist.append('The defenses are weakened. Health now at '+hp+'.')
             self.strlist.append("The monster's healthpoints are at "+hp+"! Don't stop now!")
             string = random.choice(self.strlist)
-
 
         elif type == "spawn":
             """

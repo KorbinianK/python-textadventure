@@ -8,10 +8,7 @@ from stringhandler import Stringhandler
 class Endboss(object):
 
     def __init__(self):
-
-        self.hp = 10
-        self.strength = 10
-        self.killed = False
+        
         self.handler = Stringhandler()
         self.bossList = []
         self.byteBoss = Bosslist.ByteBoss()
@@ -55,10 +52,9 @@ class Endboss(object):
             self.takeDamage(damage,player)
 
             if isinstance(self.boss,ByteBoss):
-
-                return self.handler.strBoss("bHit",player,damage)+"\n"+self.attack(player)
+                return self.handler.strBoss("bHit",player,damage)+"\n"+self.handler.strMonsterDamage("returnHP",self.boss,damage,player)+"\n"+self.attack(player)
             elif isinstance(self.boss,HipsterBoss):
-                return self.handler.strBoss("hHit",player,damage)+"\n"+self.attack(player)
+                return self.handler.strBoss("hHit",player,damage)+"\n"+self.handler.strMonsterDamage("returnHP",self.boss,damage,player)+"\n"+self.attack(player)
 
     def attack(self,player):
         damage = self.calcDamage()
