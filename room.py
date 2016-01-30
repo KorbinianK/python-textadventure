@@ -31,7 +31,6 @@ class Room(object):
     # Sets up a new Room and displays some "Intro Text"
     def newRoom(self):
         self.isDone = False
-
         string = "\n\n#######################################"+"\n\n"+\
         self.handler.strRoom("intro",self)+"\n\n"+\
         "#######################################"+"\n\n"
@@ -43,9 +42,7 @@ class Room(object):
         print Fore.WHITE
 
         # Decides whether the room gets a monster or a chest
-
         if int(self.player.level) <= int(self.goal):
-
             rnd = random.randint(0,10)
             if rnd > 1:
                 self.hasMonster = True
@@ -78,8 +75,8 @@ class Room(object):
 
     def getBoss(self):
         return self.boss
+
     # If the player has used "look around" the room should be set to inspected
-    # room.inspectRoom()
     def inspectRoom(self):
         self.inspected = True
 
@@ -92,7 +89,6 @@ class Room(object):
 
     def attackMonster(self,player):
         room  = self
-        
         return self.monster.attack(room,player)
 
     # Opens the chest, required for the player to be able to continue -> Room set to "Done"
@@ -104,7 +100,6 @@ class Room(object):
         return self.isDone
 
     def finish(self):
-
         self.isDone = True
         if self.hasChest:
             self.chest.is_opened = True

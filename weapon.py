@@ -10,6 +10,3 @@ class Weapon(object):
 
 	def getShortName(self):
 		return self.nameshort
-
-	def setDamage(self, damage):
-		self.damage=damage

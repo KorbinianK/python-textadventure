@@ -68,7 +68,6 @@ class Endboss(object):
             return self.handler.strBoss("hAttack",player,damage)+player.takeDamage(damage,self.boss)
 
     def spawn(self,player):
-        
         player.facesBoss = True
         damage = self.calcDamage()
         if isinstance(self.boss,ByteBoss):

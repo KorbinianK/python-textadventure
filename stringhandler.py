@@ -725,10 +725,7 @@ class Stringhandler(object):
 
             if player.getCondition() == "normal":
                 return string
-                #return self.killString(string)
             elif player.getCondition() == "poisoned" and not player.getPrevious() == "normal":
-                # print "poisoned"
-                # return self.killString(string)
                 rnd = random.randint(0,10)
                 if rnd < 100:
                     return self.reverseString(string)

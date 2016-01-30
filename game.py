@@ -10,8 +10,6 @@ from colorama import init, Fore, Back, Style
 import random, time, re, sys
 from random import uniform
 
-# init()
-
 def play():
 
     handler = Stringhandler()
@@ -34,9 +32,7 @@ def play():
 #
     print Style.BRIGHT + Fore.WHITE
     greeting = handler.strGreeting(player)
-
     string = re.sub(r'(\x1b[^m]*m)',"", str(greeting+"\n"))
-
     pos = string.find(player.name)
     for index, char in enumerate(string):
         time.sleep(uniform(0.05, 0.1))
@@ -60,17 +56,14 @@ def play():
         else:
             print chest
 
-
 #
 # Game Loop start
 #
     while player.is_alive():
-
         if player.victory:
             print "Do you want to"+Fore.CYAN+" restart"+Fore.WHITE+" or"+Fore.CYAN+" exit"+Fore.WHITE+"?"
             end_input = raw_input(Fore.CYAN +"\n"+ player.name+ '>: ')
             if end_input.lower() == "restart":
-                # player.alive = True
                 print handler.strBasic("restart")
                 play()
             elif end_input.lower() == "exit":
@@ -88,9 +81,6 @@ def play():
                 string = room.monster.spawn(room,player)
                 if room.hasMonster:
                     print str(string)
-                # elif room.hasBoss:
-                #     #do nothing here
-                #     print
                 else:
                     print chest
 
@@ -105,15 +95,10 @@ def play():
             else:
                 # The magic happens here:
                 time.sleep(0.5)
-                # print player.condition
                 print actions(action_input,player,room)
-
-
 
     if player.victory:
         print "Victory!"
-
-
 
 if __name__ == "__main__":
     play()

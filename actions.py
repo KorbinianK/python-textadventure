@@ -21,16 +21,6 @@ class Actions():
         if self.player.alive:
 
             ##
-            ## Summons a monster
-            ##
-            if self.action.lower()== "boss":
-                if self.room.hasMonster:
-                    return self.room.monster.spawn(self.room,self.player)
-                else:
-                    return self.handler.strActions("roomEmpty",self.player,self.room)
-
-
-            ##
             ## Continues
             ##
             elif "go" in self.action.lower() or "walk" in self.action.lower() or "continue" in self.action.lower():
@@ -60,7 +50,6 @@ class Actions():
             ##
             ## Equips an item
             ##
-
             elif "equip" in self.action.lower():
                 if bool(re.search(r'\d', self.action.lower())):
                     slot = int(re.search(r'\d+', self.action.lower()).group())-1

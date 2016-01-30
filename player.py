@@ -9,7 +9,7 @@ from stringhandler import Stringhandler
 class Player(object):
 
     def __init__(self):
-    	self.name = "a"
+    	self.name = "player"
         self.hp = 100
         self.facesMonster = False
         self.facesBoss = False
@@ -17,10 +17,8 @@ class Player(object):
         self.condition = "normal"
         self.previous = "normal"
         self.strength = 5
-        self.armor = 1
         self.level = 1
         self.inventory =[]
-        self.hasItems=False
         self.is_in_room = False
         self.equipped = []
         self.triedWalk = False
@@ -48,8 +46,6 @@ class Player(object):
     def takeDamage(self, damage, monster):
         self.hp -= damage
         rnd = random.randint(0,20)
-        # self.condition = "poisoned"
-        # print rnd
         if rnd < 3:
             self.previous = self.condition
             self.condition = "poisoned"
@@ -131,8 +127,7 @@ class Player(object):
         else:
             string = self.handler.strPlayer("dies",self)+"\n"
 
-        if "SHAKESPEAR" in string:
-
+        if "SHAKESPEAR" or in string:
             string =string.replace("SHAKESPEAR ","")
             stringtwo = "to die, to sleep..."
         elif "FORGET" in string:
@@ -157,12 +152,9 @@ class Player(object):
     def getStrength(self):
         return self.strength
 
-
     def printInventory(self):
         string = "You own: "
         for index,item in enumerate(self.inventory, start=1):
              string = string+Fore.YELLOW+item.name+Fore.WHITE+"[" + str(index) +"], "
         string = string + "\nType"+Fore.CYAN +" equip 1 "+Fore.WHITE+"to equip the first item form the list."
         return self.handler.modify(string, self)
-
-    #    return self.inventory[0].name + self.inventory[1].name

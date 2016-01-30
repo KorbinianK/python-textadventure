@@ -36,7 +36,6 @@ class Monster(object):
     def takeDamage(self, damage,player):
 
         self.hp -= damage
-        #########
         string = '"'+self.handler.strMonster("hit",self,player)+'"\n'
         for char in string:
             time.sleep(uniform(0.05, 0.08))
@@ -48,9 +47,6 @@ class Monster(object):
 
     def getHP(self):
         return self.hp
-
-    def setCondition(self, condition):
-    	self.__condition = condition
 
     def getLoot(self):
         return self.Loot
