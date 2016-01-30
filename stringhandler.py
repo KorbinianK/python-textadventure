@@ -78,7 +78,7 @@ class Stringhandler(object):
             self.strlist.append("He softly and sensitives looks through his nerdy glasses. While catching his ultra positive vibes you take "+damage+" damage")
             self.strlist.append("Oh holy crap you looked him in the eye! He begins to tell you about an alternative life style and you take "+damage+" damage by only listening.")
             self.strlist.append("Not understanding how one can run so fast in such skinny jeans, he jumps forward to hand you a flyer- you take "+damage+" damage")
-            self.strlist.append("Oh no, he throws his hessian bag towards you! You get XX damage!")
+            self.strlist.append("Oh no, he throws his hessian bag towards you! You get "+damage+" damage!")
             self.strlist.append("Hearing a loud 'YOLO' the hipster jumps towards you, beating you with his skinny arms. You take "+damage+" damage.")
             string = random.choice(self.strlist)
         if type == "hDie":

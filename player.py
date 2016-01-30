@@ -50,7 +50,7 @@ class Player(object):
         rnd = random.randint(0,20)
         # self.condition = "poisoned"
         # print rnd
-        if rnd < 10:
+        if rnd < 3:
             self.previous = self.condition
             self.condition = "poisoned"
         elif rnd is 10 or 15 or 20:
@@ -60,7 +60,10 @@ class Player(object):
         else:
             self.previous = self.condition
         if self.hp >=0:
-            return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+            if self.facesBoss:
+                return "\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+            else:
+                return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
             return self.die(monster)
 

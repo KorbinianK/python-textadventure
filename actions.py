@@ -62,9 +62,14 @@ class Actions():
             ##
 
             elif "equip" in self.action.lower():
-                slot = int(re.search(r'\d+', self.action.lower()).group())-1
-
-                return self.player.equipItem(slot,self.player.inventory[slot])
+                if bool(re.search(r'\d', self.action.lower())):
+                    slot = int(re.search(r'\d+', self.action.lower()).group())-1
+                    if slot < len(self.player.inventory):
+                        return self.player.equipItem(slot,self.player.inventory[slot])
+                    else:
+                        return "You only have "+Fore.GREEN+str(len(self.player.inventory))+Fore.WHITE+" item(s) in your"+Fore.CYAN+" inventory" +Fore.WHITE+"."
+                else:
+                    return "You can't do that.\nUse "+Fore.CYAN+"equip 1" +Fore.WHITE+" to equip the first item of your"+Fore.CYAN+" inventory "+Fore.WHITE+"."
 
             ##
             ## Drinks a potion
