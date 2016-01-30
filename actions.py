@@ -23,7 +23,7 @@ class Actions():
             ##
             ## Continues
             ##
-            elif "go" in self.action.lower() or "walk" in self.action.lower() or "continue" in self.action.lower():
+            if "go" in self.action.lower() or "walk" in self.action.lower() or "continue" in self.action.lower():
                 text = self.handler.strActions("moving",self.player,self.room)
                 for x in range (0,5):
                     b = text + "." * x

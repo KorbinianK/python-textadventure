@@ -127,7 +127,7 @@ class Player(object):
         else:
             string = self.handler.strPlayer("dies",self)+"\n"
 
-        if "SHAKESPEAR" or in string:
+        if "SHAKESPEAR" in string:
             string =string.replace("SHAKESPEAR ","")
             stringtwo = "to die, to sleep..."
         elif "FORGET" in string:
