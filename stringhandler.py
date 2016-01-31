@@ -26,16 +26,18 @@ class Stringhandler(object):
         """
         Megabyte Boss
         """
+        origdmg = damage
         damage = Fore.RED + str(damage)+Fore.WHITE
+
         if type == "bHit":
-            self.strlist.append("01101111 01110101 0110"+damage+Fore.GREEN+" 01110100 01100011 01101000")
-            self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
+            damage = Fore.RED + str(bin(origdmg))+Fore.WHITE
+            self.strlist.append(damage)
+            # self.strlist.append("01100100 01101111 01101110 01110100 00100111 00100000 01101000 01110101 01110010 01110100 00100000 01101101 01100101")
             self.strlist.append("print: response(playerHit)")
             # self.strlist.append("")
             string = Fore.GREEN + random.choice(self.strlist) + Fore.WHITE
 
         if type == "bAttack":
-
             self.strlist.append("He hits you and you take "+damage+" damage.")
             # self.strlist.append("")
             # self.strlist.append("")
@@ -75,7 +77,7 @@ class Stringhandler(object):
             string = random.choice(self.strlist)
         if type == "hHit":
             damage = str(Fore.RED + str(damage) + Fore.WHITE)
-            self.strlist.append("Aua.")   
+            self.strlist.append("Aua.")
             # self.strlist.append("")
             # self.strlist.append("")
             # self.strlist.append("")
@@ -730,7 +732,7 @@ class Stringhandler(object):
                 return string
             elif player.getCondition() == "poisoned" and not player.getPrevious() == "normal":
                 rnd = random.randint(0,10)
-                if rnd < 100:
+                if rnd < 5:
                     return self.reverseString(string)
                 else:
                     return self.killString(string)

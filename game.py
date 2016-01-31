@@ -61,7 +61,7 @@ def play():
 #
     while player.is_alive():
         if player.victory:
-            print "Do you want to"+Fore.CYAN+" restart"+Fore.WHITE+" or"+Fore.CYAN+" exit"+Fore.WHITE+"?"
+            print "You have beaten the game. Congratulations!\n\nDo you want to"+Fore.CYAN+" restart"+Fore.WHITE+" or"+Fore.CYAN+" exit"+Fore.WHITE+"?"
             end_input = raw_input(Fore.CYAN +"\n"+ player.name+ '>: ')
             if end_input.lower() == "restart":
                 print handler.strBasic("restart")
