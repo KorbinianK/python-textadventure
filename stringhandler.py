@@ -748,23 +748,27 @@ class Stringhandler(object):
         text = string.split()
         for word in text:
             i = re.sub(r'(\x1b[^m]*m)',"", word)
-            if (i[-1] == "."):
-                if (len(i) > 3):
-                    if (i[-2]== "." and i[-3] == "."):
-                        newString += i[-4] + i[1:-4] + i[0] + i[-3] + i[-2] + i[-1] + " "
-                    else:
-                        newString += i[-2] + i[1:-2] + i[0] + i[-1] +" "
+            if(len(i)>1):
+                if (i[-1] == "."):
+                    if (len(i) > 3):
+                        if (i[-2]== "." and i[-3] == "."):
+                            newString += i[-4] + i[1:-4] + i[0] + i[-3] + i[-2] + i[-1] + " "
+                        else:
+                            newString += i[-2] + i[1:-2] + i[0] + i[-1] +" "
 
-            elif(i[-1] == "," and i[-2]=="'" or i[-1] =="." and i[-2]=="'"):
-                newString += i[-3] + i[1:-3] + i[0] + i[-2] + i[-1] +" "
-            elif (i[0] == "'"):
-                newString += i[0] + i[-1] + i[2:-1] + i[1] +" "
-            elif (i[-1] == "'" or i[-1] == "," or i[-1] =="!" or i[-1]=="?" or i[-1]==":"):
-                newString += i[-2] + i[1:-2] + i[0] + i[-1] +" "
+                elif(i[-1] == "," and i[-2]=="'" or i[-1] =="." and i[-2]=="'"):
+                    newString += i[-3] + i[1:-3] + i[0] + i[-2] + i[-1] +" "
+                elif (i[0] == "'"):
+                    newString += i[0] + i[-1] + i[2:-1] + i[1] +" "
+                elif (i[-1] == "'" or i[-1] == "," or i[-1] =="!" or i[-1]=="?" or i[-1]==":"):
+                    newString += i[-2] + i[1:-2] + i[0] + i[-1] +" "
+                else:
+                    newString += i[-1] + i[1: -1] + i[0] + " "
             else:
-                newString += i[-1] + i[1: -1] + i[0] + " "
+                newString += i + " ";
 
-        return (Fore.RED + newString)
+        return newString
+
 
     def reverseString(self,string):
         """
