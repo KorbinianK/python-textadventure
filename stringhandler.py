@@ -78,10 +78,10 @@ class Stringhandler(object):
         if type == "hHit":
             damage = str(Fore.RED + str(damage) + Fore.WHITE)
             self.strlist.append("Aua.")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            # self.strlist.append("")
+            self.strlist.append("You know with every attack I get angry and angrier. So if I were you I would think twice to attack or not.")
+            self.strlist.append("MWAHAHAHA.. look at you. Trying to destroy me.")
+            self.strlist.append("Pffft... hihihihii... owww try harder little one.")
+            self.strlist.append("That was a big mistake!")
             string = random.choice(self.strlist)
         if type == "hDie":
             self.strlist.append("You got away from the hipster! Finally, you see ....a unicorn coming towards you?!. You jump on it and ride towards the rainbow on the horizon.")
@@ -709,7 +709,7 @@ class Stringhandler(object):
                 self.strlist.append("Oh, ah shiny new "+itemshort+".")
                 self.strlist.append("Wow the new "+itemshort+" feels nice.")
                 string = random.choice(self.strlist)
-                
+
         elif type == "equipItem":
             if isinstance(item,Weapon):
                 self.strlist.append("What a nice "+itemshort+"! Feels heavy.")
@@ -730,8 +730,13 @@ class Stringhandler(object):
 
         elif type == "exit":
             string = str(Back.RED+"                  "+Fore.WHITE+"Game exited"+ Back.RED +"                  "+Style.RESET_ALL)
+        elif type == "win":
+            self.strlist.append("You have beaten the game. Congratulations!")
+            self.strlist.append("You destroyed it! You did it! Oh happy dayyyy...\nCongratulations again! You were a pretty tough fella. We are proud of you!\n"+"You have our huge respect! Now you can walk home in peace. Have a nice day and do not forget you are always welcome here.\nThe next adventures are waiting for you. But we understand if you want to take a little rest.\nSo wehenever you wanna come the door is always open. Here have some cookies for your way back home.")
+            string = random.choice(self.strlist)
+            del self.strlist[:]
+            return random.choice(self.strlist) +"\n\nDo you want to"+Fore.CYAN+" restart"+Fore.WHITE+" or"+Fore.CYAN+" exit"+Fore.WHITE+"?"
         return string
-
     def modify(self,string,player):
         """
         Modifies the strings before returning, depending on his condition
