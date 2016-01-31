@@ -93,6 +93,7 @@ class Player(object):
         self.inventory.append(item)
         self.hasItems = True
         if isinstance(item,Weapon):
+            print "\n"+self.handler.strPlayerItem("newItem", self, item)
             return self.equipItem(len(self.inventory)-1,item)
 
     def equipItem(self,pos,item):
@@ -101,12 +102,12 @@ class Player(object):
             string = "Sorry Dave, I'm afraid I can't let you do that."
         else:
             self.equipped = self.inventory[slot]
-            return "\n"+self.handler.strPlayerItem("newItem", self, item)
+            # return "\n"+self.handler.strPlayerItem("newItem", self, item)
             if isinstance(item,Weapon):
                 self.strength = 1
                 self.strength += self.equipped.damage
-            else:
-                string += "\nDo you want to"+Fore.CYAN+" drink "+Fore.WHITE+"it?"
+            # print "\nYou equipped "+Fore.YELLOW + item.name+Fore.WHITE
+            string = self.handler.strPlayerItem("equipItem", self, item)
         return string
 
     def heal(self):

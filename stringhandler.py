@@ -291,7 +291,7 @@ class Stringhandler(object):
         player = None
         if type == "open":
 
-            item = Fore.YELLOW + item +Fore.WHITE
+            item = Fore.YELLOW + item  +Fore.WHITE
             itemshort = Fore.YELLOW +item.replace("a ","",1) +Fore.WHITE
 
             self.strlist.append("You found "+item+"! It has been added to your inventory")
@@ -695,21 +695,32 @@ class Stringhandler(object):
             self.strlist.append("Sure! I mean you can try drinking "+itemname+". But you have to know, that's impossible!")
             string = random.choice(self.strlist)
 
-        if type =="newItem":
+        elif type =="newItem":
             """
             Informs the player about a new item he found
             """
             if isinstance(item,Weapon):
-                self.strlist.append("You now have "+itemname+" in your hand.")
+                self.strlist.append("You found "+itemname+"! It has been added to your inventory")
+                self.strlist.append("Oooh. Shiny! You got "+itemname+"!" )
+                self.strlist.append("*plop* Wow a new "+itemshort+"!")
+                self.strlist.append("This is now MINE! My "+itemshort+"! My PRECIOUS!")
+                self.strlist.append("Oh yes, a "+itemname+"! Exactly what I needed!")
+                self.strlist.append("Winner winner, chicken dinner! It's a "+itemname)
                 self.strlist.append("Oh, ah shiny new "+itemshort+".")
                 self.strlist.append("Wow the new "+itemshort+" feels nice.")
-                self.strlist.append("What a nice "+itemshort+ "! Feels heavy.")
+                string = random.choice(self.strlist)
+                
+        elif type == "equipItem":
+            if isinstance(item,Weapon):
+                self.strlist.append("What a nice "+itemshort+"! Feels heavy.")
+                self.strlist.append("Hey, I wonder if this "+itemshort+" is part of a set...")
+                self.strlist.append("You now have "+itemname+" in your hand.")
                 self.strlist.append("You grasp the "+itemshort+" and swing it through the air for a testdrive! Nice!")
+                string = random.choice(self.strlist)
             else:
-                self.strlist.append("A sip from this mighty "+itemshort+" should help.")
+                self.strlist.append("A sip from this mighty "+itemshort+" should help."+"\nDo you want to"+Fore.CYAN+" drink "+Fore.WHITE+"it?")
                 # self.strlist.append("")
-            string = random.choice(self.strlist)
-
+                string = random.choice(self.strlist)
         del self.strlist[:]
         return self.modify(string,player)
 
