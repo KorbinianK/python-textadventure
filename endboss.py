@@ -8,7 +8,7 @@ from stringhandler import Stringhandler
 class Endboss(object):
 
     def __init__(self):
-        
+
         self.handler = Stringhandler()
         self.bossList = []
         self.byteBoss = Bosslist.ByteBoss()
@@ -52,16 +52,18 @@ class Endboss(object):
             self.takeDamage(damage,player)
 
             if isinstance(self.boss,ByteBoss):
-                return self.handler.strBoss("bHit",player,damage)+"\n"+self.handler.strMonsterDamage("returnHP",self.boss,damage,player)+"\n"+self.attack(player)
+                print self.handler.strBoss("bHit",player,damage)+"\n"+self.handler.strMonsterDamage("returnHP",self.boss,damage,player)
+                return "\n"+self.attack(player)
             elif isinstance(self.boss,HipsterBoss):
-                return self.handler.strBoss("hHit",player,damage)+"\n"+self.handler.strMonsterDamage("returnHP",self.boss,damage,player)+"\n"+self.attack(player)
+                print self.handler.strBoss("hHit",player,damage)+"\n"+self.handler.strMonsterDamage("returnHP",self.boss,damage,player)+"\n"
+                return self.attack(player)
 
     def attack(self,player):
         damage = self.calcDamage()
         if isinstance(self.boss,ByteBoss):
-            return self.handler.strBoss("bAttack",player,damage)+player.takeDamage(damage,self.boss)
+            return player.takeDamage(damage,self.boss)
         elif isinstance(self.boss,HipsterBoss):
-            return self.handler.strBoss("hAttack",player,damage)+player.takeDamage(damage,self.boss)
+            return player.takeDamage(damage,self.boss)
 
     def spawn(self,player):
         player.facesBoss = True

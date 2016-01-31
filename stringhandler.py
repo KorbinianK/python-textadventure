@@ -75,11 +75,11 @@ class Stringhandler(object):
             string = random.choice(self.strlist)
         if type == "hHit":
             damage = str(Fore.RED + str(damage) + Fore.WHITE)
-            self.strlist.append("He softly and sensitives looks through his nerdy glasses. While catching his ultra positive vibes you take "+damage+" damage")
-            self.strlist.append("Oh holy crap you looked him in the eye! He begins to tell you about an alternative life style and you take "+damage+" damage by only listening.")
-            self.strlist.append("Not understanding how one can run so fast in such skinny jeans, he jumps forward to hand you a flyer- you take "+damage+" damage")
-            self.strlist.append("Oh no, he throws his hessian bag towards you! You get "+damage+" damage!")
-            self.strlist.append("Hearing a loud 'YOLO' the hipster jumps towards you, beating you with his skinny arms. You take "+damage+" damage.")
+            self.strlist.append("Aua.")   
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
+            # self.strlist.append("")
             string = random.choice(self.strlist)
         if type == "hDie":
             self.strlist.append("You got away from the hipster! Finally, you see ....a unicorn coming towards you?!. You jump on it and ride towards the rainbow on the horizon.")
@@ -91,13 +91,11 @@ class Stringhandler(object):
             string = random.choice(self.strlist)
 
         if type == "hAttack":
-            self.strlist.append("He hits you and you take "+damage+" damage.")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            # self.strlist.append("")
-            # self.strlist.append("")
+            self.strlist.append("He softly and sensitives looks through his nerdy glasses. While catching his ultra positive vibes you take "+damage+" damage")
+            self.strlist.append("Oh holy crap you looked him in the eye! He begins to tell you about an alternative life style and you take "+damage+" damage by only listening.")
+            self.strlist.append("Not understanding how one can run so fast in such skinny jeans, he jumps forward to hand you a flyer- you take "+damage+" damage")
+            self.strlist.append("Oh no, he throws his hessian bag towards you! You get "+damage+" damage!")
+            self.strlist.append("Hearing a loud 'YOLO' the hipster jumps towards you, beating you with his skinny arms. You take "+damage+" damage.")
             string = random.choice(self.strlist)
 
         del self.strlist[:]

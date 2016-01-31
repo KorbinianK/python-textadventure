@@ -30,12 +30,14 @@ class Actions():
                     sys.stdout.write('\r'+b)
                     time.sleep(0.4)
 
-                if self.room.hasMonster:
-                    if not self.room.monster.killed:
+                if self.room.hasMonster or self.player.facesBoss:
+                    if not self.room.monster.killed and not self.player.facesBoss:
                         self.player.triedWalk = True
                         damage = self.room.monster.calcDamage()
                         return self.room.monster.attackPlayer(self.room,self.player,damage)
-                        # response = "a"
+                    elif not self.room.endboss.killed and self.player.facesBoss:
+                        self.player.triedWalk = True
+                        return self.room.boss.attack(self.player)
                     else:
                         return self.handler.strActions("nextRoomMonster",self.player,self.room) +\
                          "\n"+self.handler.strActions("nextRoom",self.player,self.room)
@@ -75,7 +77,6 @@ class Actions():
             elif(self.action.lower()== "attack"):
 
                 if not self.monster.killed and self.player.facesMonster:
-
                     return self.room.attackMonster(self.player)
                 elif self.player.facesBoss:
                     boss = self.room.getBoss()

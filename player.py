@@ -5,6 +5,7 @@ from potion import Potion
 import time,sys,random,re
 from random import uniform
 from stringhandler import Stringhandler
+from bosslist import ByteBoss,HipsterBoss
 
 class Player(object):
 
@@ -55,9 +56,16 @@ class Player(object):
                 self.previous = "poisoned"
         else:
             self.previous = self.condition
-        if self.hp >=0:
+        if self.hp > 0:
             if self.facesBoss:
-                return "\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+
+                if isinstance(monster,ByteBoss) or isinstance(monster,HipsterBoss):
+                    if isinstance(monster,ByteBoss):
+                        return self.handler.strBoss("bAttack",self,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+                    elif isinstance(monster,HipsterBoss):
+                        return self.handler.strBoss("hAttack",self,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
+                    else:
+                        return "Uh oh, not good."
             else:
                 return "\n"+self.handler.strPlayerDamage("takeDamage",self,monster,damage)+"\n"+self.handler.strPlayer("condition",self)+self.handler.strPlayerDamage("hp",self,monster,damage)+"\n"
         else:
@@ -147,7 +155,8 @@ class Player(object):
             sys.stdout.write('\033[36m'+char)
             sys.stdout.flush()
         self.alive = False
-        return Fore.WHITE+"\n\n\nYou are dead.\n\n"+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+" exit?"
+        return Fore.WHITE+"\n\n\nYou are dead.\n\n"
+        #"+Fore.CYAN+"restart "+Fore.WHITE+"or"+Fore.CYAN+" exit?"
 
     def getStrength(self):
         return self.strength
