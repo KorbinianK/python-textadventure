@@ -404,11 +404,11 @@ class Stringhandler(object):
             self.strlist.append('"Your soul is mine!"')
             self.strlist.append("'Nope dude! You ain't going nowhere!'")
             self.strlist.append("'Where do you think you're going?!'")
-            self.strlist.append('Tell me '+playername+'. Do you fear death?')
+            self.strlist.append('Tell me '+player.name+'. Do you fear death?')
             self.strlist.append('Why leave so soon?')
             self.strlist.append('How rude! Right as I started to like you!')
             self.strlist.append("The party ain't over yet!")
-            string = random.choice(self.strlist)
+            string = random.choice(self.strlist)+player.name
 
         elif type == "fleeSuccess":
             """

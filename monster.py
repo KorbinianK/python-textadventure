@@ -108,14 +108,14 @@ class Monster(object):
             return self.handler.strMonsterDamage("getAttacked",self,damage,player) +"\n"+\
             self.handler.strMonsterDamage("returnHP",self,damage,player) +"\n"+self.attackPlayer(room,player,damageplayer)
 
-    def flee(self, room, player):
+    def flee(self, room, player): 
             player.facesMonster = False
             damage = self.calcDamage()
 
             if damage < 5:
-                return self.handler("flee",self,player) +" "+ self.handler("fleeSuccess",self,player)
+                return self.handler.strMonster("flee",room.monster,player) +" "+ self.handler.strMonster("fleeSuccess",room.monster,player)
             else:
-                return self.handler("flee",self,player) +" "+ self.handler("fleeFail",self,player) +"\n" + player.takeDamage(damage,room.monster)
+                return self.handler.strMonster("flee",room.monster,player) +" "+ self.handler.strMonster("fleeFail",room.monster,player) +"\n" + player.takeDamage(damage,room.monster)
 
 
     def spawn(self,room,player):
